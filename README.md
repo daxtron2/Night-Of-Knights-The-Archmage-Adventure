@@ -24,8 +24,7 @@ This README would normally document whatever steps are necessary to get your app
 * Other guidelines
 
 ### Who do I talk to? ###
-
-* [TJ Wolschon](mailto:tjw3948@g.rit.edu)
-* [Zack Dunham](mailto:zsd7200@g.rit.edu)
-* [Michael Schek](mailto:mjs9513@g.rit.edu)
-* [Ben Fairlamb](mailto:btf6119@g.rit.edu)
+* [Ben Fairlamb](mailto:btf6119@g.rit.edu) - Team Lead
+* [TJ Wolschon](mailto:tjw3948@g.rit.edu) - Architect
+* [Zack Dunham](mailto:zsd7200@g.rit.edu) - UI/Art direction
+* [Michael Schek](mailto:mjs9513@g.rit.edu) - Game design
