@@ -1,5 +1,10 @@
 ﻿using System;
-
+/* GDAPS 2 Game Project - Group 2
+ * Ben Fairlamb  - Group Lead
+ * TJ Wolschon   - Architect
+ * Zack Dunham   - UI/Art
+ * Michael Schek - Game Design
+ */
 namespace GDAPS2Game
 {
 #if WINDOWS || LINUX
