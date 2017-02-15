@@ -5,6 +5,7 @@ This README would normally document whatever steps are necessary to get your app
 ### What is this repository for? ###
 
 * In our class, Game Development and Algorithmic Problem Solving 2, we are tasked with creating a game over the course of a semester. 
+* 0
 * [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
 ### How do I get set up? ###
@@ -24,6 +25,6 @@ This README would normally document whatever steps are necessary to get your app
 
 ### Who do I talk to? ###
 * [Ben Fairlamb](mailto:btf6119@g.rit.edu) - Team Lead
-* [TJ Wolschon ](mailto:tjw3948@g.rit.edu) - Architect
-* [Zack Dunham ](mailto:zsd7200@g.rit.edu) - UI/Art direction
+* [TJ Wolschon](mailto:tjw3948@g.rit.edu) - Architect
+* [Zack Dunham](mailto:zsd7200@g.rit.edu) - UI/Art direction
 * [Michael Schek](mailto:mjs9513@g.rit.edu) - Game design
