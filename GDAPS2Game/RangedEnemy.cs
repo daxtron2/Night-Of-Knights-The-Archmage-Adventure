@@ -9,15 +9,11 @@ namespace GDAPS2Game
     class RangedEnemy : Enemy
     {
         public int enemyHealth;
+        public RangedEnemy()
+        {
+            
+        }
         public void Attack()
-        {
-            throw new NotImplementedException();
-        }
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-        public void Spawn()
         {
             throw new NotImplementedException();
         }

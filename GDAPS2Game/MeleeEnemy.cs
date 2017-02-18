@@ -9,15 +9,12 @@ namespace GDAPS2Game
     class MeleeEnemy : Enemy
     {
         public int enemyHealth;
+
+        public MeleeEnemy()
+        {
+            
+        }
         public void Attack()
-        {
-            throw new NotImplementedException();
-        }
-        public void Destroy()
-        {
-            throw new NotImplementedException();
-        }
-        public void Spawn()
         {
             throw new NotImplementedException();
         }
