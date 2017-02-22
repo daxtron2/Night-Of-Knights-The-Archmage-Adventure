@@ -16,12 +16,19 @@ namespace GDAPS2Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Menu menu;
+        KeyboardState kState;
+        KeyboardState oldKState;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.ApplyChanges();
+            menu = new Menu(kState);
+
 
         }
 
@@ -33,7 +40,6 @@ namespace GDAPS2Game
         /// </summary>
         protected override void Initialize()
         {
-
 
             base.Initialize();
         }
@@ -67,8 +73,15 @@ namespace GDAPS2Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            
+            kState = Keyboard.GetState();
+            if(kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
+            {
+                //Menu.
+            }
 
+
+            //last thing
+            oldKState = kState;
             base.Update(gameTime);
         }
 
