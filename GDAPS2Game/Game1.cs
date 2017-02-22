@@ -16,18 +16,21 @@ namespace GDAPS2Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        SpriteFont mainFont;
         Menu menu;
         KeyboardState kState;
         KeyboardState oldKState;
+        int menuState;//0 = menu, 1 = game
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 1600;
-            graphics.PreferredBackBufferHeight = 900;
-            graphics.ApplyChanges();
-            menu = new Menu(kState);
+            graphics.PreferredBackBufferWidth = 1600;//width of window
+            graphics.PreferredBackBufferHeight = 900;//height of window
+            menu = new Menu(kState, oldKState);
+            menuState = 0;
+            mainFont = 
 
 
         }
@@ -73,10 +76,15 @@ namespace GDAPS2Game
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            kState = Keyboard.GetState();
+            kState = Keyboard.GetState();//first thing
+            
             if(kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
             {
-                //Menu.
+                menuState = 0;
+            }
+            if(menuState == 0)
+            {
+                menu.Input();
             }
 
 
@@ -93,9 +101,14 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();//Draw after this
-
-
-
+            if(menuState == 0)
+            {
+                spriteBatch.DrawString()
+            }
+            else if(menuState == 1)
+            {
+                //the code to draw the game
+            }
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }
