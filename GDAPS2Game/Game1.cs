@@ -20,7 +20,8 @@ namespace GDAPS2Game
         Menu menu;
         KeyboardState kState;
         KeyboardState oldKState;
-        int menuState;//0 = menu, 1 = game
+        MouseState mState;
+        bool paused;//true = paused, false = in game
 
         public Game1()
         {
@@ -29,8 +30,8 @@ namespace GDAPS2Game
             graphics.PreferredBackBufferWidth = 1600;//width of window
             graphics.PreferredBackBufferHeight = 900;//height of window
             menu = new Menu(kState, oldKState);
-            menuState = 0;
-            mainFont = 
+            paused = true;
+            IsMouseVisible = true;
 
 
         }
@@ -55,6 +56,7 @@ namespace GDAPS2Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            mainFont = Content.Load<SpriteFont>("mainFont");
 
         }
 
@@ -77,14 +79,22 @@ namespace GDAPS2Game
         protected override void Update(GameTime gameTime)
         {
             kState = Keyboard.GetState();//first thing
-            
-            if(kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
+            mState = Mouse.GetState();//second thing
+
+            if (paused == false)
             {
-                menuState = 0;
+                if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
+                {
+                    paused = true;
+                }
             }
-            if(menuState == 0)
+            if(paused == true)
             {
                 menu.Input();
+                if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
+                {
+                    paused = false;
+                }
             }
 
 
@@ -101,14 +111,16 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();//Draw after this
-            if(menuState == 0)
+            if(paused == true)//if in menu, i.e. paused
             {
-                spriteBatch.DrawString()
+                spriteBatch.DrawString(mainFont, "Menu", new Vector2(800 - (mainFont.MeasureString("Menu").Length() / 2), 50), Color.Black); //centers text at 200 = y
+
             }
-            else if(menuState == 1)
+            else if(paused == false)//if in game, i.e. not paused
             {
                 //the code to draw the game
             }
+
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }
