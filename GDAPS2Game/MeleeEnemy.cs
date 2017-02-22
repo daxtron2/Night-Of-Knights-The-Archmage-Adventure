@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GDAPS2Game
 {
@@ -10,9 +13,9 @@ namespace GDAPS2Game
     {
         public int enemyHealth;
 
-        public MeleeEnemy()
+        public MeleeEnemy(Player playerObj)
         {
-            
+            enemyHealth = 0;
         }
         public void Attack()
         {

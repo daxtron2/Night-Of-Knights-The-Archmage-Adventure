@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GDAPS2Game
 {
     class Player : Character
     {
         private int score;
-        
+        public int Health { get { return health; } }
         public Player()
         {
-            
+            health = 5;//testing value
+            score = 0;//score starts out at zero, obviously
         }
         public void Movement()
         {

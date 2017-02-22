@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace GDAPS2Game
 {
     abstract class Enemy : Character
     {
         Vector2 playerPos;
-        public Enemy(Player playerObj)
+        public Enemy()
         {
-            playerPos = playerObj.
+
         }
     }
 }
