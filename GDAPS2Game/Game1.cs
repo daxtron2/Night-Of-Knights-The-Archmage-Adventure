@@ -22,16 +22,17 @@ namespace GDAPS2Game
         KeyboardState oldKState;
         MouseState mState;
         bool paused;//true = paused, false = in game
-
+        bool firstMenu;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1600;//width of window
             graphics.PreferredBackBufferHeight = 900;//height of window
-            menu = new Menu(kState, oldKState);
+            menu = new Menu();
             paused = true;
             IsMouseVisible = true;
+            firstMenu = true;
 
 
         }
@@ -80,7 +81,6 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
-
             if (paused == false)
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
@@ -88,12 +88,28 @@ namespace GDAPS2Game
                     paused = true;
                 }
             }
-            if(paused == true)
+            else if(paused == true)
             {
                 menu.Input();
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))
                 {
                     paused = false;
+                }
+            }
+            if (kState.IsKeyDown(Keys.Enter))
+            {
+                switch (menu.SelectionIndex)
+                {
+                    case 0:
+                        paused = false;
+                        firstMenu = false;
+                        break;
+                    case 1:
+                        Exit();
+                        break;
+                    default:
+                        paused = true;
+                        break;
                 }
             }
 
@@ -113,13 +129,39 @@ namespace GDAPS2Game
             spriteBatch.Begin();//Draw after this
             if(paused == true)//if in menu, i.e. paused
             {
-                spriteBatch.DrawString(mainFont, "Menu", new Vector2(800 - (mainFont.MeasureString("Menu").Length() / 2), 50), Color.Black); //centers text at 200 = y
+                if (firstMenu == true)
+                {
+                    spriteBatch.DrawString(mainFont, "Start Menu", new Vector2(800 - (mainFont.MeasureString("Start Menu").Length() / 2), 50), Color.Black); //centers text at 200 = y
+                    
+                }
+                else if(firstMenu == false)
+                {
+                    spriteBatch.DrawString(mainFont, "Pause Menu", new Vector2(800 - (mainFont.MeasureString("Pause Menu").Length() / 2), 50), Color.Black); //centers text at 200 = y
 
+                }
+                spriteBatch.DrawString(mainFont, menu.SelectionIndex.ToString(), new Vector2(200, 100), Color.Black);//debug print
+                spriteBatch.DrawString(mainFont, "Play Game", new Vector2(667, 100), Color.Black);
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(667, 150), Color.Black);
+                switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
+                {
+                    case 0:
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(640, 105), Color.Black);
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(925, 105), Color.Black);
+
+                        break;
+                    case 1:
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(640, 155), Color.Black);
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(925, 155), Color.Black);
+
+                        break;
+                }
             }
             else if(paused == false)//if in game, i.e. not paused
             {
                 //the code to draw the game
+                //no ingame drawing code should be outside of this
             }
+
 
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
