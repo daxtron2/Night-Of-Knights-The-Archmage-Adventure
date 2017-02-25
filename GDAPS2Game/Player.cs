@@ -11,31 +11,43 @@ namespace GDAPS2Game
 {
     class Player : Character
     {
-        //Integer that tracks the player's score. Increases as the player levels up.
+        // Purpose: The Player controlled character in the game
+        // Limitations: None
+
+        // Fields
         private int score;
 
-        //returns the health value;
+        // Properties
+        /// <summary>
+        /// Integer that tracks the player's score. Increases as the player levels up
+        /// </summary>
         public int Health { get { return health; } }
 
-        //Main contructor for the player, contains all the values necessary to start
+        // Constructor
+        /// <summary>
+        /// Instatiate a new Player
+        /// </summary>
         public Player()
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
         }
-        //Script that handles the movement of the player, updats x and y values.
+
+        /// <summary>
+        /// Script that handles the movement of the player, updats x and y values
+        /// </summary>
         public void Movement()
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
 
-
-
             throw new NotImplementedException();
 
         }
 
-        //Script that handles picking up health items that then increase or refill the player's health
+        /// <summary>
+        /// Script that handles picking up health items that then increase or refill the player's health
+        /// </summary>
         public void HealthPickup()
         {
             // Enemies occasionally drop health pickup
@@ -44,7 +56,9 @@ namespace GDAPS2Game
 
         }
 
-        //Main collision detection script.
+        /// <summary>
+        /// Main collision detection script
+        /// </summary>
         public void Collision()
         {
             // If character is within a piece of terrain move them out
@@ -54,8 +68,10 @@ namespace GDAPS2Game
 
         }
 
-        //Main attack script, damages enemies infront of the player character.
-        public void Attack()
+        /// <summary>
+        /// Main attack script, damages enemies infront of the player character
+        /// </summary>
+        public override void Attack()
         {
             // When user presses the attack key
             // Do attack animation

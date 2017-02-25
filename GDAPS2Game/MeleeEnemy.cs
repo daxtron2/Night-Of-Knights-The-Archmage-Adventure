@@ -11,13 +11,28 @@ namespace GDAPS2Game
 {
     class MeleeEnemy : Enemy
     {
+        // Purpose: Hold code for Melee Enemies
+        // Limitations: None
+
+        // Fields
         public int enemyHealth;
 
-        public MeleeEnemy(Player playerObj)
+        // Properties
+
+        // Constructor
+        /// <summary>
+        /// Instatiate a new MeleeEnemy
+        /// </summary>
+        /// <param name="player">The Player</param>
+        public MeleeEnemy(Player player)
         {
             enemyHealth = 0;
         }
-        public void Attack()
+
+        /// <summary>
+        /// Character Attack
+        /// </summary>
+        public override void Attack()
         {
             throw new NotImplementedException();
         }

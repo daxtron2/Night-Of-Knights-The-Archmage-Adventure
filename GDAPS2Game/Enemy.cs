@@ -11,10 +11,23 @@ namespace GDAPS2Game
 {
     abstract class Enemy : Character
     {
+        // Purpose: Class to hold all the Enemy code
+        // Limitations: None
+
+        // Fields
         Vector2 playerPos;
+
+        // Properties
+
+        // Constructor
         public Enemy()
         {
 
         }
+
+        /// <summary>
+        /// Character Attack
+        /// </summary>
+        public abstract override void Attack();
     }
 }

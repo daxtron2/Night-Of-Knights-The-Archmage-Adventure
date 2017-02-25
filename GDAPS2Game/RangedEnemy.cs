@@ -10,12 +10,27 @@ namespace GDAPS2Game
 {
     class RangedEnemy : Enemy
     {
+        // Purpose: Hold code for Ranged Enemies
+        // Limitations: None
+
+        // Fields
         public int enemyHealth;
+
+        // Properties
+
+        // Constructor
+        /// <summary>
+        /// Instantiate a new RangedEnemy
+        /// </summary>
         public RangedEnemy()
         {
             
         }
-        public void Attack()
+
+        /// <summary>
+        /// Character Attack
+        /// </summary>
+        public override void Attack()
         {
             throw new NotImplementedException();
         }
