@@ -20,9 +20,9 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new Character
         /// </summary>
-        public Character()
+        public Character(Vector2 initialPosition)
         {
-            position = new Vector2();
+            position = initialPosition;
         }
 
         /// <summary>
@@ -35,7 +35,9 @@ namespace GDAPS2Game
         }
 
         /// <summary>
-        /// When enemy/playerHealth is less than or equal to 0, remove enemy from screen, Death animation?, give a chance to drop a health potion
+        /// When enemy/playerHealth is less than or equal to 0 remove enemy from screen
+        /// Death animation?
+        /// give a chance to drop a health potion
         /// </summary>
         public void Destroy()
         {

@@ -1,12 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 /* GDAPS 2 Game Project - Group 2
- * Ben Fairlamb  - Group Lead
- * TJ Wolschon   - Architect
- * Zack Dunham   - UI/Art
- * Michael Schek - Game Design
- */
+* Ben Fairlamb  - Group Lead
+* TJ Wolschon   - Architect
+* Zack Dunham   - UI/Art
+* Michael Schek - Game Design
+*/
 namespace GDAPS2Game
 {
     /// <summary>
@@ -21,6 +22,9 @@ namespace GDAPS2Game
         KeyboardState kState;
         KeyboardState oldKState;
         MouseState mState;
+        Texture2D floorBG;
+        Player player;
+        List<Enemy> enemies;
         
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
@@ -33,7 +37,8 @@ namespace GDAPS2Game
             menu = new Menu();
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
-
+            player = new Player();
+            enemies.Add(new MeleeEnemy(player));
 
         }
 
@@ -58,6 +63,7 @@ namespace GDAPS2Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
+            floorBG = Content.Load<Texture2D>("Background Layer 1.png");
 
         }
 
@@ -127,13 +133,31 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();//Draw after this
-
-            DrawMenu(spriteBatch);
-
+            switch (currentState)
+            {
+                case GameState.Game:
+                    DrawGame(spriteBatch, gameTime);//Draws in game
+                    break;
+                case GameState.Menu:
+                    DrawMenu(spriteBatch);//Draws the main menu
+                    break;
+                case GameState.Pause:
+                    DrawMenu(spriteBatch);//Draws the pause menu
+                    break;
+                case GameState.GameOver:
+                    DrawMenu(spriteBatch);//Draws the Game Over screen
+                    break;
+            }
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }
+        
+        protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
+        {
+            
 
+
+        }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
             if (currentState == GameState.Menu)//if in menu, i.e. paused
@@ -175,6 +199,10 @@ namespace GDAPS2Game
 
                         break;
                 }
+            }
+            if(currentState == GameState.GameOver)
+            {
+                //Game over screen
             }
         }
     }

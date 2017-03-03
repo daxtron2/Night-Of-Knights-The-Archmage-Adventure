@@ -16,7 +16,7 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
-
+        public Vector2 Position { get { return position; } }
         // Properties
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
@@ -27,7 +27,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player()
+        public Player(Vector2 initPosition) : base(initPosition)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously

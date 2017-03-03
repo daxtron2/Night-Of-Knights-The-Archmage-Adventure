@@ -15,7 +15,7 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        public int enemyHealth;
+        protected int enemyHealth;
 
         // Properties
 
@@ -24,9 +24,10 @@ namespace GDAPS2Game
         /// Instatiate a new MeleeEnemy
         /// </summary>
         /// <param name="player">The Player</param>
-        public MeleeEnemy(Player player)
+        public MeleeEnemy(Player player, Vector2 enemyPos) : base (player, enemyPos)
         {
             enemyHealth = 0;
+            
         }
 
         /// <summary>

@@ -15,14 +15,14 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        Vector2 playerPos;
+        protected Vector2 playerPos;
 
         // Properties
 
         // Constructor
-        public Enemy()
+        public Enemy(Player player, Vector2 initPosition) : base(initPosition)
         {
-
+            playerPos = player.Position;
         }
 
         /// <summary>

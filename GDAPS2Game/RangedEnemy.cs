@@ -14,7 +14,7 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        public int enemyHealth;
+        protected int enemyHealth;
 
         // Properties
 
@@ -22,7 +22,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new RangedEnemy
         /// </summary>
-        public RangedEnemy()
+        public RangedEnemy(Player player, Vector2 enemyPos) : base (player, enemyPos)
         {
             
         }
