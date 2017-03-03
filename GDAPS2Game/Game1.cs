@@ -28,6 +28,8 @@ namespace GDAPS2Game
         Texture2D rangedEnemySprite;
         Player player;
         List<Enemy> enemies;
+        Vector3 cameraPos;
+
         const int FLOOR = 750;
         
         enum GameState { Menu, Pause, Game, GameOver}
@@ -38,6 +40,7 @@ namespace GDAPS2Game
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1600;//width of window
             graphics.PreferredBackBufferHeight = 900;//height of window
+            IsFixedTimeStep = false;
             menu = new Menu();
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
@@ -71,6 +74,7 @@ namespace GDAPS2Game
             playerSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 50, 65, 130), playerSprite);
 
+
         }
 
         /// <summary>
@@ -99,9 +103,9 @@ namespace GDAPS2Game
                 {
                     currentState = GameState.Pause;// go to pause menu
                 }
-                player.Physics();
-                player.Movement();
-                player.Collision();
+                player.Physics();//calculates gravity and handles jumping
+                player.Movement();//left/right movement
+                player.Collision();//check if colliding with floor, left wall, right wall, or enemy(not yet implemented)
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -129,6 +133,7 @@ namespace GDAPS2Game
             }
 
 
+            cameraPos = new Vector3((player.CharacterBox.X*-1)+200, 0, 0f);
             //last thing
             oldKState = kState;
             base.Update(gameTime);
@@ -141,8 +146,19 @@ namespace GDAPS2Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin();//Draw after this
-            switch (currentState)
+            
+            if (player.CharacterBox.X > 200)//if the player is past 200px on the screen
+            {
+                //the camera will stick with the player along the x coordinate
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
+            }
+            if (player.CharacterBox.X <= 200)//if they're at or before 200
+            {
+                spriteBatch.Begin();//draw normally with topleft being (0,0)
+            }
+
+
+            switch (currentState)//use different draw methods depending on our current game state
             {
                 case GameState.Game:
                     DrawGame(spriteBatch, gameTime);//Draws in game
@@ -157,7 +173,13 @@ namespace GDAPS2Game
                     DrawMenu(spriteBatch);//Draws the Game Over screen
                     break;
             }
-            spriteBatch.DrawString(mainFont, "X: " + mState.X + " Y: " + mState.Y, new Vector2(25, 25), Color.White);
+            //spriteBatch.DrawString(mainFont, "X: " + mState.X + " Y: " + mState.Y, new Vector2(25, 25), Color.White);
+            //debug, show mouse coords
+            
+            //spriteBatch.DrawString(mainFont, "X: " + player.CharacterBox.X + " Y: " + player.CharacterBox.Y, new Vector2(25, 50), Color.White);
+            //debug, show player coords
+
+
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }

@@ -19,6 +19,7 @@ namespace GDAPS2Game
         KeyboardState kState;
         KeyboardState lastKState;
         // Properties
+        public Rectangle CharacterBox { get { return characterBox; } }
 
         // Constructor
         /// <summary>

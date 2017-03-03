@@ -16,7 +16,6 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
-        public Rectangle CharacterBox { get { return CharacterBox; } }
         // Properties
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
@@ -74,6 +73,10 @@ namespace GDAPS2Game
             if (characterBox.Y + characterBox.Height >= 750)
             {
                 characterBox.Y = 750 - characterBox.Height;
+            }
+            if (characterBox.X <= 0)
+            {
+                characterBox.X = 0;
             }
 
 
