@@ -27,7 +27,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox) : base(initPositionBox)
+        public Player(Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
@@ -40,8 +40,14 @@ namespace GDAPS2Game
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
-
-            throw new NotImplementedException();
+            if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+            {
+                characterBox.X -= 7;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+            {
+                characterBox.X += 7;
+            }
 
         }
 
@@ -64,7 +70,15 @@ namespace GDAPS2Game
             // If character is within a piece of terrain move them out
             // Might be handled by monogame?
 
-            throw new NotImplementedException();
+            //first handle ground collision
+            if (characterBox.Y + characterBox.Height >= 750)
+            {
+                characterBox.Y = 750 - characterBox.Height;
+            }
+
+
+
+            //throw new NotImplementedException();
 
         }
 

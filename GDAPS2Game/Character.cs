@@ -14,15 +14,20 @@ namespace GDAPS2Game
         protected int health;
         protected Rectangle characterBox;
         protected bool isActive;
+        protected Texture2D characterSprite;
+        private int gravity;
+        KeyboardState kState;
+        KeyboardState lastKState;
         // Properties
 
         // Constructor
         /// <summary>
         /// Instantiate a new Character
         /// </summary>
-        public Character(Rectangle initialPosition)
+        public Character(Rectangle initialPosition, Texture2D charSprite)
         {
             characterBox = initialPosition;
+            characterSprite = charSprite;
 
 
             Spawn();
@@ -59,14 +64,33 @@ namespace GDAPS2Game
         {
             // Called every frame
             // Somehow pull player and or enemy towards the floor
-            // Not 100% sure on the best way to do this - majic
+            // Not 100% sure on the best way to do this
+            characterBox.Y += gravity;
+            gravity += 1; 
+            if(characterBox.Y >= 620)//will need to be changed from 620 depending on sprite height
+            {
+                gravity = 0;
+            }
+            kState = Keyboard.GetState();
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) && (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= 620)//620 is based on sprite height
+            {
+                gravity = -25;
+            }
 
+
+
+            lastKState = kState;
         }
 
         /// <summary>
         /// Character Attack
         /// </summary>
         public abstract void Attack();
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(characterSprite, characterBox, Color.White);
+        }
     }
 }
 

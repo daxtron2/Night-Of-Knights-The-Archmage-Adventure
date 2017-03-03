@@ -24,7 +24,7 @@ namespace GDAPS2Game
         /// Instatiate a new MeleeEnemy
         /// </summary>
         /// <param name="player">The Player</param>
-        public MeleeEnemy(Player player, Rectangle enemyPosBox) : base (player, enemyPosBox)
+        public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
         {
             enemyHealth = 0;
             

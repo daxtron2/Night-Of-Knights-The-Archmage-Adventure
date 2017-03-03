@@ -23,8 +23,12 @@ namespace GDAPS2Game
         KeyboardState oldKState;
         MouseState mState;
         Texture2D floorBG;
+        Texture2D playerSprite;
+        Texture2D meleeEnemySprite;
+        Texture2D rangedEnemySprite;
         Player player;
         List<Enemy> enemies;
+        const int FLOOR = 750;
         
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
@@ -37,8 +41,8 @@ namespace GDAPS2Game
             menu = new Menu();
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
-            player = new Player()
-            enemies.Add(new MeleeEnemy(player));
+            
+            
 
         }
 
@@ -63,7 +67,9 @@ namespace GDAPS2Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
-            floorBG = Content.Load<Texture2D>("Background Layer 1.png");
+            floorBG = Content.Load<Texture2D>("Background Layer 1");
+            playerSprite = Content.Load<Texture2D>("playerSpriteTesting");
+            player = new Player(new Rectangle(50, 50, 65, 130), playerSprite);
 
         }
 
@@ -93,6 +99,9 @@ namespace GDAPS2Game
                 {
                     currentState = GameState.Pause;// go to pause menu
                 }
+                player.Physics();
+                player.Movement();
+                player.Collision();
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -148,15 +157,15 @@ namespace GDAPS2Game
                     DrawMenu(spriteBatch);//Draws the Game Over screen
                     break;
             }
+            spriteBatch.DrawString(mainFont, "X: " + mState.X + " Y: " + mState.Y, new Vector2(25, 25), Color.White);
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }
         
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            
-
-
+            spriteBatch.Draw(floorBG, new Rectangle(0, 0, 1600, 900), Color.White);
+            player.Draw(spriteBatch);
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
