@@ -22,7 +22,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new RangedEnemy
         /// </summary>
-        public RangedEnemy(Player player, Vector2 enemyPos) : base (player, enemyPos)
+        public RangedEnemy(Player player, Rectangle enemyPosBox) : base (player, enemyPosBox)
         {
             
         }

@@ -12,17 +12,20 @@ namespace GDAPS2Game
 
         // Fields
         protected int health;
-        protected Vector2 position;
-
+        protected Rectangle characterBox;
+        protected bool isActive;
         // Properties
 
         // Constructor
         /// <summary>
         /// Instantiate a new Character
         /// </summary>
-        public Character(Vector2 initialPosition)
+        public Character(Rectangle initialPosition)
         {
-            position = initialPosition;
+            characterBox = initialPosition;
+
+
+            Spawn();
         }
 
         /// <summary>
@@ -30,8 +33,9 @@ namespace GDAPS2Game
         /// </summary>
         public void Spawn()
         {
-            
-            throw new NotImplementedException();
+            isActive = true;
+            health = 5;//testing value
+
         }
 
         /// <summary>
@@ -41,8 +45,11 @@ namespace GDAPS2Game
         /// </summary>
         public void Destroy()
         {
+            if (health <= 0)
+            {
+                isActive = false;
+            }
 
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -54,7 +61,6 @@ namespace GDAPS2Game
             // Somehow pull player and or enemy towards the floor
             // Not 100% sure on the best way to do this - majic
 
-            throw new NotImplementedException();
         }
 
         /// <summary>

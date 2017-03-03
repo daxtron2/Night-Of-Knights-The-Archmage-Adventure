@@ -37,7 +37,7 @@ namespace GDAPS2Game
             menu = new Menu();
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
-            player = new Player();
+            player = new Player()
             enemies.Add(new MeleeEnemy(player));
 
         }
