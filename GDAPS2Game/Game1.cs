@@ -103,9 +103,9 @@ namespace GDAPS2Game
                 {
                     currentState = GameState.Pause;// go to pause menu
                 }
-                player.Physics();//calculates gravity and handles jumping
-                player.Movement();//left/right movement
-                player.Collision();//check if colliding with floor, left wall, right wall, or enemy(not yet implemented)
+                player.Physics();
+                player.Movement();
+                player.Collision();
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -158,7 +158,7 @@ namespace GDAPS2Game
             }
 
 
-            switch (currentState)//use different draw methods depending on our current game state
+            switch (currentState)
             {
                 case GameState.Game:
                     DrawGame(spriteBatch, gameTime);//Draws in game
