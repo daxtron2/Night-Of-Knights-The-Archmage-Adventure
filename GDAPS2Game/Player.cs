@@ -96,5 +96,14 @@ namespace GDAPS2Game
             throw new NotImplementedException();
 
         }
+
+        /// <summary>
+        /// Have character Take Damage
+        /// </summary>
+        /// <param name="dmg">Damage to take</param>
+        public override void TakeDamage(int dmg)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

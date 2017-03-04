@@ -92,6 +92,12 @@ namespace GDAPS2Game
         {
             spriteBatch.Draw(characterSprite, characterBox, Color.White);
         }
+
+        /// <summary>
+        /// Have character Take Damage
+        /// </summary>
+        /// <param name="dmg">Damage to take</param>
+        public abstract void TakeDamage(int dmg);
     }
 }
 
