@@ -73,7 +73,7 @@ namespace GDAPS2Game
                 gravity = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) && (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= 620)//620 is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= 620)//620 is based on sprite height
             {
                 gravity = -25;
             }
