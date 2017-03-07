@@ -36,7 +36,7 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
-            throw new NotImplementedException();
+            health -= dmg;
         }
     }
 }

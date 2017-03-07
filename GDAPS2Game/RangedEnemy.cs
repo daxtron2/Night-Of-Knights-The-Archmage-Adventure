@@ -15,6 +15,8 @@ namespace GDAPS2Game
 
         // Fields
         protected int enemyHealth;
+        protected Point leftAttack;
+        protected Point rightAttack;
 
         // Properties
 
@@ -32,7 +34,14 @@ namespace GDAPS2Game
         /// </summary>
         public override void Attack()
         {
-            throw new NotImplementedException();
+            if (playerPos.X + playerPos.Width / 2 > characterBox.X + characterBox.Width / 2)
+            {
+                // Instatiate projectile at rightAttack
+            }
+            else
+            {
+                // Instantiate projectile at leftAttack
+            }
         }
     }
 }

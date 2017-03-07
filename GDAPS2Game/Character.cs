@@ -7,7 +7,7 @@ namespace GDAPS2Game
 {
     abstract class Character
     {
-        // Purpose: Common Character that all characters will share, including player
+        // Purpose: Common code that all Characters will share, including player
         // Limitations: None
 
         // Fields
@@ -18,6 +18,7 @@ namespace GDAPS2Game
         private int gravity;
         KeyboardState kState;
         KeyboardState lastKState;
+
         // Properties
         public Rectangle CharacterBox { get { return characterBox; } }
 
