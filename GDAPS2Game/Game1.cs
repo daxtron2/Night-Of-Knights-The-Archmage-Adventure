@@ -27,7 +27,6 @@ namespace GDAPS2Game
         Texture2D meleeEnemySprite;
         Texture2D rangedEnemySprite;
         Player player;
-        List<Enemy> enemies;
         Vector3 cameraPos;
 
         const int FLOOR = 750;

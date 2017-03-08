@@ -21,6 +21,7 @@ namespace GDAPS2Game
 
         // Properties
         public Rectangle CharacterBox { get { return characterBox; } }
+        public bool IsActive { get { return isActive; } }
 
         // Constructor
         /// <summary>

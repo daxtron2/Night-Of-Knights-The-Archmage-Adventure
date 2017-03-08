@@ -14,7 +14,6 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        protected int enemyHealth;
         protected Point leftAttack;
         protected Point rightAttack;
 

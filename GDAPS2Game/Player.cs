@@ -105,7 +105,7 @@ namespace GDAPS2Game
             foreach (Enemy enm in enemies)
             {
                 Rectangle pHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
-                Rectangle pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
+                Rectangle pHitBoxL = new Rectangle(characterBox.X - 15, characterBox.Y, 10, characterBox.Height);
                 if (pHitBox.Intersects(enm.CharacterBox))
                 {
                     enm.TakeDamage(5);
@@ -114,8 +114,11 @@ namespace GDAPS2Game
                 {
                     enm.TakeDamage(5);
                 }
+                if (enm.IsActive == false)
+                {
+                    enemies.Remove(enm);
+                }
             }
-           // throw new NotImplementedException();
 
         }
 
@@ -132,9 +135,9 @@ namespace GDAPS2Game
                 health -= dmg;
             }
             else
+            {
                 health = 0;
-
-            //throw new NotImplementedException();
+            }
         }
     }
 }

@@ -15,7 +15,6 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        protected int enemyHealth;
 
         // Properties
 
@@ -26,7 +25,6 @@ namespace GDAPS2Game
         /// <param name="player">The Player</param>
         public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
         {
-            enemyHealth = 0;
             
         }
         //Do not use, use other method
@@ -52,7 +50,6 @@ namespace GDAPS2Game
             {
                 user.TakeDamage(5);
             }
-            // throw new NotImplementedException();
         }
     }
 }
