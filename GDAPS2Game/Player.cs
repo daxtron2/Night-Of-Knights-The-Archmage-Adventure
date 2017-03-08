@@ -22,6 +22,10 @@ namespace GDAPS2Game
         /// </summary>
         public int Health { get { return health; } }
 
+
+        //List of enemies that are spawned
+        List<Enemy> enemies = new List<Enemy>();
+
         // Constructor
         /// <summary>
         /// Instatiate a new Player
@@ -85,6 +89,11 @@ namespace GDAPS2Game
 
         }
 
+
+        /// <summary>
+        /// Don't Use? use the constructor version
+        /// </summary>
+
         /// <summary>
         /// Main attack script, damages enemies infront of the player character
         /// </summary>
@@ -93,9 +102,23 @@ namespace GDAPS2Game
             // When user presses the attack key
             // Do attack animation
             // If enemy within range, kill/deal damage to enemy
-            throw new NotImplementedException();
+            foreach (Enemy enm in enemies)
+            {
+                Rectangle pHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
+                Rectangle pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
+                if (pHitBox.Intersects(enm.CharacterBox))
+                {
+                    enm.TakeDamage(5);
+                }
+                if (pHitBoxL.Intersects(enm.CharacterBox))
+                {
+                    enm.TakeDamage(5);
+                }
+            }
+           // throw new NotImplementedException();
 
         }
+
 
         /// <summary>
         /// Have character Take Damage
@@ -103,7 +126,15 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
-            throw new NotImplementedException();
+            //Subtracts from the health value any damage that is taken if it results in 0 or above, otherwise sets the health to 0 in the interest of not having negative health.
+            if (health - dmg >= 0)
+            {
+                health -= dmg;
+            }
+            else
+                health = 0;
+
+            //throw new NotImplementedException();
         }
     }
 }

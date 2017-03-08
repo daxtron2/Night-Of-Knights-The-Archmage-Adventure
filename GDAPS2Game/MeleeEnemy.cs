@@ -29,13 +29,30 @@ namespace GDAPS2Game
             enemyHealth = 0;
             
         }
+        //Do not use, use other method
+        public override void Attack()
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary>
         /// Character Attack
         /// </summary>
-        public override void Attack()
+        public void Attack(Player user)
         {
-            throw new NotImplementedException();
+            Rectangle eHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
+            Rectangle eHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
+
+            if (eHitBox.Intersects(user.CharacterBox))
+            {
+                user.TakeDamage(5);
+            }
+
+            if (eHitBoxL.Intersects(user.CharacterBox))
+            {
+                user.TakeDamage(5);
+            }
+            // throw new NotImplementedException();
         }
     }
 }

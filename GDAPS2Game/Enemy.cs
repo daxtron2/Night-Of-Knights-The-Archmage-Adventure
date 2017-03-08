@@ -36,7 +36,13 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
-            health -= dmg;
+            ///Edited to make it so health cannot be negative.
+            if (health - dmg >= 0)
+            {
+                health -= dmg;
+            }
+            else
+                health = 0;
         }
     }
 }
