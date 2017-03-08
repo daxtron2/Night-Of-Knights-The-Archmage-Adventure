@@ -16,6 +16,7 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
+
         // Properties
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
@@ -82,10 +83,6 @@ namespace GDAPS2Game
             {
                 characterBox.X = 0;
             }
-
-
-
-            //throw new NotImplementedException();
 
         }
 
