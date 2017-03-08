@@ -57,6 +57,11 @@
             // GravityUD
             // 
             this.GravityUD.Location = new System.Drawing.Point(24, 30);
+            this.GravityUD.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
             this.GravityUD.Name = "GravityUD";
             this.GravityUD.Size = new System.Drawing.Size(37, 20);
             this.GravityUD.TabIndex = 3;
