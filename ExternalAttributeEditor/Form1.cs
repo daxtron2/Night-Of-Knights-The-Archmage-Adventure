@@ -7,14 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.IO;
 namespace ExternalAttributeEditor
 {
-    public partial class Form1 : Form
+    public partial class ExtAttEdit : Form
     {
-        public Form1()
+        BinaryReader reader;
+        BinaryWriter writer;
+        Stream attribFilePath;
+        public ExtAttEdit()
         {
             InitializeComponent();
+            attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\AttributeEditor\\attributes.dat", FileMode.OpenOrCreate);
+            reader = new BinaryReader(attribFilePath);
+            writer = new BinaryWriter(attribFilePath);
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
