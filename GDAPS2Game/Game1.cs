@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-/* GDAPS 2 Game Project - Group 2
+/*GDAPS 2 Game Project - Group 2
 * Ben Fairlamb  - Group Lead
 * TJ Wolschon   - Architect
 * Zack Dunham   - UI/Art
@@ -27,6 +27,10 @@ namespace GDAPS2Game
         Texture2D meleeEnemySprite;
         Texture2D rangedEnemySprite;
         Player player;
+<<<<<<< HEAD
+=======
+        List<Enemy> enemies = new List<Enemy>();
+>>>>>>> d4512b8d4b6dde678e20624f0c6407ebc9f8641a
         Vector3 cameraPos;
 
         const int FLOOR = 750;
@@ -39,11 +43,10 @@ namespace GDAPS2Game
             Content.RootDirectory = "Content";
             graphics.PreferredBackBufferWidth = 1600;//width of window
             graphics.PreferredBackBufferHeight = 900;//height of window
-            IsFixedTimeStep = false;
+            //IsFixedTimeStep = false;
             menu = new Menu();
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
-            
             
 
         }
@@ -71,7 +74,7 @@ namespace GDAPS2Game
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             floorBG = Content.Load<Texture2D>("Background Layer 1");
             playerSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(50, 50, 65, 130), playerSprite);
+            player = new Player(new Rectangle(50, 50, 65, 130), playerSprite, enemies);
 
 
         }
