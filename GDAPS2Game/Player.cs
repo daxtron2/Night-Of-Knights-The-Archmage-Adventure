@@ -30,11 +30,10 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, List<Enemy> allEnemies) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
-            enemies = allEnemies;
         }
 
         /// <summary>
