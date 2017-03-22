@@ -152,11 +152,11 @@ namespace GDAPS2Game
             if (player.CharacterBox.X > 200)//if the player is past 200px on the screen
             {
                 //the camera will stick with the player along the x coordinate
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
             }
             if (player.CharacterBox.X <= 200)//if they're at or before 200
             {
-                spriteBatch.Begin();//draw normally with topleft being (0,0)
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
             }
 
 
