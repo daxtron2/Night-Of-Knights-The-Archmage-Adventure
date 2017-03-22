@@ -22,15 +22,20 @@ namespace GDAPS2Game
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
 
+        //List of enemies that are spawned
+        List<Enemy> enemies = new List<Enemy>();
+
         // Properties
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
         /// </summary>
         public int Health { get { return health; } }
 
-        //List of enemies that are spawned
-        List<Enemy> enemies = new List<Enemy>();
-
+        //Properties
+        public List<Enemy> Enemies
+        {
+            get { return enemies; }
+        }
 
         // Constructor
         /// <summary>

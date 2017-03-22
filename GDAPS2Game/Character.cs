@@ -74,16 +74,19 @@ namespace GDAPS2Game
             // Called every frame
             // Somehow pull player and or enemy towards the floor
             // Not 100% sure on the best way to do this
-            characterBox.Y += downAccel;
-            downAccel += 1; 
-            if(characterBox.Y >= FLOORHEIGHT)//will need to be changed from 620 depending on sprite height
+            characterBox.Y += downAccel; 
+            if(characterBox.Y >= FLOORHEIGHT)//will need to be changed from FLOORHEIGHT depending on sprite height
             {
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT-characterBox.Height)//620 is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT-characterBox.Height)//FLOORHEIGHT is based on sprite height
             {
                 downAccel = -25;
+            }
+            if (characterBox.Y + characterBox.Height <= FLOORHEIGHT)
+            {
+                downAccel++;
             }
 
 
