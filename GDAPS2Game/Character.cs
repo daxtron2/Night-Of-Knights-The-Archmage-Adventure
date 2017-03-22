@@ -75,7 +75,7 @@ namespace GDAPS2Game
             // Not 100% sure on the best way to do this
             characterBox.Y += downAccel;
             downAccel += 1; 
-            if(characterBox.Y >= 620)//will need to be changed from 620 depending on sprite height
+            if(characterBox.Y >= 850)//will need to be changed from 620 depending on sprite height
             {
                 downAccel = 0;
             }

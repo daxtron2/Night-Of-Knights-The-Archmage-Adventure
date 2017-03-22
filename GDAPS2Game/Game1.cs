@@ -68,7 +68,7 @@ namespace GDAPS2Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
-            floorBG = Content.Load<Texture2D>("Background Layer 1");
+            floorBG = Content.Load<Texture2D>("background_new");
             playerSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 50, 65, 130), playerSprite);
 
