@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+
 /*GDAPS 2 Game Project - Group 2
 * Ben Fairlamb  - Group Lead
 * TJ Wolschon   - Architect
@@ -186,6 +187,8 @@ namespace GDAPS2Game
         {
             spriteBatch.Draw(floorBG, new Rectangle(0, 0, 1600, 900), Color.White);
             player.Draw(spriteBatch);
+
+            
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {

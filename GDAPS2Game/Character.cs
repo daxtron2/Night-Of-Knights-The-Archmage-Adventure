@@ -95,7 +95,7 @@ namespace GDAPS2Game
         /// </summary>
         public abstract void Attack();
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(characterSprite, characterBox, Color.White);
         }
