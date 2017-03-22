@@ -32,8 +32,10 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.GravityUD = new System.Windows.Forms.NumericUpDown();
             this.LoadButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.floorLabel = new System.Windows.Forms.Label();
+            this.FloorUD = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).BeginInit();
             this.SuspendLayout();
             // 
             // Gravity
@@ -77,21 +79,34 @@
             this.LoadButton.UseVisualStyleBackColor = true;
             this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
-            // label1
+            // floorLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 75);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "label1";
+            this.floorLabel.AutoSize = true;
+            this.floorLabel.Location = new System.Drawing.Point(22, 65);
+            this.floorLabel.Name = "floorLabel";
+            this.floorLabel.Size = new System.Drawing.Size(82, 26);
+            this.floorLabel.TabIndex = 5;
+            this.floorLabel.Text = "Floor Height\r\n(Higher is lower)";
+            // 
+            // FloorUD
+            // 
+            this.FloorUD.Location = new System.Drawing.Point(25, 94);
+            this.FloorUD.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.FloorUD.Name = "FloorUD";
+            this.FloorUD.Size = new System.Drawing.Size(80, 20);
+            this.FloorUD.TabIndex = 6;
             // 
             // ExtAttEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 389);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.FloorUD);
+            this.Controls.Add(this.floorLabel);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.GravityUD);
             this.Controls.Add(this.SaveButton);
@@ -99,6 +114,7 @@
             this.Name = "ExtAttEdit";
             this.Text = "External Attribute Editor";
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,7 +125,8 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.NumericUpDown GravityUD;
         private System.Windows.Forms.Button LoadButton;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label floorLabel;
+        private System.Windows.Forms.NumericUpDown FloorUD;
     }
 }
 

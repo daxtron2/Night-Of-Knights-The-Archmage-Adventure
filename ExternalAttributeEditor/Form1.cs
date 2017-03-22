@@ -16,6 +16,7 @@ namespace ExternalAttributeEditor
         BinaryWriter writer;
         Stream attribFilePath;
         int gravity;
+        int floorHeight;
         public ExtAttEdit()
         {
             InitializeComponent();
@@ -30,16 +31,18 @@ namespace ExternalAttributeEditor
         {
             //convert values to ints
             gravity = (int)GravityUD.Value;
+            floorHeight = (int)FloorUD.Value;
 
             //output to attributes.dat
             writer.Write(gravity);
+            writer.Write(floorHeight);
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
         {
             //read in values
             gravity = reader.ReadInt32();
-
+            floorHeight = reader.ReadInt32();
 
             //update values
             GravityUD.Value = gravity;
