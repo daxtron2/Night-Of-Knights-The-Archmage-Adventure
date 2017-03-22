@@ -38,6 +38,7 @@
   <ItemGroup>
     <Compile Include="Game1.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="Generator.cs" />
     <Compile Include="MeleeEnemy.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Player.cs" />
@@ -51,7 +52,6 @@
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -73,11 +73,6 @@
     <Content Include="Content\playerSpriteTesting.xnb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\attributes.dat">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

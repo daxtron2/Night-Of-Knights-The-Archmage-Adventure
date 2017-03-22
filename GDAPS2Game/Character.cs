@@ -36,7 +36,7 @@ namespace GDAPS2Game
             characterBox = initialPosition;
             characterSprite = charSprite;
             read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.OpenOrCreate));
-            Debug.WriteLine(read.ReadInt32());
+            //Debug.WriteLine(read.ReadInt32());
 
             Spawn();
         }
