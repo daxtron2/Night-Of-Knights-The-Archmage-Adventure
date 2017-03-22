@@ -16,6 +16,11 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
+        //Creates the two rectangles for the attack hitboxes
+        public Rectangle pHitBox;
+        public Rectangle pHitBoxL;
+        //creates a boolean for the direction in which the player is facing;
+        Boolean faceRight;
 
         // Properties
         /// <summary>
@@ -35,6 +40,9 @@ namespace GDAPS2Game
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
+            faceRight = true;
+            pHitBox = new Rectangle(characterBox.X + 10, characterBox.Y + 5, 10, 10);
+            pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y, 10, characterBox.Height);
         }
 
         /// <summary>
@@ -47,11 +55,15 @@ namespace GDAPS2Game
             if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 characterBox.X -= 7;
+                faceRight = false;
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
             {
                 characterBox.X += 7;
+                faceRight = true;
             }
+            pHitBox = new Rectangle(characterBox.X + 10, characterBox.Y + 5, 10, 10);
+            pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y, 10, characterBox.Height);
 
         }
 
@@ -101,15 +113,19 @@ namespace GDAPS2Game
             // If enemy within range, kill/deal damage to enemy
             foreach (Enemy enm in enemies)
             {
-                Rectangle pHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
-                Rectangle pHitBoxL = new Rectangle(characterBox.X - 15, characterBox.Y, 10, characterBox.Height);
-                if (pHitBox.Intersects(enm.CharacterBox))
+                if (faceRight == true)
                 {
-                    enm.TakeDamage(5);
+                    if (pHitBox.Intersects(enm.CharacterBox))
+                    {
+                        enm.TakeDamage(5);
+                    }
                 }
-                if (pHitBoxL.Intersects(enm.CharacterBox))
+                if (faceRight == false)
                 {
-                    enm.TakeDamage(5);
+                    if (pHitBoxL.Intersects(enm.CharacterBox))
+                    {
+                        enm.TakeDamage(5);
+                    }
                 }
                 if (enm.IsActive == false)
                 {
@@ -135,6 +151,11 @@ namespace GDAPS2Game
             {
                 health = 0;
             }
+        }
+        public override void Draw(SpriteBatch spritebatch)
+        {
+            base.Draw(spritebatch);
+            spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
         }
     }
 }
