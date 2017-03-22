@@ -19,6 +19,7 @@ namespace GDAPS2Game
         protected Texture2D characterSprite;
         private int downAccel;
         private int jumpHeight;
+        private const int FLOORHEIGHT = 850;
         KeyboardState kState;
         KeyboardState lastKState;
         BinaryReader read;
@@ -75,12 +76,12 @@ namespace GDAPS2Game
             // Not 100% sure on the best way to do this
             characterBox.Y += downAccel;
             downAccel += 1; 
-            if(characterBox.Y >= 620)//will need to be changed from 620 depending on sprite height
+            if(characterBox.Y >= FLOORHEIGHT)//will need to be changed from 620 depending on sprite height
             {
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= 620)//620 is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT)//620 is based on sprite height
             {
                 downAccel = -25;
             }

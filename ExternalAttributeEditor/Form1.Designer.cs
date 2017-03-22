@@ -32,6 +32,7 @@
             this.SaveButton = new System.Windows.Forms.Button();
             this.GravityUD = new System.Windows.Forms.NumericUpDown();
             this.LoadButton = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).BeginInit();
             this.SuspendLayout();
             // 
@@ -40,9 +41,9 @@
             this.Gravity.AutoSize = true;
             this.Gravity.Location = new System.Drawing.Point(21, 13);
             this.Gravity.Name = "Gravity";
-            this.Gravity.Size = new System.Drawing.Size(142, 13);
+            this.Gravity.Size = new System.Drawing.Size(83, 26);
             this.Gravity.TabIndex = 1;
-            this.Gravity.Text = "Jump Height(Negative is Up)";
+            this.Gravity.Text = "Jump Height\r\n(Negative is Up)";
             // 
             // SaveButton
             // 
@@ -56,14 +57,14 @@
             // 
             // GravityUD
             // 
-            this.GravityUD.Location = new System.Drawing.Point(24, 47);
+            this.GravityUD.Location = new System.Drawing.Point(24, 42);
             this.GravityUD.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
             this.GravityUD.Name = "GravityUD";
-            this.GravityUD.Size = new System.Drawing.Size(32, 20);
+            this.GravityUD.Size = new System.Drawing.Size(80, 20);
             this.GravityUD.TabIndex = 3;
             // 
             // LoadButton
@@ -76,11 +77,21 @@
             this.LoadButton.UseVisualStyleBackColor = true;
             this.LoadButton.Click += new System.EventHandler(this.LoadButton_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 75);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "label1";
+            // 
             // ExtAttEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(466, 389);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.LoadButton);
             this.Controls.Add(this.GravityUD);
             this.Controls.Add(this.SaveButton);
@@ -98,6 +109,7 @@
         private System.Windows.Forms.Button SaveButton;
         private System.Windows.Forms.NumericUpDown GravityUD;
         private System.Windows.Forms.Button LoadButton;
+        private System.Windows.Forms.Label label1;
     }
 }
 
