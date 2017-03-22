@@ -19,7 +19,7 @@ namespace GDAPS2Game
         protected Texture2D characterSprite;
         private int downAccel;
         private int jumpHeight;
-        protected const int FLOORHEIGHT = 850;
+        protected int FLOORHEIGHT = 850;//never change this in the program, only through editor, treat it as a constant
         KeyboardState kState;
         KeyboardState lastKState;
         BinaryReader read;
@@ -36,9 +36,22 @@ namespace GDAPS2Game
         {
             characterBox = initialPosition;
             characterSprite = charSprite;
-            read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.OpenOrCreate));
-            //Debug.WriteLine(read.ReadInt32());
-
+            try
+            {
+                write = new BinaryWriter(new FileStream("Content/attributes.dat", FileMode.Open));
+                read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.Open));
+            }
+            catch(FileNotFoundException fnfe)//if the file doesn't exist setup a default one
+            {
+                write = new BinaryWriter(new FileStream("Content/attributes.dat", FileMode.Create));
+                write.Write(downAccel);
+                write.Write(FLOORHEIGHT);
+            }
+            catch(IOException ioe)
+            {
+                write.Close();
+                read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.Open));
+            }
             Spawn();
         }
 
