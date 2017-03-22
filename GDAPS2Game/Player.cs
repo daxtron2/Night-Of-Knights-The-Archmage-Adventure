@@ -41,8 +41,8 @@ namespace GDAPS2Game
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
             faceRight = true;
-            pHitBox = new Rectangle(characterBox.X + 10, characterBox.Y + 5, 10, 10);
-            pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y, 10, characterBox.Height);
+            pHitBox = new Rectangle(characterBox.X, characterBox.Y, 10, 10);
+            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
         }
 
         /// <summary>
@@ -62,8 +62,8 @@ namespace GDAPS2Game
                 characterBox.X += 7;
                 faceRight = true;
             }
-            pHitBox = new Rectangle(characterBox.X + 10, characterBox.Y + 5, 10, 10);
-            pHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y, 10, characterBox.Height);
+            pHitBox = new Rectangle(characterBox.X + 70, characterBox.Y + characterBox.Height/2, 60, 40);
+            pHitBoxL = new Rectangle(characterBox.X - 70, characterBox.Y + characterBox.Height/2, 60, 40);
 
         }
 
@@ -156,6 +156,7 @@ namespace GDAPS2Game
         {
             base.Draw(spritebatch);
             spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
+            spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
         }
     }
 }
