@@ -57,6 +57,7 @@ namespace GDAPS2Game
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
+            
             if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 characterBox.X -= 7;
@@ -122,16 +123,22 @@ namespace GDAPS2Game
             {
                 if (faceRight == true)
                 {
-                    if (pHitBox.Intersects(enm.CharacterBox))
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        enm.TakeDamage(5);
+                        if (pHitBox.Intersects(enm.CharacterBox))
+                        {
+                            enm.TakeDamage(5);
+                        }
                     }
                 }
                 if (faceRight == false)
                 {
-                    if (pHitBoxL.Intersects(enm.CharacterBox))
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        enm.TakeDamage(5);
+                        if (pHitBoxL.Intersects(enm.CharacterBox))
+                        {
+                            enm.TakeDamage(5);
+                        }
                     }
                 }
                 if (enm.IsActive == false)
@@ -162,8 +169,16 @@ namespace GDAPS2Game
         public override void Draw(SpriteBatch spritebatch)
         {
             base.Draw(spritebatch);
-            spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
-            spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+            if (faceRight == true)
+            {
+                spritebatch.Draw(base.characterSprite, pHitBox, Color.Green);
+                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+            }
+            else
+            {
+                spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
+                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Green);
+            }
         }
     }
 }
