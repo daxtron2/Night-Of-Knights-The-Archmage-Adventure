@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.IO;
+using System.Diagnostics;
 
 namespace GDAPS2Game
 {
@@ -15,10 +17,12 @@ namespace GDAPS2Game
         protected Rectangle characterBox;
         protected bool isActive;
         protected Texture2D characterSprite;
-        private int gravity;
+        private int downAccel;
+        private int jumpHeight;
         KeyboardState kState;
         KeyboardState lastKState;
-
+        BinaryReader read;
+        BinaryWriter write;
         // Properties
         public Rectangle CharacterBox { get { return characterBox; } }
         public bool IsActive { get { return isActive; } }
@@ -31,7 +35,8 @@ namespace GDAPS2Game
         {
             characterBox = initialPosition;
             characterSprite = charSprite;
-
+            read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.OpenOrCreate));
+            Debug.WriteLine(read.ReadInt32());
 
             Spawn();
         }
@@ -68,16 +73,16 @@ namespace GDAPS2Game
             // Called every frame
             // Somehow pull player and or enemy towards the floor
             // Not 100% sure on the best way to do this
-            characterBox.Y += gravity;
-            gravity += 1; 
+            characterBox.Y += downAccel;
+            downAccel += 1; 
             if(characterBox.Y >= 620)//will need to be changed from 620 depending on sprite height
             {
-                gravity = 0;
+                downAccel = 0;
             }
             kState = Keyboard.GetState();
             if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= 620)//620 is based on sprite height
             {
-                gravity = -25;
+                downAccel = -25;
             }
 
 
