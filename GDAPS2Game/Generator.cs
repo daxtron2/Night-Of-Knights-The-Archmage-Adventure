@@ -25,6 +25,8 @@ namespace GDAPS2Game
         }
 
         // Methods
-
+        public void Draw()
+        {
+        }
     }
 }
