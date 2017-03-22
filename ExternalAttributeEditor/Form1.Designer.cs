@@ -40,9 +40,9 @@
             this.Gravity.AutoSize = true;
             this.Gravity.Location = new System.Drawing.Point(21, 13);
             this.Gravity.Name = "Gravity";
-            this.Gravity.Size = new System.Drawing.Size(40, 13);
+            this.Gravity.Size = new System.Drawing.Size(142, 13);
             this.Gravity.TabIndex = 1;
-            this.Gravity.Text = "Gravity";
+            this.Gravity.Text = "Jump Height(Negative is Up)";
             // 
             // SaveButton
             // 
@@ -56,14 +56,14 @@
             // 
             // GravityUD
             // 
-            this.GravityUD.Location = new System.Drawing.Point(24, 30);
+            this.GravityUD.Location = new System.Drawing.Point(24, 47);
             this.GravityUD.Minimum = new decimal(new int[] {
             100,
             0,
             0,
             -2147483648});
             this.GravityUD.Name = "GravityUD";
-            this.GravityUD.Size = new System.Drawing.Size(37, 20);
+            this.GravityUD.Size = new System.Drawing.Size(32, 20);
             this.GravityUD.TabIndex = 3;
             // 
             // LoadButton
