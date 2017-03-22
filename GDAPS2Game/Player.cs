@@ -87,9 +87,11 @@ namespace GDAPS2Game
             // Might be handled by monogame?
 
             //first handle ground collision
-            if (characterBox.Y + characterBox.Height >= 850)
+            if (characterBox.Y + characterBox.Height >= FLOORHEIGHT)
             {
-                characterBox.Y = 850 - characterBox.Height;
+                characterBox.Y = FLOORHEIGHT - characterBox.Height;
+                pHitBoxL.Y = characterBox.Y + characterBox.Height / 2;
+                pHitBox.Y = characterBox.Y + characterBox.Height / 2;
             }
             if (characterBox.X <= 0)
             {

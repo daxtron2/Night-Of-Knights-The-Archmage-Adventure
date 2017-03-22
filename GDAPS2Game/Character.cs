@@ -19,7 +19,7 @@ namespace GDAPS2Game
         protected Texture2D characterSprite;
         private int downAccel;
         private int jumpHeight;
-        private const int FLOORHEIGHT = 850;
+        protected const int FLOORHEIGHT = 850;
         KeyboardState kState;
         KeyboardState lastKState;
         BinaryReader read;
@@ -37,7 +37,7 @@ namespace GDAPS2Game
             characterBox = initialPosition;
             characterSprite = charSprite;
             read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.OpenOrCreate));
-            Debug.WriteLine(read.ReadInt32());
+            //Debug.WriteLine(read.ReadInt32());
 
             Spawn();
         }
@@ -81,7 +81,7 @@ namespace GDAPS2Game
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT)//620 is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT-characterBox.Height)//620 is based on sprite height
             {
                 downAccel = -25;
             }
