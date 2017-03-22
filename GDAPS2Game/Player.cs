@@ -22,15 +22,20 @@ namespace GDAPS2Game
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
 
+        //List of enemies that are spawned
+        List<Enemy> enemies = new List<Enemy>();
+
         // Properties
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
         /// </summary>
         public int Health { get { return health; } }
 
-        //List of enemies that are spawned
-        List<Enemy> enemies = new List<Enemy>();
-
+        //Properties
+        public List<Enemy> Enemies
+        {
+            get { return enemies; }
+        }
 
         // Constructor
         /// <summary>
@@ -52,6 +57,7 @@ namespace GDAPS2Game
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
+            
             if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
                 characterBox.X -= 7;
@@ -117,16 +123,22 @@ namespace GDAPS2Game
             {
                 if (faceRight == true)
                 {
-                    if (pHitBox.Intersects(enm.CharacterBox))
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        enm.TakeDamage(5);
+                        if (pHitBox.Intersects(enm.CharacterBox))
+                        {
+                            enm.TakeDamage(5);
+                        }
                     }
                 }
                 if (faceRight == false)
                 {
-                    if (pHitBoxL.Intersects(enm.CharacterBox))
+                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                     {
-                        enm.TakeDamage(5);
+                        if (pHitBoxL.Intersects(enm.CharacterBox))
+                        {
+                            enm.TakeDamage(5);
+                        }
                     }
                 }
                 if (enm.IsActive == false)
@@ -157,8 +169,16 @@ namespace GDAPS2Game
         public override void Draw(SpriteBatch spritebatch)
         {
             base.Draw(spritebatch);
-            spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
-            spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+            if (faceRight == true)
+            {
+                spritebatch.Draw(base.characterSprite, pHitBox, Color.Green);
+                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+            }
+            else
+            {
+                spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
+                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Green);
+            }
         }
     }
 }

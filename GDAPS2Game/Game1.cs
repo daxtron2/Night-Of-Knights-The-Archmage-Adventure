@@ -29,6 +29,7 @@ namespace GDAPS2Game
         Texture2D rangedEnemySprite;
         Player player;
         Vector3 cameraPos;
+        Generator gen;
         
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
@@ -56,6 +57,8 @@ namespace GDAPS2Game
         {
 
             base.Initialize();
+
+            gen = new Generator(spriteBatch, floorBG, player);
         }
 
         /// <summary>
@@ -103,6 +106,8 @@ namespace GDAPS2Game
                 player.Physics();
                 player.Movement();
                 player.Collision();
+                gen.Update();
+                player.Attack();
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -183,7 +188,7 @@ namespace GDAPS2Game
         
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Draw(floorBG, new Rectangle(0, 0, 1600, 900), Color.White);
+            gen.Draw();
             player.Draw(spriteBatch);
 
             
