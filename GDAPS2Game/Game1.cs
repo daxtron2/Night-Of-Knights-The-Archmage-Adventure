@@ -103,6 +103,7 @@ namespace GDAPS2Game
                 player.Physics();
                 player.Movement();
                 player.Collision();
+                player.Attack();
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
