@@ -29,8 +29,6 @@ namespace GDAPS2Game
         Texture2D rangedEnemySprite;
         Player player;
         Vector3 cameraPos;
-
-        const int FLOOR = 750;
         
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
