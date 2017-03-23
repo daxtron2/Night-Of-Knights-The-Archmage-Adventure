@@ -71,8 +71,8 @@ namespace GDAPS2Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             floorBG = Content.Load<Texture2D>("background_new");
-            playerSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(50, 50, 65, 130), playerSprite);
+            playerSprite = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
+            player = new Player(new Rectangle(17, 750, 17, 26), playerSprite); // spawns player right where they will be for rest of game
 
 
         }
@@ -104,7 +104,7 @@ namespace GDAPS2Game
                     currentState = GameState.Pause;// go to pause menu
                 }
                 player.Physics();
-                player.Movement();
+                player.Movement(gameTime); // threw in gametime for animation
                 player.Collision();
                 gen.Update();
                 player.Attack();
@@ -190,8 +190,6 @@ namespace GDAPS2Game
         {
             gen.Draw();
             player.Draw(spriteBatch);
-
-            
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {

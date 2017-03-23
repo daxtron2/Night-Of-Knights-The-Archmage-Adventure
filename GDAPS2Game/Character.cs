@@ -19,7 +19,8 @@ namespace GDAPS2Game
         protected Texture2D characterSprite;
         private int downAccel;
         private int jumpHeight;
-        protected int FLOORHEIGHT = 850;//never change this in the program, only through editor, treat it as a constant
+        protected int FLOORHEIGHT = 750; //never change this in the program, only through editor, treat it as a constant
+        // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
         KeyboardState kState;
         KeyboardState lastKState;
         BinaryReader read;
@@ -34,6 +35,7 @@ namespace GDAPS2Game
         /// </summary>
         public Character(Rectangle initialPosition, Texture2D charSprite)
         {
+
             characterBox = initialPosition;
             characterSprite = charSprite;
             try
@@ -93,7 +95,7 @@ namespace GDAPS2Game
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT-characterBox.Height)//FLOORHEIGHT is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT - characterBox.Height)//FLOORHEIGHT is based on sprite height
             {
                 downAccel = -25;
             }

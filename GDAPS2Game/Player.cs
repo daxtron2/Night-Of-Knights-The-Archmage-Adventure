@@ -22,6 +22,13 @@ namespace GDAPS2Game
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
 
+        // animation attributes
+        private int frame = 0; // default frame of 0
+        private int numFrames = 3; // total number of frames is 3
+        private int timeSinceLastFrame; // for counting milliseconds
+        private Point currentFrame; // where current frame is on spritesheet
+        private Point frameSize = new Point(17, 26); // size of each sprite
+
         //List of enemies that are spawned
         List<Enemy> enemies = new List<Enemy>();
 
@@ -53,20 +60,22 @@ namespace GDAPS2Game
         /// <summary>
         /// Script that handles the movement of the player, updats x and y values
         /// </summary>
-        public void Movement()
+        public void Movement(GameTime gameTime) // added gameTime parameter for movement animation
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
             
             if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
             {
-                characterBox.X -= 7;
+                base.characterBox.X -= 7;
                 faceRight = false;
+                Update(gameTime); // for movement animation
             }
             if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
             {
-                characterBox.X += 7;
+                base.characterBox.X += 7;
                 faceRight = true;
+                Update(gameTime);
             }
             pHitBox = new Rectangle(characterBox.X + 70, characterBox.Y + characterBox.Height/2, 60, 40);
             pHitBoxL = new Rectangle(characterBox.X - 70, characterBox.Y + characterBox.Height/2, 60, 40);
@@ -95,7 +104,7 @@ namespace GDAPS2Game
             //first handle ground collision
             if (characterBox.Y + characterBox.Height >= FLOORHEIGHT)
             {
-                characterBox.Y = FLOORHEIGHT - characterBox.Height;
+                //characterBox.Y = FLOORHEIGHT - characterBox.Height;
                 pHitBoxL.Y = characterBox.Y + characterBox.Height / 2;
                 pHitBox.Y = characterBox.Y + characterBox.Height / 2;
             }
@@ -166,18 +175,56 @@ namespace GDAPS2Game
                 health = 0;
             }
         }
-        public override void Draw(SpriteBatch spritebatch)
+        public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
-            base.Draw(spritebatch);
             if (faceRight == true)
             {
-                spritebatch.Draw(base.characterSprite, pHitBox, Color.Green);
-                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+                spriteBatch.Draw(base.characterSprite, pHitBox, Color.Green);
+                spriteBatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+                // player is now drawn here and base.Draw is no longer called
+                spriteBatch.Draw(base.characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+
             }
             else
             {
-                spritebatch.Draw(base.characterSprite, pHitBox, Color.Red);
-                spritebatch.Draw(base.characterSprite, pHitBoxL, Color.Green);
+                spriteBatch.Draw(base.characterSprite, pHitBox, Color.Red);
+                spriteBatch.Draw(base.characterSprite, pHitBoxL, Color.Green);
+                // same thing as above but flipped 
+                spriteBatch.Draw(base.characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.FlipHorizontally, 0);
+            }
+        }
+
+        // Update method is used for movement animation
+        public void Update(GameTime gameTime)
+        {
+            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+
+            // every 80 ms while player is holding left/right it will change frame
+            if(timeSinceLastFrame > 80)
+            {
+                timeSinceLastFrame = 0;
+                frame++;
+                if (frame >= numFrames)
+                {
+                    frame = 0;
+                }
+
+                // switch case for loading different frames of animation
+                switch(frame)
+                {
+                    case 0:
+                        currentFrame.X = 1;
+                        currentFrame.Y = 6;
+                        break;
+                    case 1:
+                        currentFrame.X = 23;
+                        currentFrame.Y = 6;
+                        break;
+                    case 2:
+                        currentFrame.X = 1;
+                        currentFrame.Y = 36; // on the spritesheet this sprite's location is actually 1,40 but for some reason monogame decided to bring it up 4 pixels
+                        break;
+                }
             }
         }
     }
