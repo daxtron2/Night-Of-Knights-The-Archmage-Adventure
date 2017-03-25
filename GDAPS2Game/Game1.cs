@@ -154,10 +154,15 @@ namespace GDAPS2Game
                 //the camera will stick with the player along the x coordinate
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
             }
-            if (player.CharacterBox.X <= 200)//if they're at or before 200
+            if (player.CharacterBox.X <= 200 || currentState != GameState.Game)//if they're at or before 200, or in a menu
             {
+                if(currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
+                {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
+                    spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
+                }
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
             }
+
 
 
             switch (currentState)
