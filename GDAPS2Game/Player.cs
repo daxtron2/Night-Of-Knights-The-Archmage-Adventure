@@ -79,8 +79,8 @@ namespace GDAPS2Game
                 faceRight = true;
                 Update(gameTime);
             }
-            pHitBox = new Rectangle(characterBox.X + 70, characterBox.Y + characterBox.Height/2, 60, 40);
-            pHitBoxL = new Rectangle(characterBox.X - 70, characterBox.Y + characterBox.Height/2, 60, 40);
+            pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + characterBox.Height, 40, 70);
+            pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + characterBox.Height, 40, 70);
 
         }
 
@@ -102,14 +102,15 @@ namespace GDAPS2Game
         {
             // If character is within a piece of terrain move them out
             // Might be handled by monogame?
-
+            
             //first handle ground collision
             if (characterBox.Y + characterBox.Height >= FLOORHEIGHT)
             {
                 //characterBox.Y = FLOORHEIGHT - characterBox.Height;
-                pHitBoxL.Y = characterBox.Y + characterBox.Height / 2;
-                pHitBox.Y = characterBox.Y + characterBox.Height / 2;
+                pHitBoxL.Y = characterBox.Y + characterBox.Height;
+                pHitBox.Y = characterBox.Y + characterBox.Height;
             }
+            
             if (characterBox.X <= 0)
             {
                 characterBox.X = 0;
