@@ -179,18 +179,18 @@ namespace GDAPS2Game
         {
             if (faceRight == true)
             {
-                spriteBatch.Draw(base.characterSprite, pHitBox, Color.Green);
-                spriteBatch.Draw(base.characterSprite, pHitBoxL, Color.Red);
+                spriteBatch.Draw(characterSprite, pHitBox, Color.Green);
+                spriteBatch.Draw(characterSprite, pHitBoxL, Color.Red);
                 // player is now drawn here and base.Draw is no longer called
-                spriteBatch.Draw(base.characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
             }
             else
             {
-                spriteBatch.Draw(base.characterSprite, pHitBox, Color.Red);
-                spriteBatch.Draw(base.characterSprite, pHitBoxL, Color.Green);
+                spriteBatch.Draw(characterSprite, pHitBox, Color.Red);
+                spriteBatch.Draw(characterSprite, pHitBoxL, Color.Green);
                 // same thing as above but flipped 
-                spriteBatch.Draw(base.characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.FlipHorizontally, 0);
             }
         }
 
