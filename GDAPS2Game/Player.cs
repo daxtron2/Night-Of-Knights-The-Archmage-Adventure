@@ -16,6 +16,7 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
+        private Texture2D hit;
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
@@ -48,13 +49,14 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox) : base(initPositionBox, charSprite)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
             faceRight = true;
             pHitBox = new Rectangle(characterBox.X, characterBox.Y, 10, 10);
             pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
+            hit = hitbox;
         }
 
         /// <summary>
@@ -179,18 +181,18 @@ namespace GDAPS2Game
         {
             if (faceRight == true)
             {
-                spriteBatch.Draw(characterSprite, pHitBox, Color.Green);
-                spriteBatch.Draw(characterSprite, pHitBoxL, Color.Red);
+                spriteBatch.Draw(hit, pHitBox, Color.Green);
+                spriteBatch.Draw(hit, pHitBoxL, Color.Red);
                 // player is now drawn here and base.Draw is no longer called
                 spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
             }
             else
             {
-                spriteBatch.Draw(characterSprite, pHitBox, Color.Red);
-                spriteBatch.Draw(characterSprite, pHitBoxL, Color.Green);
+                spriteBatch.Draw(hit, pHitBox, Color.Red);
+                spriteBatch.Draw(hit, pHitBoxL, Color.Green);
                 // same thing as above but flipped 
-                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.FlipHorizontally, 0);
+                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6,0), 5f, SpriteEffects.FlipHorizontally, 0);
             }
         }
 

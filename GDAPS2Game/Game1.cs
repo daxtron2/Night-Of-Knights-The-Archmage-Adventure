@@ -27,6 +27,7 @@ namespace GDAPS2Game
         Texture2D playerSprite;
         Texture2D meleeEnemySprite;
         Texture2D rangedEnemySprite;
+        Texture2D hitSprite;
         Player player;
         Vector3 cameraPos;
         Generator gen;
@@ -72,7 +73,8 @@ namespace GDAPS2Game
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             floorBG = Content.Load<Texture2D>("background_new");
             playerSprite = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
-            player = new Player(new Rectangle(17, 750, 17, 26), playerSprite); // spawns player right where they will be for rest of game
+            hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
+            player = new Player(new Rectangle(17, 750, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
 
 
         }
