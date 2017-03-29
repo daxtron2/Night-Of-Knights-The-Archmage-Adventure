@@ -17,6 +17,7 @@ namespace GDAPS2Game
         // Fields
         protected Rectangle playerPos;
         protected Texture2D sprite;
+        protected Rectangle posBox;
 
         // animation attributes
         private int frame = 0; // default frame of 0
@@ -31,6 +32,7 @@ namespace GDAPS2Game
         {
             playerPos = player.CharacterBox;
             sprite = charSprite;
+            posBox = initPositionBox;
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace GDAPS2Game
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(sprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+            spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
         }
     }
 }
