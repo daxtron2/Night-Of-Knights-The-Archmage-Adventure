@@ -55,6 +55,7 @@ namespace GDAPS2Game
             pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
             hit = hitbox;
             intersects = false;
+            playerAttack = 1;//deals 1 damage per click
         }
 
         /// <summary>
