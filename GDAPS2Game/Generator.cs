@@ -15,10 +15,11 @@ namespace GDAPS2Game
     {
         // Fields
         private SpriteBatch sb;
-        Texture2D floor;
-        int it;
-        int currentIt;
-        Player player;
+        private Texture2D floor;
+        private int it;
+        private int currentIt;
+        private Player player;
+        private List<Chunk> chunks;
 
         // Properties
 
@@ -35,9 +36,9 @@ namespace GDAPS2Game
         // Methods
         public void Draw()
         {
-            for (int i = currentIt - 1; i < currentIt + 2; i++)
+            foreach (Chunk chunk in chunks)
             {
-                sb.Draw(floor, new Rectangle(i * 1600, 0, 1600, 900), Color.White);
+                chunk.Draw(sb);
             }
 
         }

@@ -74,7 +74,7 @@ namespace GDAPS2Game
             floorBG = Content.Load<Texture2D>("background_new");
             playerSprite = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(17, 750, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
+            player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
 
 
         }
