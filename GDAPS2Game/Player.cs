@@ -16,13 +16,14 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
+        private int playerAttack;
         private Texture2D hit;
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
-        Boolean intersects = false;
+        Boolean intersects;
         // animation attributes
         private int frame = 0; // default frame of 0
         private int numFrames = 4; // total number of frames is 4
@@ -30,7 +31,7 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
 
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
 
         // Properties
 
@@ -53,6 +54,7 @@ namespace GDAPS2Game
             pHitBox = new Rectangle(characterBox.X, characterBox.Y, 10, 10);
             pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
             hit = hitbox;
+            intersects = false;
         }
 
         /// <summary>
@@ -77,6 +79,8 @@ namespace GDAPS2Game
             }
             pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + characterBox.Height, 40, 70);
             pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + characterBox.Height, 40, 70);
+            
+
 
         }
 
@@ -122,40 +126,62 @@ namespace GDAPS2Game
         /// <summary>
         /// Main attack script, damages enemies infront of the player character
         /// </summary>
+
+        MouseState mState;
+        MouseState mStateLast;
         public override void Attack()
         {
+            mState = Mouse.GetState();
             // When user presses the attack key
             // Do attack animation
             // If enemy within range, kill/deal damage to enemy
-            foreach (Enemy enm in enemies)
+            if (enemies.Count == 0)//if the enemy list is empty, ie no enemies
             {
-                if (faceRight == true)
+                intersects = false;//cant intersect because there is no enemies
+            }
+            foreach (Enemy enm in enemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
+            {
+                if (faceRight == true)//if facing right
                 {
-                    if (pHitBox.Intersects(enm.CharacterBox))
+                    if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
+                    {
+                        intersects = true;//currently intersecting
+                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
+                        {
+                            //Console.WriteLine("CLICK EVENT");//debug output
+                            enm.TakeDamage(playerAttack);//take an amount of damage
+                        }
+                    }
+                    else//if not intersecting
+                    {
+                        intersects = false;//false obv
+                    }
+                }
+                if (faceRight == false)//if facing left
+                {
+                    if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
                     {
                         intersects = true;
-                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
-                        {
-                            enm.TakeDamage(5);
+                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+                        {//if LMB just pressed
+                            //Console.WriteLine("CLICK EVENT");//debug console output
+                            enm.TakeDamage(playerAttack);//take an amount of damage
                         }
                     }
-                }
-                if (faceRight == false)
-                {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    else//if hitboxes don't intersect
                     {
-                        if (pHitBoxL.Intersects(enm.CharacterBox))
-                        {
-                            enm.TakeDamage(5);
-                        }
+                        intersects = false;
                     }
                 }
-                if (enm.IsActive == false)
+                enm.TryDestroy();//check if the enemy's health<=0, if it is set IsActive=false
+                if (enm.IsActive == false)//if enemy is "dead"
                 {
-                    enemies.Remove(enm);
+                    //Console.WriteLine("Removing enemy from list.");//debug output
+                    enemies.Remove(enm);//remove the enemy from the list
                 }
             }
 
+            mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
 
@@ -179,15 +205,15 @@ namespace GDAPS2Game
         {
             if (faceRight == true)
             {
-                if (intersects == false)
-                {
-                    spriteBatch.Draw(hit, pHitBox, Color.Green);
-                    spriteBatch.Draw(hit, pHitBoxL, Color.Red);
-                }
-                else
+                if (intersects)
                 {
                     spriteBatch.Draw(hit, pHitBox, Color.Purple);
                     spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
+                }
+                else
+                {
+                    spriteBatch.Draw(hit, pHitBox, Color.Green);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Red);
                 }
                 // player is now drawn here and base.Draw is no longer called
                 if (

@@ -67,7 +67,7 @@ namespace GDAPS2Game
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (health > 0)
+            if (isActive)
             {
                 spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }

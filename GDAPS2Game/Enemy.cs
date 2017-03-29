@@ -42,12 +42,14 @@ namespace GDAPS2Game
         public override void TakeDamage(int dmg)
         {
             ///Edited to make it so health cannot be negative.
-            if (health - dmg >= 0)
+            if(health >= dmg)
             {
                 health -= dmg;
             }
             else
-                health = 0;
+            {
+               TryDestroy();
+            }
         }
     }
 }

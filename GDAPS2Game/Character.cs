@@ -56,7 +56,7 @@ namespace GDAPS2Game
         /// Death animation?
         /// give a chance to drop a health potion
         /// </summary>
-        public void Destroy()
+        public void TryDestroy()
         {
             if (health <= 0)
             {

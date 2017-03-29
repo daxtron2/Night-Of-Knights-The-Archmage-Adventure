@@ -75,7 +75,7 @@ namespace GDAPS2Game
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
-            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 14, 20), spriteSheet);
+            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
             enemies.Add(rangedEnemy);
         }
 
@@ -99,6 +99,7 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
+            player.enemies = this.enemies;
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
@@ -108,8 +109,8 @@ namespace GDAPS2Game
                 player.Physics();
                 player.Movement(gameTime); // threw in gametime for animation
                 player.Collision();
-                gen.Update();
                 player.Attack();
+                gen.Update();
                 rangedEnemy.Update(gameTime);
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
