@@ -25,7 +25,7 @@ namespace GDAPS2Game
 
         // animation attributes
         private int frame = 0; // default frame of 0
-        private int numFrames = 3; // total number of frames is 3
+        private int numFrames = 4; // total number of frames is 4
         private int timeSinceLastFrame; // for counting milliseconds
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
@@ -224,6 +224,10 @@ namespace GDAPS2Game
                         currentFrame.Y = 6;
                         break;
                     case 2:
+                        currentFrame.X = 1;
+                        currentFrame.Y = 6;
+                        break;
+                    case 3:
                         currentFrame.X = 1;
                         currentFrame.Y = 36; // on the spritesheet this sprite's location is actually 1,40 but for some reason monogame decided to bring it up 4 pixels
                         break;
