@@ -238,10 +238,15 @@ namespace GDAPS2Game
         }
 
         // Update method is used for movement animation
+        bool firstRun = true;
         public void Update(GameTime gameTime)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
+            if (firstRun)
+            {
+                currentFrame.X = 1;
+                currentFrame.Y = 6;
+            }
             // every 80 ms while player is holding left/right it will change frame
             if(timeSinceLastFrame > 80)
             {
@@ -273,6 +278,7 @@ namespace GDAPS2Game
                         break;
                 }
             }
+            firstRun = false;
         }
     }
 }
