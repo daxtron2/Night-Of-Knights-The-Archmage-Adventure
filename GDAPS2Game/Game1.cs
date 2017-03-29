@@ -41,7 +41,7 @@ namespace GDAPS2Game
             graphics.PreferredBackBufferWidth = 1600;//width of window
             graphics.PreferredBackBufferHeight = 900;//height of window
             //IsFixedTimeStep = false;
-            menu = new Menu();
+            menu = new Menu();//new menu object
             currentState = GameState.Menu;
             IsMouseVisible = true;//mouse is visible
             
