@@ -74,7 +74,7 @@ namespace GDAPS2Game
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
-            //rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 14, 20), spriteSheet);
+            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 14, 20), spriteSheet);
         }
 
         /// <summary>
