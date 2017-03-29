@@ -30,7 +30,8 @@ namespace GDAPS2Game
         Vector3 cameraPos;
         Generator gen;
         RangedEnemy rangedEnemy;
-        
+        List<Enemy> enemies = new List<Enemy>();
+
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
         public Game1()
@@ -73,8 +74,9 @@ namespace GDAPS2Game
             floorBG = Content.Load<Texture2D>("background_new");
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
+            player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 14, 20), spriteSheet);
+            enemies.Add(rangedEnemy);
         }
 
         /// <summary>

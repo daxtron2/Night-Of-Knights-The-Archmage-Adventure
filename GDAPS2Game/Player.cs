@@ -22,7 +22,7 @@ namespace GDAPS2Game
         public Rectangle pHitBoxL;
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
-
+        Boolean intersects = false;
         // animation attributes
         private int frame = 0; // default frame of 0
         private int numFrames = 4; // total number of frames is 4
@@ -30,26 +30,22 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
 
-        //List of enemies that are spawned
         List<Enemy> enemies = new List<Enemy>();
 
         // Properties
+
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
         /// </summary>
         public int Health { get { return health; } }
 
         //Properties
-        public List<Enemy> Enemies
-        {
-            get { return enemies; }
-        }
 
         // Constructor
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, List<Enemy> enemies) : base(initPositionBox, charSprite)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
@@ -135,9 +131,10 @@ namespace GDAPS2Game
             {
                 if (faceRight == true)
                 {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    if (pHitBox.Intersects(enm.CharacterBox))
                     {
-                        if (pHitBox.Intersects(enm.CharacterBox))
+                        intersects = true;
+                        if (Mouse.GetState().LeftButton == ButtonState.Pressed)
                         {
                             enm.TakeDamage(5);
                         }
@@ -182,8 +179,16 @@ namespace GDAPS2Game
         {
             if (faceRight == true)
             {
-                spriteBatch.Draw(hit, pHitBox, Color.Green);
-                spriteBatch.Draw(hit, pHitBoxL, Color.Red);
+                if (intersects == false)
+                {
+                    spriteBatch.Draw(hit, pHitBox, Color.Green);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Red);
+                }
+                else
+                {
+                    spriteBatch.Draw(hit, pHitBox, Color.Purple);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
+                }
                 // player is now drawn here and base.Draw is no longer called
                 if (
                     (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D)) 
