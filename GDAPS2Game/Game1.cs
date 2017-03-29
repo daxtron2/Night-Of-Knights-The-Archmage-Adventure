@@ -24,13 +24,12 @@ namespace GDAPS2Game
         KeyboardState oldKState;
         MouseState mState;
         Texture2D floorBG;
-        Texture2D playerSprite;
-        Texture2D meleeEnemySprite;
-        Texture2D rangedEnemySprite;
+        Texture2D spriteSheet;
         Texture2D hitSprite;
         Player player;
         Vector3 cameraPos;
         Generator gen;
+        RangedEnemy rangedEnemy;
         
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
@@ -72,11 +71,10 @@ namespace GDAPS2Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             floorBG = Content.Load<Texture2D>("background_new");
-            playerSprite = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
+            spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(17, 750, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
-
-
+            player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
+            //rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 14, 20), spriteSheet);
         }
 
         /// <summary>
@@ -110,6 +108,7 @@ namespace GDAPS2Game
                 player.Collision();
                 gen.Update();
                 player.Attack();
+                rangedEnemy.Update(gameTime);
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -197,6 +196,7 @@ namespace GDAPS2Game
         {
             gen.Draw();
             player.Draw(spriteBatch);
+            rangedEnemy.Draw(spriteBatch);
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
