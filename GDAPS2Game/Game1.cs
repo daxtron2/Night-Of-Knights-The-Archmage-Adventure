@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 /*GDAPS 2 Game Project - Group 2
 * Ben Fairlamb  - Group Lead
@@ -31,15 +33,49 @@ namespace GDAPS2Game
         Generator gen;
         RangedEnemy rangedEnemy;
         List<Enemy> enemies = new List<Enemy>();
+        BinaryReader attribRead;
+        Stream attribFilePath;
+
 
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
         public Game1()
         {
+            int screenWidth = 0;
+            int screenHeight = 0;
+            try
+            {
+                Console.WriteLine("About to open file");
+                attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);
+
+                Console.WriteLine("About to initialize attribRead obj");
+                attribRead = new BinaryReader(attribFilePath);
+
+                Console.WriteLine("About to try to read file");
+                screenWidth = attribRead.ReadInt32();
+                screenHeight = attribRead.ReadInt32();
+                Console.WriteLine("Got through try block.");
+            }
+            catch(Exception ex) { Console.WriteLine(ex.Message); }
+            
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 1600;//width of window
-            graphics.PreferredBackBufferHeight = 900;//height of window
+            if (screenWidth != 0)
+            {
+                graphics.PreferredBackBufferWidth = screenWidth;//width of window
+            }
+            else
+            {
+                graphics.PreferredBackBufferWidth = 1600;
+            }
+            if (screenHeight != 0)
+            {
+                graphics.PreferredBackBufferHeight = screenHeight;//height of window
+            }
+            else
+            {
+                graphics.PreferredBackBufferHeight = 900;
+            }
             //IsFixedTimeStep = false;
             menu = new Menu();//new menu object
             currentState = GameState.Menu;//start in the menu

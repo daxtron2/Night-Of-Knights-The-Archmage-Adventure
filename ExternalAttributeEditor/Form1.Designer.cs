@@ -34,8 +34,14 @@
             this.LoadButton = new System.Windows.Forms.Button();
             this.floorLabel = new System.Windows.Forms.Label();
             this.FloorUD = new System.Windows.Forms.NumericUpDown();
+            this.widthUD = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.heightUD = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightUD)).BeginInit();
             this.SuspendLayout();
             // 
             // Gravity
@@ -49,7 +55,7 @@
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(371, 340);
+            this.SaveButton.Location = new System.Drawing.Point(113, 345);
             this.SaveButton.Name = "SaveButton";
             this.SaveButton.Size = new System.Drawing.Size(83, 37);
             this.SaveButton.TabIndex = 2;
@@ -71,7 +77,7 @@
             // 
             // LoadButton
             // 
-            this.LoadButton.Location = new System.Drawing.Point(282, 340);
+            this.LoadButton.Location = new System.Drawing.Point(20, 345);
             this.LoadButton.Name = "LoadButton";
             this.LoadButton.Size = new System.Drawing.Size(83, 37);
             this.LoadButton.TabIndex = 4;
@@ -100,11 +106,67 @@
             this.FloorUD.Size = new System.Drawing.Size(80, 20);
             this.FloorUD.TabIndex = 6;
             // 
+            // widthUD
+            // 
+            this.widthUD.Location = new System.Drawing.Point(113, 42);
+            this.widthUD.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.widthUD.Name = "widthUD";
+            this.widthUD.Size = new System.Drawing.Size(80, 20);
+            this.widthUD.TabIndex = 8;
+            this.widthUD.Value = new decimal(new int[] {
+            1600,
+            0,
+            0,
+            0});
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(110, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 26);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Screen Width\r\n(in pixels)";
+            // 
+            // heightUD
+            // 
+            this.heightUD.Location = new System.Drawing.Point(114, 94);
+            this.heightUD.Maximum = new decimal(new int[] {
+            2000,
+            0,
+            0,
+            0});
+            this.heightUD.Name = "heightUD";
+            this.heightUD.Size = new System.Drawing.Size(80, 20);
+            this.heightUD.TabIndex = 10;
+            this.heightUD.Value = new decimal(new int[] {
+            900,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(111, 65);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(75, 26);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "Screen Height\r\n(in pixels)";
+            // 
             // ExtAttEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(466, 389);
+            this.ClientSize = new System.Drawing.Size(218, 394);
+            this.Controls.Add(this.heightUD);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.widthUD);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.FloorUD);
             this.Controls.Add(this.floorLabel);
             this.Controls.Add(this.LoadButton);
@@ -115,6 +177,8 @@
             this.Text = "External Attribute Editor";
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.widthUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.heightUD)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -127,6 +191,10 @@
         private System.Windows.Forms.Button LoadButton;
         private System.Windows.Forms.Label floorLabel;
         private System.Windows.Forms.NumericUpDown FloorUD;
+        private System.Windows.Forms.NumericUpDown widthUD;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown heightUD;
+        private System.Windows.Forms.Label label2;
     }
 }
 
