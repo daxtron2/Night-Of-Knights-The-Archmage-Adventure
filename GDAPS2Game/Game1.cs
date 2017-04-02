@@ -39,7 +39,7 @@ namespace GDAPS2Game
 
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
-        public Game1()
+        private void FileResolution()
         {
             int screenWidth = 0;
             int screenHeight = 0;
@@ -56,10 +56,8 @@ namespace GDAPS2Game
                 screenHeight = attribRead.ReadInt32();
                 Console.WriteLine("Got through try block.");
             }
-            catch(Exception ex) { Console.WriteLine(ex.Message); }
-            
-            graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+
             if (screenWidth != 0)
             {
                 graphics.PreferredBackBufferWidth = screenWidth;//width of window
@@ -76,6 +74,12 @@ namespace GDAPS2Game
             {
                 graphics.PreferredBackBufferHeight = 900;
             }
+        }
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            FileResolution();
             //IsFixedTimeStep = false;
             menu = new Menu();//new menu object
             currentState = GameState.Menu;//start in the menu
