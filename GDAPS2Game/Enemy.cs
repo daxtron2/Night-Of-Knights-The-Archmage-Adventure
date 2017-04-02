@@ -16,6 +16,9 @@ namespace GDAPS2Game
 
         // Fields
         protected Rectangle playerPos;
+        protected Texture2D sprite;
+        protected Rectangle posBox;
+
 
         // Properties
 
@@ -23,6 +26,8 @@ namespace GDAPS2Game
         public Enemy(Player player, Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
         {
             playerPos = player.CharacterBox;
+            sprite = charSprite;
+            posBox = initPositionBox;
         }
 
         /// <summary>
@@ -37,12 +42,14 @@ namespace GDAPS2Game
         public override void TakeDamage(int dmg)
         {
             ///Edited to make it so health cannot be negative.
-            if (health - dmg >= 0)
+            if(health >= dmg)
             {
                 health -= dmg;
             }
             else
-                health = 0;
+            {
+               TryDestroy();
+            }
         }
     }
 }

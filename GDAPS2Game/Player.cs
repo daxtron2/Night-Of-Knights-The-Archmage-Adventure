@@ -16,13 +16,14 @@ namespace GDAPS2Game
 
         // Fields
         private int score;
+        private int playerAttack;
         private Texture2D hit;
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
         //creates a boolean for the direction in which the player is facing;
         Boolean faceRight;
-
+        Boolean intersects;
         // animation attributes
         private int frame = 0; // default frame of 0
         private int numFrames = 4; // total number of frames is 4
@@ -30,26 +31,22 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
 
-        //List of enemies that are spawned
-        List<Enemy> enemies = new List<Enemy>();
+        public List<Enemy> enemies = new List<Enemy>();
 
         // Properties
+
         /// <summary>
         /// Integer that tracks the player's score. Increases as the player levels up
         /// </summary>
         public int Health { get { return health; } }
 
         //Properties
-        public List<Enemy> Enemies
-        {
-            get { return enemies; }
-        }
 
         // Constructor
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, List<Enemy> enemies) : base(initPositionBox, charSprite)
         {
             health = 5;//testing value
             score = 0;//score starts out at zero, obviously
@@ -57,6 +54,8 @@ namespace GDAPS2Game
             pHitBox = new Rectangle(characterBox.X, characterBox.Y, 10, 10);
             pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
             hit = hitbox;
+            intersects = false;
+            playerAttack = 1;//deals 1 damage per click
         }
 
         /// <summary>
@@ -81,6 +80,8 @@ namespace GDAPS2Game
             }
             pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + characterBox.Height, 40, 70);
             pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + characterBox.Height, 40, 70);
+            
+
 
         }
 
@@ -126,39 +127,62 @@ namespace GDAPS2Game
         /// <summary>
         /// Main attack script, damages enemies infront of the player character
         /// </summary>
+
+        MouseState mState;
+        MouseState mStateLast;
         public override void Attack()
         {
+            mState = Mouse.GetState();
             // When user presses the attack key
             // Do attack animation
             // If enemy within range, kill/deal damage to enemy
-            foreach (Enemy enm in enemies)
+            if (enemies.Count == 0)//if the enemy list is empty, ie no enemies
             {
-                if (faceRight == true)
+                intersects = false;//cant intersect because there is no enemies
+            }
+            foreach (Enemy enm in enemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
+            {
+                if (faceRight == true)//if facing right
                 {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
                     {
-                        if (pHitBox.Intersects(enm.CharacterBox))
+                        intersects = true;//currently intersecting
+                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
                         {
-                            enm.TakeDamage(5);
+                            //Console.WriteLine("CLICK EVENT");//debug output
+                            enm.TakeDamage(playerAttack);//take an amount of damage
                         }
                     }
-                }
-                if (faceRight == false)
-                {
-                    if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+                    else//if not intersecting
                     {
-                        if (pHitBoxL.Intersects(enm.CharacterBox))
-                        {
-                            enm.TakeDamage(5);
-                        }
+                        intersects = false;//false obv
                     }
                 }
-                if (enm.IsActive == false)
+                if (faceRight == false)//if facing left
                 {
-                    enemies.Remove(enm);
+                    if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
+                    {
+                        intersects = true;
+                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+                        {//if LMB just pressed
+                            //Console.WriteLine("CLICK EVENT");//debug console output
+                            enm.TakeDamage(playerAttack);//take an amount of damage
+                        }
+                    }
+                    else//if hitboxes don't intersect
+                    {
+                        intersects = false;
+                    }
+                }
+                enm.TryDestroy();//check if the enemy's health<=0, if it is set IsActive=false
+                if (enm.IsActive == false)//if enemy is "dead"
+                {
+                    //Console.WriteLine("Removing enemy from list.");//debug output
+                    enemies.Remove(enm);//remove the enemy from the list
                 }
             }
 
+            mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
 
@@ -182,35 +206,62 @@ namespace GDAPS2Game
         {
             if (faceRight == true)
             {
-                spriteBatch.Draw(hit, pHitBox, Color.Green);
-                spriteBatch.Draw(hit, pHitBoxL, Color.Red);
-                // player is now drawn here and base.Draw is no longer called
-                if (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D) )
+                if (intersects)
                 {
-                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(hit, pHitBox, Color.Purple);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
                 }
                 else
                 {
-                    if (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyUp(Keys.D))
-                    {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                    }
-                    if (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D))
-                    {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                    }
+                    spriteBatch.Draw(hit, pHitBox, Color.Green);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Red);
                 }
-
+                // player is now drawn here and base.Draw is no longer called
+                if (
+                    (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D)) 
+                    ||
+                    (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                    )
+                    {
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    }
+                else
+                {
+                    if  (
+                            (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyUp(Keys.D)) 
+                            ||
+                            (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
+                        )
+                        {
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        }
+                    if  (
+                            (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D)) 
+                            || 
+                            (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right)) 
+                            || 
+                            (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.D)) 
+                            ||
+                            (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                        )
+                        {
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        }
+                }
             }
             else
             {
                 spriteBatch.Draw(hit, pHitBox, Color.Red);
                 spriteBatch.Draw(hit, pHitBoxL, Color.Green);
                 // same thing as above but flipped 
-                if (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
-                {
-                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
-                }
+                if (
+                        (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A)) 
+                        ||
+                        (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
+                   )
+                    {
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+                    }
                 else
                 {
                     spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
@@ -219,10 +270,15 @@ namespace GDAPS2Game
         }
 
         // Update method is used for movement animation
+        bool firstRun = true;
         public void Update(GameTime gameTime)
         {
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-
+            if (firstRun)
+            {
+                currentFrame.X = 1;
+                currentFrame.Y = 6;
+            }
             // every 80 ms while player is holding left/right it will change frame
             if(timeSinceLastFrame > 80)
             {
@@ -254,6 +310,7 @@ namespace GDAPS2Game
                         break;
                 }
             }
+            firstRun = false;
         }
     }
 }

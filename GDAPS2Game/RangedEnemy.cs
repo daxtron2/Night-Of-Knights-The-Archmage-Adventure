@@ -17,6 +17,12 @@ namespace GDAPS2Game
         protected Point leftAttack;
         protected Point rightAttack;
 
+        // animation attributes
+        private int frame = 0; // default frame of 0
+        private int numFrames = 2; // total number of frames is 2
+        private Point currentFrame; // where current frame is on spritesheet
+        private Point frameSize = new Point(14, 20); // size of each sprite
+
         // Properties
 
         // Constructor
@@ -40,6 +46,30 @@ namespace GDAPS2Game
             else
             {
                 // Instantiate projectile at leftAttack
+            }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            // switch case for loading different frames of animation
+            switch (frame)
+            {
+                case 0:
+                    currentFrame.X = 82;
+                    currentFrame.Y = 40;
+                    break;
+                case 1:
+                    currentFrame.X = 104;
+                    currentFrame.Y = 40;
+                    break;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (isActive)
+            {
+                spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
         }
     }

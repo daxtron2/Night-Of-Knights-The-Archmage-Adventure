@@ -15,12 +15,14 @@ namespace ExternalAttributeEditor
         BinaryReader reader;
         BinaryWriter writer;
         Stream attribFilePath;
+        int screenWidth;
+        int screenHeight;
         int gravity;
         int floorHeight;
         public ExtAttEdit()
         {
             InitializeComponent();
-            attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\AttributeEditor\\attributes.dat", FileMode.OpenOrCreate);
+            attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
             reader = new BinaryReader(attribFilePath);
             writer = new BinaryWriter(attribFilePath);
             
@@ -30,12 +32,19 @@ namespace ExternalAttributeEditor
         private void SaveButton_Click(object sender, EventArgs e)
         {
             //convert values to ints
+            screenWidth = (int)widthUD.Value;
+            screenHeight = (int)heightUD.Value;
             gravity = (int)GravityUD.Value;
             floorHeight = (int)FloorUD.Value;
 
             //output to attributes.dat
+            writer.Write(screenWidth);
+            writer.Write(screenHeight);
             writer.Write(gravity);
             writer.Write(floorHeight);
+
+            writer.Flush();
+            writer.Close();
         }
 
         private void LoadButton_Click(object sender, EventArgs e)

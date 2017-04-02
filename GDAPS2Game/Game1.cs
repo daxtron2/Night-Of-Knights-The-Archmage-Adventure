@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 /*GDAPS 2 Game Project - Group 2
 * Ben Fairlamb  - Group Lead
@@ -16,33 +18,82 @@ namespace GDAPS2Game
     /// </summary>
     public class Game1 : Game
     {
+        // Fields
+        // Graphics
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont mainFont;
+        Texture2D spriteSheet;
+        Texture2D hitSprite;
+        List<Texture2D> backgrounds;
+
+        // UI
         Menu menu;
+
+        // Map Generation
+        Generator gen;
+
+        // Camera
+        Vector3 cameraPos;
+
+        // Controls
         KeyboardState kState;
         KeyboardState oldKState;
         MouseState mState;
-        Texture2D floorBG;
-        Texture2D playerSprite;
-        Texture2D meleeEnemySprite;
-        Texture2D rangedEnemySprite;
-        Texture2D hitSprite;
+
+        // Calculations
+        Random rng;
         Player player;
-        Vector3 cameraPos;
-        Generator gen;
-        
+        RangedEnemy rangedEnemy;
+        List<Enemy> enemies = new List<Enemy>();
+
+        // IO
+        BinaryReader attribRead;
+        Stream attribFilePath;
+
+
         enum GameState { Menu, Pause, Game, GameOver}
         GameState currentState;
         public Game1()
         {
+            int screenWidth = 0;
+            int screenHeight = 0;
+            try
+            {
+                Console.WriteLine("About to open file");
+                attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);
+
+                Console.WriteLine("About to initialize attribRead obj");
+                attribRead = new BinaryReader(attribFilePath);
+
+                Console.WriteLine("About to try to read file");
+                screenWidth = attribRead.ReadInt32();
+                screenHeight = attribRead.ReadInt32();
+                Console.WriteLine("Got through try block.");
+            }
+            catch(Exception ex) { Console.WriteLine(ex.Message); }
+            
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            graphics.PreferredBackBufferWidth = 1600;//width of window
-            graphics.PreferredBackBufferHeight = 900;//height of window
+            if (screenWidth != 0)
+            {
+                graphics.PreferredBackBufferWidth = screenWidth;//width of window
+            }
+            else
+            {
+                graphics.PreferredBackBufferWidth = 1600;
+            }
+            if (screenHeight != 0)
+            {
+                graphics.PreferredBackBufferHeight = screenHeight;//height of window
+            }
+            else
+            {
+                graphics.PreferredBackBufferHeight = 900;
+            }
             //IsFixedTimeStep = false;
-            menu = new Menu();
-            currentState = GameState.Menu;
+            menu = new Menu();//new menu object
+            currentState = GameState.Menu;//start in the menu
             IsMouseVisible = true;//mouse is visible
             
 
@@ -56,10 +107,11 @@ namespace GDAPS2Game
         /// </summary>
         protected override void Initialize()
         {
+            rng = new Random();
 
             base.Initialize();
 
-            gen = new Generator(spriteBatch, floorBG, player);
+            gen = new Generator(spriteBatch, rng, backgrounds, player);
         }
 
         /// <summary>
@@ -70,13 +122,19 @@ namespace GDAPS2Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            // Load backgrounds for game from file here {
+            Texture2D floorBG = Content.Load<Texture2D>("background_new");
+            // }
+
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
-            floorBG = Content.Load<Texture2D>("background_new");
-            playerSprite = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
+            spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
-
-
+            player = new Player(new Rectangle(17, 750, 17, 26), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
+            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
+            enemies.Add(rangedEnemy);
+            
+            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
         }
 
         /// <summary>
@@ -99,6 +157,7 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
+            player.enemies = this.enemies;
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
@@ -108,8 +167,9 @@ namespace GDAPS2Game
                 player.Physics();
                 player.Movement(gameTime); // threw in gametime for animation
                 player.Collision();
-                gen.Update();
                 player.Attack();
+                gen.Update();
+                rangedEnemy.Update(gameTime);
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -197,6 +257,7 @@ namespace GDAPS2Game
         {
             gen.Draw();
             player.Draw(spriteBatch);
+            rangedEnemy.Draw(spriteBatch);
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {

@@ -38,22 +38,6 @@ namespace GDAPS2Game
 
             characterBox = initialPosition;
             characterSprite = charSprite;
-            try
-            {
-                write = new BinaryWriter(new FileStream("Content/attributes.dat", FileMode.Open));
-                read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.Open));
-            }
-            catch(FileNotFoundException fnfe)//if the file doesn't exist setup a default one
-            {
-                write = new BinaryWriter(new FileStream("Content/attributes.dat", FileMode.Create));
-                write.Write(downAccel);
-                write.Write(FLOORHEIGHT);
-            }
-            catch(IOException ioe)
-            {
-                write.Close();
-                read = new BinaryReader(new FileStream("Content/attributes.dat", FileMode.Open));
-            }
             Spawn();
         }
 
@@ -72,7 +56,7 @@ namespace GDAPS2Game
         /// Death animation?
         /// give a chance to drop a health potion
         /// </summary>
-        public void Destroy()
+        public void TryDestroy()
         {
             if (health <= 0)
             {
