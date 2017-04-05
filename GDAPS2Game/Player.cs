@@ -48,11 +48,11 @@ namespace GDAPS2Game
         /// </summary>
         public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, List<Enemy> enemies) : base(initPositionBox, charSprite)
         {
-            health = 5;//testing value
+            health = 50;//testing value
             score = 0;//score starts out at zero, obviously
             faceRight = true;
-            pHitBox = new Rectangle(characterBox.X, characterBox.Y, 10, 10);
-            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 10, characterBox.Height);
+            pHitBox = new Rectangle(characterBox.X, characterBox.Y + 85, 10, 10);
+            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y + 85, 10, characterBox.Height);
             hit = hitbox;
             intersects = false;
             playerAttack = 1;//deals 1 damage per click
@@ -65,23 +65,26 @@ namespace GDAPS2Game
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
-            
-            if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
-            {
-                base.characterBox.X -= 7;
-                faceRight = false;
-                Update(gameTime); // for movement animation
-            }
-            if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
-            {
-                base.characterBox.X += 7;
-                faceRight = true;
-                Update(gameTime);
-            }
-            pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + 85, 40, 70);
-            pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + 85, 40, 70);
-            
 
+            //If the player's health is above 0, he can move
+            if (health > 0)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+                {
+                    base.characterBox.X -= 7;
+                    faceRight = false;
+                    Update(gameTime); // for movement animation
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+                {
+                    base.characterBox.X += 7;
+                    faceRight = true;
+                    Update(gameTime);
+                }
+                pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + 105, 40, 70);
+                pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + 105, 40, 70);
+
+            }
 
         }
 
@@ -204,67 +207,71 @@ namespace GDAPS2Game
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
-            if (faceRight == true)
+            //While the player's health is greater than 0, it continues to draw him
+            if (health > 0)
             {
-                if (intersects)
+                if (faceRight == true)
                 {
-                    spriteBatch.Draw(hit, pHitBox, Color.Purple);
-                    spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
-                }
-                else
-                {
-                    spriteBatch.Draw(hit, pHitBox, Color.Green);
-                    spriteBatch.Draw(hit, pHitBoxL, Color.Red);
-                }
-                // player is now drawn here and base.Draw is no longer called
-                if (
-                    (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D)) 
-                    ||
-                    (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
-                    )
+                    if (intersects)
+                    {
+                        spriteBatch.Draw(hit, pHitBox, Color.Purple);
+                        spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
+                    }
+                    else
+                    {
+                        spriteBatch.Draw(hit, pHitBox, Color.Green);
+                        spriteBatch.Draw(hit, pHitBoxL, Color.Red);
+                    }
+                    // player is now drawn here and base.Draw is no longer called
+                    if (
+                        (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D))
+                        ||
+                        (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                        )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                     }
+                    else
+                    {
+                        if (
+                                (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyUp(Keys.D))
+                                ||
+                                (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
+                            )
+                        {
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        }
+                        if (
+                                (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D))
+                                ||
+                                (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                                ||
+                                (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.D))
+                                ||
+                                (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                            )
+                        {
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        }
+                    }
+                }
                 else
                 {
-                    if  (
-                            (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyUp(Keys.D)) 
+                    spriteBatch.Draw(hit, pHitBox, Color.Red);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Green);
+                    // same thing as above but flipped 
+                    if (
+                            (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
                             ||
-                            (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
-                        )
-                        {
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                        }
-                    if  (
-                            (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D)) 
-                            || 
-                            (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right)) 
-                            || 
-                            (Keyboard.GetState().IsKeyDown(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.D)) 
-                            ||
-                            (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
-                        )
-                        {
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                        }
-                }
-            }
-            else
-            {
-                spriteBatch.Draw(hit, pHitBox, Color.Red);
-                spriteBatch.Draw(hit, pHitBoxL, Color.Green);
-                // same thing as above but flipped 
-                if (
-                        (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A)) 
-                        ||
-                        (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
-                   )
+                            (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
+                       )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
                     }
-                else
-                {
-                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+                    else
+                    {
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+                    }
                 }
             }
         }

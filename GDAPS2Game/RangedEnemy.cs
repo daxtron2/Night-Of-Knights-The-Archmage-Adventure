@@ -27,6 +27,8 @@ namespace GDAPS2Game
         private Vector2 arrowPos;
         private Rectangle arrowRect;
         Boolean intersecting = false;
+        Boolean arrowActive = true;
+        Color arrowColor = Color.White;
 
         // Properties
 
@@ -53,6 +55,7 @@ namespace GDAPS2Game
                     if (arrowPos.X < (posBox.X - posBox.Width) - 900)
                     {
                         arrowPos.X = posBox.X - posBox.Width;
+                        arrowActive = true;
                     }
                 }
             }
@@ -63,8 +66,17 @@ namespace GDAPS2Game
             arrowRect.X = (int)arrowPos.X;
             if (arrowRect.Intersects(playerPos))
             {
-                arrowPos.Y -= 12;
+                arrowColor = Color.Red;
+                if (arrowActive == true)
+                {
+                    playerL.TakeDamage(5);
+                }
+                arrowActive = false;
                 intersecting = true;
+            }
+            else
+            {
+                arrowColor = Color.White;
             }
             Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
             
@@ -88,7 +100,7 @@ namespace GDAPS2Game
             if (isActive)
             {
                 // draw arrow
-                spriteBatch.Draw(sprite, arrowPos, new Rectangle(47, 48, 15, 7), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(sprite, arrowPos, new Rectangle(47, 48, 15, 7), arrowColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
                 // draw enemy
                 spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
