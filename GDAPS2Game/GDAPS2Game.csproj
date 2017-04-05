@@ -39,6 +39,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Chunk.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Generator.cs" />

@@ -18,21 +18,36 @@ namespace GDAPS2Game
     /// </summary>
     public class Game1 : Game
     {
+        // Fields
+        // Graphics
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont mainFont;
+        Texture2D spriteSheet;
+        Texture2D hitSprite;
+        List<Texture2D> backgrounds;
+
+        // UI
         Menu menu;
+
+        // Map Generation
+        Generator gen;
+
+        // Camera
+        Vector3 cameraPos;
+
+        // Controls
         KeyboardState kState;
         KeyboardState oldKState;
         MouseState mState;
-        Texture2D floorBG;
-        Texture2D spriteSheet;
-        Texture2D hitSprite;
+
+        // Calculations
+        Random rng;
         Player player;
-        Vector3 cameraPos;
-        Generator gen;
         RangedEnemy rangedEnemy;
         List<Enemy> enemies = new List<Enemy>();
+
+        // IO
         BinaryReader attribRead;
         Stream attribFilePath;
 
@@ -84,6 +99,7 @@ namespace GDAPS2Game
             menu = new Menu();//new menu object
             currentState = GameState.Menu;//start in the menu
             IsMouseVisible = true;//mouse is visible
+            backgrounds = new List<Texture2D>();
             
 
         }
@@ -96,10 +112,11 @@ namespace GDAPS2Game
         /// </summary>
         protected override void Initialize()
         {
+            rng = new Random();
 
             base.Initialize();
 
-            gen = new Generator(spriteBatch, floorBG, player);
+            gen = new Generator(rng, backgrounds, player, this);
         }
 
         /// <summary>
@@ -110,13 +127,19 @@ namespace GDAPS2Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            
+            // Load backgrounds for game from file here {
+            backgrounds.Add(Content.Load<Texture2D>("background_new"));
+            // }
+
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
-            floorBG = Content.Load<Texture2D>("background_new");
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(17, 750, 85, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
             enemies.Add(rangedEnemy);
+            
+            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
         }
 
         /// <summary>
@@ -238,7 +261,7 @@ namespace GDAPS2Game
         
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            gen.Draw();
+            gen.Draw(spriteBatch);
             player.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
         }
