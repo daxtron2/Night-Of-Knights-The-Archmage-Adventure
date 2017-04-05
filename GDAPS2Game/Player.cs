@@ -111,8 +111,9 @@ namespace GDAPS2Game
             if (characterBox.Y + characterBox.Height >= FLOORHEIGHT)
             {
                 //characterBox.Y = FLOORHEIGHT - characterBox.Height;
-                pHitBoxL.Y = characterBox.Y + characterBox.Height;
-                pHitBox.Y = characterBox.Y + characterBox.Height;
+                pHitBoxL.Y = characterBox.Y + 30; // + characterBox.Height - 50;
+               
+                pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
             }
             
             if (characterBox.X <= 0)
