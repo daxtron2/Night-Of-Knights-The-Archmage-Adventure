@@ -31,11 +31,6 @@ namespace GDAPS2Game
         }
 
         /// <summary>
-        /// Character Attack
-        /// </summary>
-        public abstract override void Attack();
-
-        /// <summary>
         /// Have character Take Damage
         /// </summary>
         /// <param name="dmg">Damage to take</param>
