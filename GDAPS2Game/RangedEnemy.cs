@@ -63,14 +63,11 @@ namespace GDAPS2Game
             arrowRect.X = (int)arrowPos.X;
             if (arrowRect.Intersects(playerPos))
             {
-                arrowPos.Y += 12;
+                arrowPos.Y -= 12;
                 intersecting = true;
             }
-            Console.WriteLine("ArrowRect X: {0}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y);
-            if (intersecting == true)
-            {
-                Console.WriteLine("Huston, we have intersection!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            }
+            Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
+            
             // switch case for loading different frames of animation
             switch (frame)
             {
@@ -83,6 +80,7 @@ namespace GDAPS2Game
                     currentFrame.Y = 40;
                     break;
             }
+            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -78,8 +78,8 @@ namespace GDAPS2Game
                 faceRight = true;
                 Update(gameTime);
             }
-            pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + characterBox.Height, 40, 70);
-            pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + characterBox.Height, 40, 70);
+            pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + 85, 40, 70);
+            pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + 85, 40, 70);
             
 
 

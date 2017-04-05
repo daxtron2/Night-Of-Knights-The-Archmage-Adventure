@@ -18,7 +18,7 @@ namespace GDAPS2Game
         protected Rectangle playerPos;
         protected Texture2D sprite;
         protected Rectangle posBox;
-
+        protected Player playerL;
 
         // Properties
 
@@ -26,6 +26,7 @@ namespace GDAPS2Game
         public Enemy(Player player, Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
         {
             playerPos = player.CharacterBox;
+            playerL = player;
             sprite = charSprite;
             posBox = initPositionBox;
         }
@@ -45,6 +46,11 @@ namespace GDAPS2Game
             {
                TryDestroy();
             }
+        }
+
+        internal void Update(GameTime gameTime)
+        {
+            playerPos = playerL.CharacterBox;
         }
     }
 }
