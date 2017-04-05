@@ -79,7 +79,7 @@ namespace GDAPS2Game
                 Update(gameTime);
             }
             pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + characterBox.Height, 40, 70);
-            pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + characterBox.Height, 40, 70);
+            pHitBoxL = new Rectangle(characterBox.X - 60, characterBox.Y + characterBox.Height, 40, 70);
             
 
 
@@ -251,8 +251,16 @@ namespace GDAPS2Game
             }
             else
             {
-                spriteBatch.Draw(hit, pHitBox, Color.Red);
-                spriteBatch.Draw(hit, pHitBoxL, Color.Green);
+                if (intersects)
+                {
+                    spriteBatch.Draw(hit, pHitBox, Color.Purple);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
+                }
+                else
+                {
+                    spriteBatch.Draw(hit, pHitBox, Color.Red);
+                    spriteBatch.Draw(hit, pHitBoxL, Color.Green);
+                }
                 // same thing as above but flipped 
                 if (
                         (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A)) 
