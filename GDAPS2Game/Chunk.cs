@@ -18,9 +18,10 @@ namespace GDAPS2Game
         
         // Graphics
         private Texture2D background;
-        private Vector2 location;
+        private Rectangle location;
         private List<Enemy> chunkEnemies;
         private int chunkNum;
+        private Game1 game;
 
 
         // Properties
@@ -41,12 +42,14 @@ namespace GDAPS2Game
         /// <param name="chunkNum">Number of Chunk in order</param>
         /// <param name="numEnemies">Number of enemies to create in chunk</param>
         /// <param name="x">X start position of chunk</param>
-        public Chunk(Random rng, Texture2D background, int chunkNum, int numEnemies, int x)
+        public Chunk(Random rng, Texture2D background, int chunkNum, int numEnemies, int x, Game1 game)
         {
             this.rng = rng;
             this.background = background;
             this.chunkNum = chunkNum;
-            location = new Vector2(x, 0);
+            location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
+            chunkEnemies = new List<Enemy>();
+            Populate(numEnemies);
         }
 
         // Methods

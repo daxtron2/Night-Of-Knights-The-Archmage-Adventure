@@ -17,13 +17,13 @@ namespace GDAPS2Game
         private Random rng;
 
         // Graphics
-        private SpriteBatch sb;
         private List<Texture2D> backgrounds;
         private const int ChunkSize = 1600;
+        private Game1 game;
 
         // Generation
         private const int ChunksRight = 2;
-        private const int ChunksLeft = 1;
+        private const int ChunksLeft = 2;
 
         // Where the phuq am I?
         private int it;
@@ -35,25 +35,30 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Generator(SpriteBatch sb, Random rng, List<Texture2D> backgrounds, Player player)
+        public Generator(Random rng, List<Texture2D> backgrounds, Player player, Game1 game)
         {
             this.rng = rng;
-            this.sb = sb;
             this.backgrounds = backgrounds;
             it = 0;
             currentIt = 0;
             this.player = player;
+            this.game = game;
+            chunks = new List<Chunk>();
+            chunkOrder = new Queue<Chunk>();
         }
 
         // Methods
         /// <summary>
         /// Draw the Terrain
         /// </summary>
-        public void Draw()
+        public void Draw(SpriteBatch sb)
         {
-            foreach (Chunk chunk in chunks)
+            if (chunks.Count != 0)
             {
-                chunk.Draw(sb);
+                foreach (Chunk chunk in chunks)
+                {
+                    chunk.Draw(sb);
+                }
             }
 
         }
@@ -66,7 +71,9 @@ namespace GDAPS2Game
             // Add more chunks if nessesary
             while (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
-                chunkOrder.Enqueue(new Chunk(rng, backgrounds[rng.Next(0, backgrounds.Count)], it, 1, it * ChunkSize));
+                Chunk chunk = new Chunk(rng, backgrounds[rng.Next(0, backgrounds.Count)], it, 1, it * ChunkSize, game);
+                chunks.Add(chunk);
+                chunkOrder.Enqueue(chunk);
                 it++;
             }
 
@@ -76,7 +83,7 @@ namespace GDAPS2Game
             // Remove previous chunks long passed
             while ((chunkOrder.Peek().ChunkNum + ChunksLeft) * ChunkSize < player.CharacterBox.X)
             {
-                chunkOrder.Dequeue();
+                chunks.Remove(chunkOrder.Dequeue());
             }
         }
     }

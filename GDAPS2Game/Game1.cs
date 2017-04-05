@@ -99,6 +99,7 @@ namespace GDAPS2Game
             menu = new Menu();//new menu object
             currentState = GameState.Menu;//start in the menu
             IsMouseVisible = true;//mouse is visible
+            backgrounds = new List<Texture2D>();
             
 
         }
@@ -115,7 +116,7 @@ namespace GDAPS2Game
 
             base.Initialize();
 
-            gen = new Generator(spriteBatch, rng, backgrounds, player);
+            gen = new Generator(rng, backgrounds, player, this);
         }
 
         /// <summary>
@@ -128,7 +129,7 @@ namespace GDAPS2Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             // Load backgrounds for game from file here {
-            Texture2D floorBG = Content.Load<Texture2D>("background_new");
+            backgrounds.Add(Content.Load<Texture2D>("background_new"));
             // }
 
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
@@ -259,7 +260,7 @@ namespace GDAPS2Game
         
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            gen.Draw();
+            gen.Draw(spriteBatch);
             player.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
         }
