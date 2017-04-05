@@ -19,13 +19,14 @@ namespace ExternalAttributeEditor
         int screenHeight;
         int gravity;
         int floorHeight;
+        int jumpHeight;
         public ExtAttEdit()
         {
             InitializeComponent();
             attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
-            reader = new BinaryReader(attribFilePath);
+            //reader = new BinaryReader(attribFilePath);
             writer = new BinaryWriter(attribFilePath);
-            
+            DefaultButton.Enabled = false;
             
         }
 
@@ -36,15 +37,19 @@ namespace ExternalAttributeEditor
             screenHeight = (int)heightUD.Value;
             gravity = (int)GravityUD.Value;
             floorHeight = (int)FloorUD.Value;
-
+            jumpHeight = (int)jumpUD.Value;
             //output to attributes.dat
             writer.Write(screenWidth);
             writer.Write(screenHeight);
             writer.Write(gravity);
             writer.Write(floorHeight);
+            writer.Write(jumpHeight);
 
             writer.Flush();
             writer.Close();
+            SaveButton.Enabled = false;
+            DefaultButton.Enabled = true;
+
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
@@ -55,6 +60,20 @@ namespace ExternalAttributeEditor
 
             //update values
             GravityUD.Value = gravity;
+        }
+
+        private void DefaultButton_Click(object sender, EventArgs e)
+        {
+            widthUD.Value = 1600;
+            heightUD.Value = 900;
+            GravityUD.Value = 1;
+            FloorUD.Value = 750;
+            jumpUD.Value = -25;
+            attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
+            writer = new BinaryWriter(attribFilePath);
+
+            DefaultButton.Enabled = false;
+            SaveButton.Enabled = true;
         }
     }
 }

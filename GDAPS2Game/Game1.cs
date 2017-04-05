@@ -175,6 +175,7 @@ namespace GDAPS2Game
                 player.Attack();
                 gen.Update();
                 rangedEnemy.Update(gameTime);
+                rangedEnemy.Attack();
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {

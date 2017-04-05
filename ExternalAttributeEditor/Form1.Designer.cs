@@ -38,10 +38,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.heightUD = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
+            this.jumpUD = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.DefaultButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.GravityUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUD)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUD)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jumpUD)).BeginInit();
             this.SuspendLayout();
             // 
             // Gravity
@@ -51,13 +55,13 @@
             this.Gravity.Name = "Gravity";
             this.Gravity.Size = new System.Drawing.Size(83, 26);
             this.Gravity.TabIndex = 1;
-            this.Gravity.Text = "Jump Height\r\n(Negative is Up)";
+            this.Gravity.Text = "Gravity\r\n(Negative is Up)";
             // 
             // SaveButton
             // 
-            this.SaveButton.Location = new System.Drawing.Point(113, 345);
+            this.SaveButton.Location = new System.Drawing.Point(147, 345);
             this.SaveButton.Name = "SaveButton";
-            this.SaveButton.Size = new System.Drawing.Size(83, 37);
+            this.SaveButton.Size = new System.Drawing.Size(59, 37);
             this.SaveButton.TabIndex = 2;
             this.SaveButton.Text = "Save Attributes";
             this.SaveButton.UseVisualStyleBackColor = true;
@@ -74,12 +78,17 @@
             this.GravityUD.Name = "GravityUD";
             this.GravityUD.Size = new System.Drawing.Size(80, 20);
             this.GravityUD.TabIndex = 3;
+            this.GravityUD.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // LoadButton
             // 
-            this.LoadButton.Location = new System.Drawing.Point(20, 345);
+            this.LoadButton.Location = new System.Drawing.Point(12, 345);
             this.LoadButton.Name = "LoadButton";
-            this.LoadButton.Size = new System.Drawing.Size(83, 37);
+            this.LoadButton.Size = new System.Drawing.Size(54, 37);
             this.LoadButton.TabIndex = 4;
             this.LoadButton.Text = "Load Attributes";
             this.LoadButton.UseVisualStyleBackColor = true;
@@ -97,14 +106,19 @@
             // FloorUD
             // 
             this.FloorUD.Location = new System.Drawing.Point(25, 94);
-            this.FloorUD.Minimum = new decimal(new int[] {
-            100,
+            this.FloorUD.Maximum = new decimal(new int[] {
+            1080,
             0,
             0,
-            -2147483648});
+            0});
             this.FloorUD.Name = "FloorUD";
             this.FloorUD.Size = new System.Drawing.Size(80, 20);
             this.FloorUD.TabIndex = 6;
+            this.FloorUD.Value = new decimal(new int[] {
+            750,
+            0,
+            0,
+            0});
             // 
             // widthUD
             // 
@@ -158,11 +172,50 @@
             this.label2.TabIndex = 9;
             this.label2.Text = "Screen Height\r\n(in pixels)";
             // 
+            // jumpUD
+            // 
+            this.jumpUD.Location = new System.Drawing.Point(26, 146);
+            this.jumpUD.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.jumpUD.Name = "jumpUD";
+            this.jumpUD.Size = new System.Drawing.Size(80, 20);
+            this.jumpUD.TabIndex = 12;
+            this.jumpUD.Value = new decimal(new int[] {
+            25,
+            0,
+            0,
+            -2147483648});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(23, 117);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(81, 26);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Jump Height\r\n(Negative is up)";
+            // 
+            // DefaultButton
+            // 
+            this.DefaultButton.Location = new System.Drawing.Point(76, 345);
+            this.DefaultButton.Name = "DefaultButton";
+            this.DefaultButton.Size = new System.Drawing.Size(63, 37);
+            this.DefaultButton.TabIndex = 13;
+            this.DefaultButton.Text = "Reset to Default";
+            this.DefaultButton.UseVisualStyleBackColor = true;
+            this.DefaultButton.Click += new System.EventHandler(this.DefaultButton_Click);
+            // 
             // ExtAttEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(218, 394);
+            this.Controls.Add(this.DefaultButton);
+            this.Controls.Add(this.jumpUD);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.heightUD);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.widthUD);
@@ -179,6 +232,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.FloorUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.widthUD)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.heightUD)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.jumpUD)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -195,6 +249,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown heightUD;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown jumpUD;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button DefaultButton;
     }
 }
 

@@ -18,6 +18,7 @@ namespace GDAPS2Game
         protected bool isActive;
         protected Texture2D characterSprite;
         private int downAccel;
+        private int gravity;
         private int jumpHeight;
         protected int FLOORHEIGHT = 750; //never change this in the program, only through editor, treat it as a constant
         // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
@@ -38,13 +39,31 @@ namespace GDAPS2Game
 
             characterBox = initialPosition;
             characterSprite = charSprite;
-            Spawn();
+            //Spawn(); redundant?
+            BinaryReader read;
+            Stream attribFilePath;
+            try
+            {
+                attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);//format: screenWidth, screenHeight, gravity, floorheight
+                read = new BinaryReader(attribFilePath);
+                read.ReadInt32();//width, don't store
+                read.ReadInt32();//height, don't store
+                gravity = read.ReadInt32();
+                FLOORHEIGHT = read.ReadInt32();
+            }
+            catch (Exception ex)
+            {
+                gravity = 1;
+                jumpHeight = -25;
+            }
+            isActive = true;
+            health = 5;
         }
 
         /// <summary>
         /// Create the enemy or player, set default health value, Add to screen for draw
         /// </summary>
-        public void Spawn()
+        public void Spawn()//redundant?
         {
             isActive = true;
             health = 5;//testing value
@@ -70,6 +89,7 @@ namespace GDAPS2Game
         /// </summary>
         public void Physics()
         {
+            
             // Called every frame
             // Somehow pull player and or enemy towards the floor
             // Not 100% sure on the best way to do this
@@ -81,11 +101,11 @@ namespace GDAPS2Game
             kState = Keyboard.GetState();
             if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT - characterBox.Height)//FLOORHEIGHT is based on sprite height
             {
-                downAccel = -25;
+                downAccel = jumpHeight;
             }
             if (characterBox.Y + characterBox.Height <= FLOORHEIGHT)
             {
-                downAccel++;
+                downAccel += gravity;
             }
 
 
