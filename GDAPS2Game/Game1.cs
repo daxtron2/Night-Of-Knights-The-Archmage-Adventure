@@ -70,6 +70,7 @@ namespace GDAPS2Game
                 screenWidth = attribRead.ReadInt32();
                 screenHeight = attribRead.ReadInt32();
                 Console.WriteLine("Got through try block.");
+                attribRead.Close();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
 

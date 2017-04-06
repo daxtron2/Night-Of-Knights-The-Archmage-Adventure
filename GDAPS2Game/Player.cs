@@ -56,6 +56,7 @@ namespace GDAPS2Game
             hit = hitbox;
             intersects = false;
             playerAttack = 1;//deals 1 damage per click
+
         }
 
         /// <summary>

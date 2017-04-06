@@ -78,7 +78,7 @@ namespace GDAPS2Game
             {
                 arrowColor = Color.White;
             }
-            Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
+            //Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
             
             // switch case for loading different frames of animation
             switch (frame)

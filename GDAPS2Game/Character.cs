@@ -42,19 +42,24 @@ namespace GDAPS2Game
             //Spawn(); redundant?
             BinaryReader read;
             Stream attribFilePath;
-            try
+            if(this is Player)
             {
-                attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);//format: screenWidth, screenHeight, gravity, floorheight
-                read = new BinaryReader(attribFilePath);
-                read.ReadInt32();//width, don't store
-                read.ReadInt32();//height, don't store
-                gravity = read.ReadInt32();
-                FLOORHEIGHT = read.ReadInt32();
-            }
-            catch (Exception ex)
-            {
-                gravity = 1;
-                jumpHeight = -25;
+                try
+                {
+                    attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);//format: screenWidth, screenHeight, gravity, floorheight, jumpheight
+                    read = new BinaryReader(attribFilePath);
+                    read.ReadInt32();//width, don't store
+                    read.ReadInt32();//height, don't store
+                    gravity = read.ReadInt32();
+                    FLOORHEIGHT = read.ReadInt32();
+                    jumpHeight = read.ReadInt32();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    gravity = 1;
+                    jumpHeight = -25;
+                }
             }
             isActive = true;
             health = 5;
