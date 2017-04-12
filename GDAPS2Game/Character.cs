@@ -17,6 +17,7 @@ namespace GDAPS2Game
         protected Rectangle characterBox;
         protected bool isActive;
         protected Texture2D characterSprite;
+        protected Player playerL;
         private int downAccel;
         private int gravity;
         private int jumpHeight;
@@ -29,6 +30,8 @@ namespace GDAPS2Game
         KeyboardState lastKState;
         BinaryReader read;
         BinaryWriter write;
+        protected Heart heart;
+
         // Properties
         public Rectangle CharacterBox { get { return characterBox; } }
         public bool IsActive { get { return isActive; } }
@@ -105,7 +108,11 @@ namespace GDAPS2Game
                 //sets addScore to true so that the score can be added, set to false after score is incremented.
                 addScore = true;
                 isActive = false;
+                
+                heart = new Heart(characterSprite, characterBox, playerL);
+                
             }
+            
 
         }
 
@@ -151,7 +158,15 @@ namespace GDAPS2Game
 
         public virtual void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(characterSprite, characterBox, Color.White);
+            if (heart != null)
+            {
+                heart.Draw(spriteBatch);
+                /*if(heart.Player == null)
+                {
+                    heart = null;
+                }*/
+            }
+            //spriteBatch.Draw(characterSprite, characterBox, Color.White);
         }
 
         /// <summary>

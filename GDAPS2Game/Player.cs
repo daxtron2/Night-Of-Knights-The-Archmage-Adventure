@@ -30,7 +30,7 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
 
-        public List<Enemy> enemies = new List<Enemy>();
+        public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // Properties
 
@@ -45,7 +45,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, List<Enemy> enemies) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox) : base(initPositionBox, charSprite)
         {
             health = 50;//testing value
             faceRight = true;
@@ -70,7 +70,7 @@ namespace GDAPS2Game
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    base.characterBox.X -= 7;
+                    characterBox.X -= 7;
                     faceRight = false;
                     Update(gameTime); // for movement animation
                 }
@@ -120,10 +120,7 @@ namespace GDAPS2Game
         }
 
 
-        /// <summary>
-        /// Don't Use? use the constructor version
-        /// </summary>
-
+        
         /// <summary>
         /// Main attack script, damages enemies infront of the player character
         /// </summary>
@@ -142,11 +139,11 @@ namespace GDAPS2Game
             }
 
                 // If enemy within range, kill/deal damage to enemy
-                if (enemies.Count == 0)//if the enemy list is empty, ie no enemies
+                if (rangedEnemies.Count == 0)//if the enemy list is empty, ie no enemies
             {
                 intersects = false;//cant intersect because there is no enemies
             }
-            foreach (Enemy enm in enemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
+            foreach (RangedEnemy enm in rangedEnemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
             {
                 if (faceRight == true)//if facing right
                 {
@@ -184,7 +181,7 @@ namespace GDAPS2Game
                 if (enm.IsActive == false)//if enemy is "dead"
                 {
                     //Console.WriteLine("Removing enemy from list.");//debug output
-                    enemies.Remove(enm);//remove the enemy from the list
+                    rangedEnemies.Remove(enm);//remove the enemy from the list
                 }
             }
 

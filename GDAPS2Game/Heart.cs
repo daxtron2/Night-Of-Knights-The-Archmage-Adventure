@@ -8,33 +8,46 @@ using System.Diagnostics;
 namespace GDAPS2Game
 {
     //Heart Class. A Heart is drawn when an enemy dies, and when the player collides with it, it calls the addhealth method and then disappears.
-    class Heart : Enemy
+    class Heart
     {
-        private static Rectangle enemyPosBox;
-        protected Rectangle heartBox;
-        public Heart(Player player, Rectangle initialPosition, Texture2D charSprite) : base (player, initialPosition, charSprite)
+        private Vector2 enemyPosBox;
+        private Rectangle heartPosition;
+        private Rectangle heartSpriteBox;
+        private Texture2D sheet;
+        private Player player;
+        public Player Player
         {
-            heartBox = initialPosition;
+            get { return player; }
         }
-        public Rectangle HeartBox { get { return heartBox; } }
-
-        public override void Attack()
+        public Heart(Texture2D spriteSheet, Rectangle location, Player playerObj)
         {
-            if (isActive == true)
+            player = playerObj;
+            sheet = spriteSheet;
+            enemyPosBox.X = location.X + location.Width/2;
+            enemyPosBox.Y = location.Y + location.Height/2;
+            heartPosition = new Rectangle((int)enemyPosBox.X, (int)enemyPosBox.Y, 16 * 5, 15 * 5);
+            heartSpriteBox = new Rectangle(123, 71, 16, 15);
+        }
+
+        public void Pickup()
+        {
+            if (player != null)
             {
-                if (heartBox.Intersects(playerL.CharacterBox))
+                if (player.CharacterBox.Intersects(heartPosition))
                 {
-                    playerL.AddHealth(5);
-                    isActive = false;
+
+                    player.AddHealth(5);
+                    player = null;
                 }
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            if (isActive)
-            { 
-                spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), heartBox, Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+            if (player != null)
+            {
+                Pickup();
+                spriteBatch.Draw(sheet, enemyPosBox, heartSpriteBox, Color.White, 0f, new Vector2(0, 0), 5f, SpriteEffects.None, 0f);
             }
         }
     }
