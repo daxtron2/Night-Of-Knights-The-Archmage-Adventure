@@ -26,6 +26,14 @@ namespace GDAPS2Game
         Texture2D spriteSheet;
         Texture2D hitSprite;
         List<Texture2D> backgrounds;
+        List<Texture2D> foregrounds;
+        string[] backgroundPaths = {
+            "background_new"
+        };
+        string[] forgroundPaths = {
+            "tree",
+            "tree_2"
+        };
 
         // UI
         Menu menu;
@@ -128,12 +136,19 @@ namespace GDAPS2Game
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            // Load backgrounds for game from file here {
-            backgrounds.Add(Content.Load<Texture2D>("background_new"));
-            // }
 
-            mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
+            // Load backgrounds for game here
+            foreach (string path in backgroundPaths)
+            {
+                backgrounds.Add(Content.Load<Texture2D>(path));
+            }
+            // Load forgrounds for the game here
+            foreach (string path in forgroundPaths)
+            {
+                foregrounds.Add(Content.Load<Texture2D>(path));
+            }
+
+                mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
