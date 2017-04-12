@@ -138,6 +138,12 @@ namespace GDAPS2Game
             lastKState = kState;
         }
 
+        //Whenever this method is called, adds health to the player's current health pool.
+        public void AddHealth(int healthPlus)
+        {
+            health += healthPlus;
+        }
+
         /// <summary>
         /// Character Attack
         /// </summary>
