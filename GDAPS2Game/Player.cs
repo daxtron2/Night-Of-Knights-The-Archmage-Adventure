@@ -138,9 +138,15 @@ namespace GDAPS2Game
         {
             mState = Mouse.GetState();
             // When user presses the attack key
+
             // Do attack animation
-            // If enemy within range, kill/deal damage to enemy
-            if (enemies.Count == 0)//if the enemy list is empty, ie no enemies
+            if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+            {
+                frame = -2;
+            }
+
+                // If enemy within range, kill/deal damage to enemy
+                if (enemies.Count == 0)//if the enemy list is empty, ie no enemies
             {
                 intersects = false;//cant intersect because there is no enemies
             }
@@ -242,6 +248,7 @@ namespace GDAPS2Game
                         {
                             spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
+
                         if (
                                 (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D))
                                 ||
@@ -291,7 +298,11 @@ namespace GDAPS2Game
             if(timeSinceLastFrame > 80)
             {
                 timeSinceLastFrame = 0;
-                frame++;
+                if(frame != -2)
+                {
+                    frame++;
+                }
+
                 if (frame >= numFrames)
                 {
                     frame = 0;
@@ -300,6 +311,15 @@ namespace GDAPS2Game
                 // switch case for loading different frames of animation
                 switch(frame)
                 {
+                    case -2:
+                        currentFrame.X = 23;
+                        currentFrame.Y = 36;
+                        frame++;
+                        break;
+                    case -1:
+                        currentFrame.X = 1;
+                        currentFrame.Y = 66;
+                        break;
                     case 0:
                         currentFrame.X = 1;
                         currentFrame.Y = 6;
