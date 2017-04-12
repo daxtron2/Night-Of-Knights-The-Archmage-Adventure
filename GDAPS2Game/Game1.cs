@@ -109,6 +109,7 @@ namespace GDAPS2Game
             currentState = GameState.Menu;//start in the menu
             IsMouseVisible = true;//mouse is visible
             backgrounds = new List<Texture2D>();
+            foregrounds = new List<Texture2D>();
             
 
         }
@@ -148,7 +149,7 @@ namespace GDAPS2Game
                 foregrounds.Add(Content.Load<Texture2D>(path));
             }
 
-                mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
+            mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
