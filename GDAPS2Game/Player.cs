@@ -51,8 +51,8 @@ namespace GDAPS2Game
             health = 50;//testing value
             score = 0;//score starts out at zero, obviously
             faceRight = true;
-            pHitBox = new Rectangle(characterBox.X, characterBox.Y + 85, 10, 10);
-            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y + 85, 10, characterBox.Height);
+            pHitBox = new Rectangle(characterBox.X, characterBox.Y + 55, 10, 10);
+            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y + 55, 10, characterBox.Height);
             hit = hitbox;
             intersects = false;
             playerAttack = 1;//deals 1 damage per click
