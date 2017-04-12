@@ -124,11 +124,11 @@ namespace GDAPS2Game
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT - characterBox.Height)//FLOORHEIGHT is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT)//FLOORHEIGHT is based on sprite height
             {
                 downAccel = jumpHeight;
             }
-            if (characterBox.Y + characterBox.Height <= FLOORHEIGHT)
+            if (characterBox.Y <= FLOORHEIGHT)
             {
                 downAccel += gravity;
             }

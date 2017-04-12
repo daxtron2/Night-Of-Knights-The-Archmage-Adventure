@@ -32,6 +32,9 @@ namespace GDAPS2Game
         private List<Chunk> chunks;
         private Queue<Chunk> chunkOrder;
 
+        // tree
+        private Texture2D tree;
+
         // Properties
 
         // Constructor
@@ -45,6 +48,7 @@ namespace GDAPS2Game
             this.game = game;
             chunks = new List<Chunk>();
             chunkOrder = new Queue<Chunk>();
+            tree = game.Content.Load<Texture2D>("tree");
         }
 
         // Methods
@@ -58,6 +62,11 @@ namespace GDAPS2Game
                 foreach (Chunk chunk in chunks)
                 {
                     chunk.Draw(sb);
+
+                    if(rng.Next(1,101) > 75)
+                    {
+                        sb.Draw(tree, new Vector2(1600, 550), new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    }
                 }
             }
 
