@@ -63,6 +63,7 @@ namespace GDAPS2Game
 
         public void Update(GameTime gameTime)
         {
+            Scoring();
             if (isActive == true)
             {
                 arrowRect.X = (int)arrowPos.X;
@@ -80,8 +81,6 @@ namespace GDAPS2Game
                 {
                     arrowColor = Color.White;
                 }
-
-                Scoring();
 
                 //Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
 
