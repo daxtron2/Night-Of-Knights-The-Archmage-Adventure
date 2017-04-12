@@ -136,7 +136,7 @@ namespace GDAPS2Game
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(17, 750, 85, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
+            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
             enemies.Add(rangedEnemy);
             
