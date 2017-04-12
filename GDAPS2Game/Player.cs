@@ -49,8 +49,8 @@ namespace GDAPS2Game
         {
             health = 50;//testing value
             faceRight = true;
-            pHitBox = new Rectangle(characterBox.X, characterBox.Y + 55, 10, 10);
-            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y + 55, 10, characterBox.Height);
+            pHitBox = new Rectangle(characterBox.X, characterBox.Y, 40, 70);
+            pHitBoxL = new Rectangle(characterBox.X, characterBox.Y, 40, 70);
             hit = hitbox;
             intersects = false;
             playerAttack = 1;//deals 1 damage per click
@@ -80,8 +80,8 @@ namespace GDAPS2Game
                     faceRight = true;
                     Update(gameTime);
                 }
-                pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y + 105, 40, 70);
-                pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y + 105, 40, 70);
+                pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y, 40, 70);
+                pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y, 40, 70);
 
             }
 
@@ -107,14 +107,10 @@ namespace GDAPS2Game
             // If character is within a piece of terrain move them out
             // Might be handled by monogame?
             
-            //first handle ground collision
-            if (characterBox.Y + characterBox.Height >= FLOORHEIGHT)
-            {
-                //characterBox.Y = FLOORHEIGHT - characterBox.Height;
-                pHitBoxL.Y = characterBox.Y + 30; // + characterBox.Height - 50;
-               
-                pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
-            }
+            
+            pHitBoxL.Y = characterBox.Y + 30; // + characterBox.Height - 50;
+            pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
+            
             
             if (characterBox.X <= 0)
             {

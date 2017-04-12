@@ -263,8 +263,8 @@ namespace GDAPS2Game
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
             gen.Draw(spriteBatch);
-            player.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
+            player.Draw(spriteBatch);
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
 
             //Draws the player score and health depending on his position, made such that it follows the player when its x position is below 200, else it appears in the top left
@@ -278,7 +278,7 @@ namespace GDAPS2Game
                 spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.CharacterBox.X + screenMiddle - 400, 10), Color.Black);
                 spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10 + player.CharacterBox.X - 200, 10), Color.Black);
             }
-            
+           
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
