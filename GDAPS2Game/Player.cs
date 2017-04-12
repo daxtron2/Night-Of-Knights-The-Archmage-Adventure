@@ -15,7 +15,6 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        private int score;
         private int playerAttack;
         private Texture2D hit;
         //Creates the two rectangles for the attack hitboxes
@@ -49,7 +48,6 @@ namespace GDAPS2Game
         public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, List<Enemy> enemies) : base(initPositionBox, charSprite)
         {
             health = 50;//testing value
-            score = 0;//score starts out at zero, obviously
             faceRight = true;
             pHitBox = new Rectangle(characterBox.X, characterBox.Y + 55, 10, 10);
             pHitBoxL = new Rectangle(characterBox.X, characterBox.Y + 55, 10, characterBox.Height);
@@ -99,6 +97,7 @@ namespace GDAPS2Game
             throw new NotImplementedException();
 
         }
+
 
         /// <summary>
         /// Main collision detection script

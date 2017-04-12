@@ -44,7 +44,22 @@ namespace GDAPS2Game
             }
             else
             {
-               TryDestroy();
+                TryDestroy();
+            }
+        }
+        //method to add score, uses the addScore boolean in Character.
+        public void Scoring()
+        {
+            if (isActive == false)
+            {
+                //if addscore is equal to true adds to the score then sets it to false so it only runs once.
+                if (addScore == true)
+                {
+                    Console.WriteLine("Is this even working?");
+                    playerL.AddScore(10);
+                    Console.WriteLine("Score: " + playerL.Score);
+                    addScore = false;
+                }
             }
         }
 
