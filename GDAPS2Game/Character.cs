@@ -20,6 +20,9 @@ namespace GDAPS2Game
         private int downAccel;
         private int gravity;
         private int jumpHeight;
+        private int score;
+        protected bool addScore = false;
+
         protected int FLOORHEIGHT = 750; //never change this in the program, only through editor, treat it as a constant
         // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
         KeyboardState kState;
@@ -30,6 +33,8 @@ namespace GDAPS2Game
         public Rectangle CharacterBox { get { return characterBox; } }
         public bool IsActive { get { return isActive; } }
 
+        //Boolean used to determine if score should be added. Used when the enemy dies.
+        public bool scoreAdd { get { return addScore; } set { addScore = value; } }
         // Constructor
         /// <summary>
         /// Instantiate a new Character
@@ -65,6 +70,19 @@ namespace GDAPS2Game
             health = 5;
         }
 
+        //method to add the score, used when enemies die.
+        public void AddScore(int add)
+        {
+            score += add;
+            Console.WriteLine("Score is: " + score);
+        }
+
+        //returns the score value
+        public int Score
+        {
+            get { return score; }
+        }
+
         /// <summary>
         /// Create the enemy or player, set default health value, Add to screen for draw
         /// </summary>
@@ -84,6 +102,8 @@ namespace GDAPS2Game
         {
             if (health <= 0)
             {
+                //sets addScore to true so that the score can be added, set to false after score is incremented.
+                addScore = true;
                 isActive = false;
             }
 

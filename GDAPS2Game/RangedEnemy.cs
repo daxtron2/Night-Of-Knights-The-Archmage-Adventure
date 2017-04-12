@@ -63,36 +63,42 @@ namespace GDAPS2Game
 
         public void Update(GameTime gameTime)
         {
-            arrowRect.X = (int)arrowPos.X;
-            if (arrowRect.Intersects(playerPos))
+            if (isActive == true)
             {
-                arrowColor = Color.Red;
-                if (arrowActive == true)
+                arrowRect.X = (int)arrowPos.X;
+                if (arrowRect.Intersects(playerPos))
                 {
-                    playerL.TakeDamage(5);
+                    arrowColor = Color.Red;
+                    if (arrowActive == true)
+                    {
+                        playerL.TakeDamage(5);
+                    }
+                    arrowActive = false;
+                    intersecting = true;
                 }
-                arrowActive = false;
-                intersecting = true;
+                else
+                {
+                    arrowColor = Color.White;
+                }
+
+                Scoring();
+
+                //Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
+
+                // switch case for loading different frames of animation
+                switch (frame)
+                {
+                    case 0:
+                        currentFrame.X = 82;
+                        currentFrame.Y = 40;
+                        break;
+                    case 1:
+                        currentFrame.X = 104;
+                        currentFrame.Y = 40;
+                        break;
+                }
+                base.Update(gameTime);
             }
-            else
-            {
-                arrowColor = Color.White;
-            }
-            //Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
-            
-            // switch case for loading different frames of animation
-            switch (frame)
-            {
-                case 0:
-                    currentFrame.X = 82;
-                    currentFrame.Y = 40;
-                    break;
-                case 1:
-                    currentFrame.X = 104;
-                    currentFrame.Y = 40;
-                    break;
-            }
-            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
