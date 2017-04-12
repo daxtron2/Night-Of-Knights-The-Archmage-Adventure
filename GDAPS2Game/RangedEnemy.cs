@@ -23,12 +23,12 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(14, 20); // size of each sprite
 
-        // shooting arrow stuff
-        private Vector2 arrowPos;
-        private Rectangle arrowRect;
+        // shooting projectile stuff
+        private Vector2 projectilePos;
+        private Rectangle projectileRect;
         Boolean intersecting = false;
-        Boolean arrowActive = true;
-        Color arrowColor = Color.White;
+        Boolean projectileActive = true;
+        Color projectileColor = Color.White;
 
         // Properties
 
@@ -38,8 +38,8 @@ namespace GDAPS2Game
         /// </summary>
         public RangedEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
         {
-            arrowPos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create arrow position in center of bow, dependant on position of enemy
-            arrowRect = new Rectangle((int)arrowPos.X, (int)arrowPos.Y, 15, 7); // create arrow position in rectangle form for intersecting
+            projectilePos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
+            projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
         }
 
         /// <summary>
@@ -51,11 +51,11 @@ namespace GDAPS2Game
             {
                 if (playerPos.X < posBox.X)
                 {
-                    arrowPos.X -= 6;
-                    if (arrowPos.X < (posBox.X - posBox.Width) - 900)
+                    projectilePos.X -= 6;
+                    if (projectilePos.X < (posBox.X - posBox.Width) - 900)
                     {
-                        arrowPos.X = posBox.X - posBox.Width;
-                        arrowActive = true;
+                        projectilePos.X = posBox.X - posBox.Width;
+                        projectileActive = true;
                     }
                 }
             }
@@ -63,22 +63,22 @@ namespace GDAPS2Game
 
         public void Update(GameTime gameTime)
         {
-            arrowRect.X = (int)arrowPos.X;
-            if (arrowRect.Intersects(playerPos))
+            projectileRect.X = (int)projectilePos.X;
+            if (projectileRect.Intersects(playerPos))
             {
-                arrowColor = Color.Red;
-                if (arrowActive == true)
+                projectileColor = Color.Red;
+                if (projectileActive == true)
                 {
                     playerL.TakeDamage(5);
                 }
-                arrowActive = false;
+                projectileActive = false;
                 intersecting = true;
             }
             else
             {
-                arrowColor = Color.White;
+                projectileColor = Color.White;
             }
-            //Console.WriteLine("ArrowRect X: {0}\tplayerPos{2}\nArrowRect Y: {1}",arrowRect.X,arrowRect.Y,playerPos);
+            //Console.WriteLine("projectileRect X: {0}\tplayerPos{2}\nprojectileRect Y: {1}",projectileRect.X,projectileRect.Y,playerPos);
             
             // switch case for loading different frames of animation
             switch (frame)
@@ -99,8 +99,8 @@ namespace GDAPS2Game
         {
             if (isActive)
             {
-                // draw arrow
-                spriteBatch.Draw(sprite, arrowPos, new Rectangle(47, 48, 15, 7), arrowColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                // draw projectile
+                spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
                 // draw enemy
                 spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);

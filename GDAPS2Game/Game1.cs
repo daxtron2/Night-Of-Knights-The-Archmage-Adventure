@@ -263,8 +263,8 @@ namespace GDAPS2Game
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
             gen.Draw(spriteBatch);
-            player.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
+            player.Draw(spriteBatch);
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
