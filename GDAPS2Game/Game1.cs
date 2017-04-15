@@ -19,6 +19,7 @@ namespace GDAPS2Game
     public class Game1 : Game
     {
         // Fields
+        int playerXCamera = 500;
         // Graphics
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -32,8 +33,8 @@ namespace GDAPS2Game
             "background_new"
         };
         string[] forgroundPaths = {
-            "tree",
-            "tree_2"
+            "tree.png",
+            "tree_2.png"
         };
         Heart heartObj;
 
@@ -125,10 +126,9 @@ namespace GDAPS2Game
         protected override void Initialize()
         {
             rng = new Random();
-
             base.Initialize();
-
             gen = new Generator(rng, backgrounds, player, this);
+
         }
 
         /// <summary>
@@ -229,7 +229,7 @@ namespace GDAPS2Game
             }
 
 
-            cameraPos = new Vector3((player.CharacterBox.X*-1)+200, 0, 0f);
+            cameraPos = new Vector3((player.CharacterBox.X*-1)+playerXCamera, 0, 0f);
             //last thing
             oldKState = kState;
             base.Update(gameTime);
@@ -243,12 +243,12 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             
-            if (player.CharacterBox.X > 200)//if the player is past 200px on the screen
+            if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
             {
                 //the camera will stick with the player along the x coordinate
                 spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
             }
-            if (player.CharacterBox.X <= 200 || currentState != GameState.Game)//if they're at or before 200, or in a menu
+            if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
             {
                 if(currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
                 {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
