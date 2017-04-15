@@ -18,8 +18,7 @@ namespace GDAPS2Game
         protected Rectangle playerPos;
         protected Texture2D sprite;
         protected Rectangle posBox;
-        protected Player playerL;
-
+        private Random rng = new Random();
         // Properties
 
         // Constructor
@@ -62,7 +61,10 @@ namespace GDAPS2Game
                 }
             }
         }
-
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            base.Draw(spriteBatch);
+        }
         internal void Update(GameTime gameTime)
         {
             playerPos = playerL.CharacterBox;

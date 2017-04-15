@@ -25,6 +25,7 @@ namespace GDAPS2Game
         SpriteFont mainFont;
         Texture2D spriteSheet;
         Texture2D hitSprite;
+        Texture2D heartSprite;
         List<Texture2D> backgrounds;
         List<Texture2D> foregrounds;
         string[] backgroundPaths = {
@@ -34,6 +35,7 @@ namespace GDAPS2Game
             "tree.png",
             "tree_2.png"
         };
+        Heart heartObj;
 
         // UI
         Menu menu;
@@ -53,7 +55,7 @@ namespace GDAPS2Game
         Random rng;
         Player player;
         RangedEnemy rangedEnemy;
-        List<Enemy> enemies = new List<Enemy>();
+        List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // IO
         BinaryReader attribRead;
@@ -150,9 +152,11 @@ namespace GDAPS2Game
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, enemies); // spawns player right where they will be for rest of game
+            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
-            enemies.Add(rangedEnemy);
+            
+            rangedEnemies.Add(rangedEnemy);
+            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
             
             //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
         }
@@ -177,7 +181,7 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
-            player.enemies = this.enemies;
+            player.rangedEnemies = this.rangedEnemies;
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
@@ -191,6 +195,11 @@ namespace GDAPS2Game
                 gen.Update();
                 rangedEnemy.Update(gameTime);
                 rangedEnemy.Attack();
+                /*for (int i = 0; i < rangedEnemies.Count; i++)
+                {
+                    rangedEnemies[i].Update(gameTime);
+                    rangedEnemies[i].Attack();
+                }*/
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -278,6 +287,10 @@ namespace GDAPS2Game
         {
             gen.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
+            /*for(int i = 0; i<rangedEnemies.Count; i++)
+            {
+                rangedEnemies[i].Draw(spriteBatch);
+            }*/
             player.Draw(spriteBatch);
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
 
