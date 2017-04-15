@@ -30,6 +30,9 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
 
+        //integer that sets the leveling up goal. Starts out at 100
+        private int newGoal = 100;
+
         public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // Properties
@@ -119,7 +122,19 @@ namespace GDAPS2Game
 
         }
 
-
+        //method for leveling up. If the level starts out at 0 it sets it to 1. Each time the score reaches the 'newGoal', the new goal gets 100 added to it and level goes up
+        public void levelUp()
+        {
+            if (level == 0)
+            {
+                level = 1;
+            }
+            if (Score >= newGoal)
+            {
+                newGoal += 100;
+                level += 1;
+            }
+        }
         
         /// <summary>
         /// Main attack script, damages enemies infront of the player character
@@ -153,7 +168,8 @@ namespace GDAPS2Game
                         if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
                         {
                             //Console.WriteLine("CLICK EVENT");//debug output
-                            enm.TakeDamage(playerAttack);//take an amount of damage
+                            //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
+                            enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
                         }
                     }
                     else//if not intersecting
@@ -169,7 +185,8 @@ namespace GDAPS2Game
                         if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
                         {//if LMB just pressed
                             //Console.WriteLine("CLICK EVENT");//debug console output
-                            enm.TakeDamage(playerAttack);//take an amount of damage
+                            //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
+                            enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
                         }
                     }
                     else//if hitboxes don't intersect
@@ -281,6 +298,8 @@ namespace GDAPS2Game
         bool firstRun = true;
         public void Update(GameTime gameTime)
         {
+            //calls the level up method.
+            levelUp();
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (firstRun)
             {

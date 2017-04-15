@@ -22,7 +22,7 @@ namespace GDAPS2Game
         private int numFrames = 2; // total number of frames is 2
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(14, 20); // size of each sprite
-
+        private int damage = 5;
         // shooting projectile stuff
         private Vector2 projectilePos;
         private Rectangle projectileRect;
@@ -40,6 +40,7 @@ namespace GDAPS2Game
         {
             projectilePos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
+            health += level;
         }
 
         /// <summary>
@@ -72,7 +73,8 @@ namespace GDAPS2Game
                     projectileColor = Color.Red;
                     if (projectileActive == true)
                     {
-                        playerL.TakeDamage(5);
+                        //the projectile for the archer does damage (set to 1), plus the level divided by 2, this adds scaling.
+                        playerL.TakeDamage(damage + level/2);
                     }
                     projectileActive = false;
                     intersecting = true;

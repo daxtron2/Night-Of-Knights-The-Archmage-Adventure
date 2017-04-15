@@ -301,11 +301,13 @@ namespace GDAPS2Game
             {
                 spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(screenMiddle - 200, 10), Color.Black);
                 spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10, 10), Color.Black);
+                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(screenMiddle + 500, 10), Color.Black);
             }
             else
             {
                 spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.CharacterBox.X + screenMiddle - 400, 10), Color.Black);
                 spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10 + player.CharacterBox.X - 200, 10), Color.Black);
+                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.CharacterBox.X + screenMiddle + 300, 10), Color.Black);
             }
            
         }

@@ -43,7 +43,7 @@ namespace GDAPS2Game
             }
             else
             {
-                TryDestroy();
+                health = 0;
             }
         }
         //method to add score, uses the addScore boolean in Character.

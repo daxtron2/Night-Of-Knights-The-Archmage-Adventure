@@ -23,6 +23,8 @@ namespace GDAPS2Game
         private int jumpHeight;
         private int score;
         protected bool addScore = false;
+        //Integer for the level, initally set to 1.
+        public static int level = 1;
 
         protected int FLOORHEIGHT = 750; //never change this in the program, only through editor, treat it as a constant
         // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
