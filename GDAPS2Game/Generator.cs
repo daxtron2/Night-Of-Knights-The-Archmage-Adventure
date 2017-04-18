@@ -74,7 +74,7 @@ namespace GDAPS2Game
             // Add more chunks if nessesary
             while (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
-                Chunk chunk = new Chunk(rng, backgrounds[rng.Next(0, backgrounds.Count)], it, 1, it * ChunkSize, game);
+                Chunk chunk = new Chunk(rng, backgrounds[rng.Next(0, backgrounds.Count)], it, 1, it * ChunkSize, game, player);
                 chunks.Add(chunk);
                 chunkOrder.Enqueue(chunk);
                 it++;

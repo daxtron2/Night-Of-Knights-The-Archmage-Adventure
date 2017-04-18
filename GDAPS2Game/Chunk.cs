@@ -25,7 +25,8 @@ namespace GDAPS2Game
 
         // tree
         private Texture2D tree;
-        private Vector2 treePos = new Vector2(400, 550);
+        private List<Vector2> treePosList;
+        private Player player;
 
 
         // Properties
@@ -37,17 +38,6 @@ namespace GDAPS2Game
             get { return chunkNum; }
         }
 
-        public Vector2 TreePos
-        {
-            get { return treePos; }
-            set { treePos = value; }
-        }
-
-        public Texture2D Tree
-        {
-            get { return tree; }
-        }
-
         // Constructor
         /// <summary>
         /// Instantiate a new Chunk
@@ -57,7 +47,7 @@ namespace GDAPS2Game
         /// <param name="chunkNum">Number of Chunk in order</param>
         /// <param name="numEnemies">Number of enemies to create in chunk</param>
         /// <param name="x">X start position of chunk</param>
-        public Chunk(Random rng, Texture2D background, int chunkNum, int numEnemies, int x, Game1 game)
+        public Chunk(Random rng, Texture2D background, int chunkNum, int numEnemies, int x, Game1 game, Player player)
         {
             this.rng = rng;
             this.background = background;
@@ -65,7 +55,13 @@ namespace GDAPS2Game
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
             Populate(numEnemies);
+            this.player = player;
             tree = game.Content.Load<Texture2D>("tree");
+            treePosList = new List<Vector2>();
+            treePosList.Add(new Vector2(400, 550));
+            treePosList.Add(new Vector2(treePosList[0].X + rng.Next(300, 1600), treePosList[0].Y));
+            treePosList.Add(new Vector2(treePosList[1].X + rng.Next(300, 1600), treePosList[0].Y));
+            treePosList.Add(new Vector2(treePosList[2].X + rng.Next(300, 1600), treePosList[0].Y));
         }
 
         // Methods
@@ -88,13 +84,14 @@ namespace GDAPS2Game
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(background, location, Color.White);
-        }
-
-        
-        public void DrawTrees(SpriteBatch sb)
-        {
-            sb.Draw(tree, treePos, new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-            sb.Draw(tree, new Vector2(treePos.X + rng.Next(1, 1600), treePos.Y), new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+            for (int i = 0; i < treePosList.Count; i++)
+            {
+                sb.Draw(tree, treePosList[i], new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                if (player.CharacterBox.X > treePosList[i].X + 1600)
+                {
+                    sb.Draw(tree, new Vector2(treePosList[i].X + 1700, treePosList[i].Y), new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                }
+            }
         }
         
 
