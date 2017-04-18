@@ -23,6 +23,10 @@ namespace GDAPS2Game
         private int chunkNum;
         private Game1 game;
 
+        // tree
+        private Texture2D tree;
+        private Vector2 treePos = new Vector2(400, 550);
+
 
         // Properties
         /// <summary>
@@ -31,6 +35,17 @@ namespace GDAPS2Game
         public int ChunkNum
         {
             get { return chunkNum; }
+        }
+
+        public Vector2 TreePos
+        {
+            get { return treePos; }
+            set { treePos = value; }
+        }
+
+        public Texture2D Tree
+        {
+            get { return tree; }
         }
 
         // Constructor
@@ -50,6 +65,7 @@ namespace GDAPS2Game
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
             Populate(numEnemies);
+            tree = game.Content.Load<Texture2D>("tree");
         }
 
         // Methods
@@ -73,6 +89,14 @@ namespace GDAPS2Game
         {
             sb.Draw(background, location, Color.White);
         }
+
+        
+        public void DrawTrees(SpriteBatch sb)
+        {
+            sb.Draw(tree, treePos, new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+            sb.Draw(tree, new Vector2(treePos.X + rng.Next(1, 1600), treePos.Y), new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+        }
+        
 
         /// <summary>
         /// Remove all enemies left if any
