@@ -33,6 +33,12 @@ namespace GDAPS2Game
         //integer that sets the leveling up goal. Starts out at 100
         private int newGoal = 100;
 
+        /// <summary>
+        /// Integers to hold the maximum amount the player can move left
+        /// </summary>
+        private int maxMovement = 0;
+        private int oldMax = 0;
+
         public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // Properties
@@ -118,6 +124,10 @@ namespace GDAPS2Game
             if (characterBox.X <= 0)
             {
                 characterBox.X = 0;
+            }
+            if (characterBox.X <= maxMovement)
+            {
+                characterBox.X = maxMovement;
             }
 
         }
@@ -291,6 +301,9 @@ namespace GDAPS2Game
                        )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+
+                        //This is there the Voice left off, he has no idea waht he is even doing right now.
+                        maxMovement = currentFrame.X - 200;
                     }
                     else
                     {
