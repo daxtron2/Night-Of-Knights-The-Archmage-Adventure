@@ -15,6 +15,9 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
+        private int frame;
+        private Point currentFrame;
+        private Point frameSize = new Point(15,20);
 
         // Properties
 
@@ -50,6 +53,31 @@ namespace GDAPS2Game
             {
                 user.TakeDamage(5);
             }
+        }
+
+        public void Update()
+        {
+            switch (frame)
+            {
+                case 0:
+                    currentFrame.X = 82;
+                    currentFrame.Y = 67;
+                    break;
+                case 1:
+                    currentFrame.X = 104;
+                    currentFrame.Y = 67;
+                    break;
+            }
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (isActive)
+            {
+                // draw enemy
+                spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+            }
+            base.Draw(spriteBatch);
         }
     }
 }
