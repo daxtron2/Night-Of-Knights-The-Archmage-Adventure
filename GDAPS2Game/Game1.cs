@@ -56,6 +56,7 @@ namespace GDAPS2Game
         Random rng;
         Player player;
         RangedEnemy rangedEnemy;
+        MeleeEnemy meleeEnemy;
         List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // IO
@@ -156,6 +157,7 @@ namespace GDAPS2Game
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
+            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 20, 20), spriteSheet);
             
             rangedEnemies.Add(rangedEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
@@ -197,6 +199,8 @@ namespace GDAPS2Game
                 gen.Update();
                 rangedEnemy.Update(gameTime);
                 rangedEnemy.Attack();
+                meleeEnemy.Update();
+                //meleeEnemy.Attack();
                 /*for (int i = 0; i < rangedEnemies.Count; i++)
                 {
                     rangedEnemies[i].Update(gameTime);
@@ -289,6 +293,7 @@ namespace GDAPS2Game
         {
             gen.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
+            meleeEnemy.Draw(spriteBatch);
             /*for(int i = 0; i<rangedEnemies.Count; i++)
             {
                 rangedEnemies[i].Draw(spriteBatch);
