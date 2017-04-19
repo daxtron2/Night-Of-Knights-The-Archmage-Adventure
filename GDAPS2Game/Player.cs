@@ -84,7 +84,7 @@ namespace GDAPS2Game
                     Update(gameTime);
                 }
                 pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y, 40, 70);
-                pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y, 40, 70);
+                pHitBoxL = new Rectangle(characterBox.X - 45, characterBox.Y, 40, 70);
 
             }
 
@@ -187,6 +187,7 @@ namespace GDAPS2Game
                             //Console.WriteLine("CLICK EVENT");//debug console output
                             //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
                             enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
+                            Console.WriteLine("I just hit left yo!");
                         }
                     }
                     else//if hitboxes don't intersect
@@ -278,6 +279,11 @@ namespace GDAPS2Game
                     spriteBatch.Draw(hit, pHitBox, Color.Red);
                     spriteBatch.Draw(hit, pHitBoxL, Color.Green);
                     // same thing as above but flipped 
+                    if (intersects)
+                    {
+                        spriteBatch.Draw(hit, pHitBox, Color.PeachPuff);
+                        spriteBatch.Draw(hit, pHitBoxL, Color.PeachPuff);
+                    }
                     if (
                             (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
                             ||

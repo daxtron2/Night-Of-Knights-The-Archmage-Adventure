@@ -28,6 +28,8 @@ namespace GDAPS2Game
             playerL = player;
             sprite = charSprite;
             posBox = initPositionBox;
+            posBox.X = initPositionBox.X - 15;
+            
         }
 
         /// <summary>

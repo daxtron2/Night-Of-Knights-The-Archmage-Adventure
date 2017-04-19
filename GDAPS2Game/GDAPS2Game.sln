@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GDAPS2Game", "Z:\IGMProfile\Documents\REEEEEEEEEEEEEEE\GDAPS2Game\GDAPS2Game.csproj", "{1060FEF6-0A35-4643-BB27-B3C6614125E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExternalAttributeEditor", "Z:\IGMProfile\Documents\REEEEEEEEEEEEEEE\ExternalAttributeEditor\ExternalAttributeEditor.csproj", "{2263FE1F-1615-4A8D-9C99-791A6F3A5155}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Debug|Any CPU.Build.0 = Debug|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Debug|x86.ActiveCfg = Debug|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Debug|x86.Build.0 = Debug|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Release|Any CPU.ActiveCfg = Release|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Release|x86.ActiveCfg = Release|x86
+		{1060FEF6-0A35-4643-BB27-B3C6614125E2}.Release|x86.Build.0 = Release|x86
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Debug|x86.Build.0 = Debug|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Release|x86.ActiveCfg = Release|Any CPU
+		{2263FE1F-1615-4A8D-9C99-791A6F3A5155}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
