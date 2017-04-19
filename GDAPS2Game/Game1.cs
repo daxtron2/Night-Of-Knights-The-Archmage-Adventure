@@ -250,7 +250,7 @@ namespace GDAPS2Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            Console.WriteLine(player.IsActive);
+            //Console.WriteLine(player.IsActive);
             if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
             {
                 //the camera will stick with the player along the x coordinate
