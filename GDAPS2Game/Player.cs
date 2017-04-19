@@ -87,6 +87,10 @@ namespace GDAPS2Game
                 pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y, 40, 70);
 
             }
+            else
+            {
+                isActive = false;
+            }
 
         }
 
@@ -219,7 +223,7 @@ namespace GDAPS2Game
             }
             else
             {
-                this.isActive = false;
+                
                 health = 0;
             }
         }
@@ -299,6 +303,7 @@ namespace GDAPS2Game
         bool firstRun = true;
         public void Update(GameTime gameTime)
         {
+            
             //calls the level up method.
             levelUp();
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;

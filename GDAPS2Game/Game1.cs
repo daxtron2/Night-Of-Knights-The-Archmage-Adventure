@@ -207,7 +207,7 @@ namespace GDAPS2Game
                     currentState = GameState.GameOver;
                 }
             }
-            else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
+            else if (currentState == GameState.Pause || currentState == GameState.Menu || currentState == GameState.GameOver)//if in pause menu/start menu
             {
                 menu.Input();//check for menu input
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//if escape is pressed
@@ -220,6 +220,10 @@ namespace GDAPS2Game
                 switch (menu.SelectionIndex)//check what is currently selected
                 {
                     case 0://if the top button, play/resume game, is selected
+                        if(currentState == GameState.GameOver)
+                        {
+                            
+                        }
                         currentState = GameState.Game;//unpause game
                         //firstMenu = false;//no longer first menu, if not already
                         break;
