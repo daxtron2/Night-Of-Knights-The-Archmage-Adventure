@@ -219,6 +219,7 @@ namespace GDAPS2Game
             }
             else
             {
+                this.isActive = false;
                 health = 0;
             }
         }

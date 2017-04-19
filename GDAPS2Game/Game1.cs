@@ -202,6 +202,10 @@ namespace GDAPS2Game
                     rangedEnemies[i].Update(gameTime);
                     rangedEnemies[i].Attack();
                 }*/
+                if(player.IsActive == false)
+                {
+                    currentState = GameState.GameOver;
+                }
             }
             else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
             {
@@ -242,7 +246,7 @@ namespace GDAPS2Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+            Console.WriteLine(player.IsActive);
             if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
             {
                 //the camera will stick with the player along the x coordinate
@@ -313,6 +317,7 @@ namespace GDAPS2Game
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
+            //Console.WriteLine(mainFont.MeasureString("GAME OVER"));
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
             if (currentState == GameState.Menu)//if in menu, i.e. paused
             {
@@ -356,7 +361,23 @@ namespace GDAPS2Game
             }
             if(currentState == GameState.GameOver)
             {
-                //Game over screen
+                spriteBatch.DrawString(mainFont, "GAME OVER", new Vector2(screenMiddle - 130, 50), Color.Black);
+                spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
+
+                switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
+                {
+                    case 0://places the asterisks with "Play Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 105), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 105), Color.Black);//no matter the resolution
+
+                        break;
+                    case 1://places the asterisks with "Exit Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
+
+                        break;
+                }
             }
         }
     }
