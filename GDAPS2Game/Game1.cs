@@ -33,14 +33,16 @@ namespace GDAPS2Game
         // REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
+            "background_new",
             "background_new"
         };
-        string[] forgroundPaths = {
+        string[] foregroundPaths = {
             "tree.png",
             "tree_2.png"
         };
         int[][] odds = {
-            new int[] {100, 10, 1 } // Plains Backgrounds (HARDCODE)
+            new int[] {100, 10, 1 },  // Plains Foregrounds (HARDCODE)
+            new int[] {10, 1000, 1 }    // Forest Foregrounds (HARDCODE)
         };
 
         // UI
@@ -144,8 +146,8 @@ namespace GDAPS2Game
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // Load backgrounds for game here
-            LoadMap();
+            // Load THE ENTIRE GAME here
+            LoadWorld();
 
             // Cut
             foreach (string path in backgroundPaths)
@@ -154,7 +156,7 @@ namespace GDAPS2Game
             }
             
             // Load forgrounds for the game here
-            foreach (string path in forgroundPaths)
+            foreach (string path in foregroundPaths)
             {
                 //foregroundSet.Add(Content.Load<Texture2D>(path));
             }
@@ -370,11 +372,38 @@ namespace GDAPS2Game
         }
 
         /// <summary>
-        /// Load the Maps
+        /// Load the Maps (Currently HARDCODED)
         /// </summary>
-        protected void LoadMap()
+        protected void LoadWorld()
         {
-            throw new NotImplementedException("WE MUST CONSTRUCT MORE BIOMES");
+            //throw new NotImplementedException("WE MUST CONSTRUCT MORE BIOMES");
+
+            world = new KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[odds.Length];
+
+            // For each Biome
+            for (int i = 0; i < odds.Length; i++)
+            {
+                // Create pair to hold biome's foregrounds assets and odds
+                KeyValuePair<Texture2D, int>[] foregroundSet = new KeyValuePair<Texture2D, int>[odds[i].Length];
+
+                // For each Foreground
+                for (int j = 0; j < odds[i].Length; j++)
+                {
+                    // First foreground is always null
+                    if (j == 0)
+                    {
+                        foregroundSet[j] = new KeyValuePair<Texture2D, int>(null, odds[i][j]);
+                    }
+                    // Load Texture2D and it's coresponding odds in the biome
+                    else
+                    {
+                        foregroundSet[j] = new KeyValuePair<Texture2D, int>(Content.Load<Texture2D>(foregroundPaths[j - 1]), odds[i][j]);
+                    }
+                }
+                
+                // Add biome to the world
+                world[i] = new KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>(Content.Load<Texture2D>(backgroundPaths[i]), foregroundSet);
+            }
         }
     }
 }

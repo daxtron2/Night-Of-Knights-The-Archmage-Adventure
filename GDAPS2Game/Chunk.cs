@@ -19,6 +19,7 @@ namespace GDAPS2Game
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
         private KeyValuePair<Texture2D, Vector2>[] foregrounds;
+        private const int NUMFOREGROUNDS = 5; // number of foreground sections per chunk
         private int sumOdds;
         private Rectangle location;
         private List<Enemy> chunkEnemies;
@@ -49,7 +50,7 @@ namespace GDAPS2Game
             this.rng = rng;
             this.biome = biome;
             sumOdds = 0;
-            foregrounds = new KeyValuePair<Texture2D, Vector2>[10];
+            foregrounds = new KeyValuePair<Texture2D, Vector2>[NUMFOREGROUNDS];
             this.chunkNum = chunkNum;
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
@@ -68,11 +69,18 @@ namespace GDAPS2Game
             {
                 sumOdds += foreground.Value;
             }
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < NUMFOREGROUNDS; i++)
             {
                 Texture2D foreground = FindForeground(rng.Next(0, sumOdds));
-                foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
-                    new Vector2(location.X + i * location.Width * 10 + (location.Width / 10 - foreground.Width / 2), player.FloorHeight - foreground.Height));
+                if (foreground != null)
+                {
+                    foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
+                        new Vector2(location.X + i * location.Width / NUMFOREGROUNDS + (location.Width / NUMFOREGROUNDS - foreground.Width / 2), 825 - foreground.Height));
+                }
+                else
+                {
+                    foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(null, new Vector2());
+                }
             }
 
             for (int i = 0; i < numEnemies; i++)
@@ -119,6 +127,7 @@ namespace GDAPS2Game
                     return foreground.Key;
                 }
             }
+            // Just in case I cant math
             throw new Exception("Ya fucked up da foreground odds, matey");
         }
     }
