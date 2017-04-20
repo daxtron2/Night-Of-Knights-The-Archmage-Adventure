@@ -33,16 +33,14 @@ namespace GDAPS2Game
         private List<Chunk> chunks;
         private Queue<Chunk> chunkOrder;
 
-        // tree
-        private Vector2 treePos;
-
         // Properties
 
         // Constructor
-        public Generator(Random rng, List<Texture2D> backgrounds, Player player, Game1 game)
+        public Generator(Random rng, List<Texture2D> backgrounds, Dictionary<Texture2D, Dictionary<Texture2D, int>> foregroundSets, Player player, Game1 game)
         {
             this.rng = rng;
             this.backgrounds = backgrounds;
+            this.foregroundSets = foregroundSets;
             it = 0;
             currentIt = 0;
             this.player = player;

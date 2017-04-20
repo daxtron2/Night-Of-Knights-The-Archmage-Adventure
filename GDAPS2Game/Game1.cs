@@ -19,7 +19,6 @@ namespace GDAPS2Game
     public class Game1 : Game
     {
         // Fields
-        int playerXCamera = 500;
         // Graphics
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -46,6 +45,7 @@ namespace GDAPS2Game
 
         // Camera
         Vector3 cameraPos;
+        int playerXCamera = 500;
 
         // Controls
         KeyboardState kState;

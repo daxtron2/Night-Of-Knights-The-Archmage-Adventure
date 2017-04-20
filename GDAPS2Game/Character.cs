@@ -26,7 +26,7 @@ namespace GDAPS2Game
         //Integer for the level, initally set to 1.
         public static int level = 1;
 
-        protected int FLOORHEIGHT = 750; //never change this in the program, only through editor, treat it as a constant
+        protected int floorHeight = 750; //never change this in the program, only through editor, treat it as a constant
         // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
         KeyboardState kState;
         KeyboardState lastKState;
@@ -37,6 +37,7 @@ namespace GDAPS2Game
         // Properties
         public Rectangle CharacterBox { get { return characterBox; } }
         public bool IsActive { get { return isActive; } }
+        public int FloorHeight { get { return floorHeight; } } // Needed for foreground positioning
 
         //Boolean used to determine if score should be added. Used when the enemy dies.
         public bool scoreAdd { get { return addScore; } set { addScore = value; } }
@@ -61,7 +62,7 @@ namespace GDAPS2Game
                     read.ReadInt32();//width, don't store
                     read.ReadInt32();//height, don't store
                     gravity = read.ReadInt32();
-                    FLOORHEIGHT = read.ReadInt32();
+                    floorHeight = read.ReadInt32();
                     jumpHeight = read.ReadInt32();
                 }
                 catch (Exception ex)
@@ -128,16 +129,16 @@ namespace GDAPS2Game
             // Somehow pull player and or enemy towards the floor
             // Not 100% sure on the best way to do this
             characterBox.Y += downAccel; 
-            if(characterBox.Y >= FLOORHEIGHT)//will need to be changed from FLOORHEIGHT depending on sprite height
+            if(characterBox.Y >= floorHeight)//will need to be changed from FLOORHEIGHT depending on sprite height
             {
                 downAccel = 0;
             }
             kState = Keyboard.GetState();
-            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= FLOORHEIGHT)//FLOORHEIGHT is based on sprite height
+            if ((kState.IsKeyDown(Keys.W) || kState.IsKeyDown(Keys.Up)) && (lastKState.IsKeyUp(Keys.W) || (lastKState.IsKeyUp(Keys.Up))) && characterBox.Y >= floorHeight)//FLOORHEIGHT is based on sprite height
             {
                 downAccel = jumpHeight;
             }
-            if (characterBox.Y <= FLOORHEIGHT)
+            if (characterBox.Y <= floorHeight)
             {
                 downAccel += gravity;
             }

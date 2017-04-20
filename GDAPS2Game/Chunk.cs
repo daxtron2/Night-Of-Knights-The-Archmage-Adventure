@@ -19,15 +19,12 @@ namespace GDAPS2Game
         // Graphics
         private Texture2D background;
         private Dictionary<Texture2D, int> foregroundSet;
+        private KeyValuePair<Texture2D, Vector2>[] foregrounds;
         private int sumOdds;
         private Rectangle location;
         private List<Enemy> chunkEnemies;
         private int chunkNum;
         private Game1 game;
-
-        // tree
-        private Texture2D tree;
-        private Dictionary<int, Texture2D> forelements;
         private Player player;
 
 
@@ -54,6 +51,8 @@ namespace GDAPS2Game
             this.rng = rng;
             this.background = background;
             this.foregroundSet = foregroundSet;
+            sumOdds = 0;
+            foregrounds = new KeyValuePair<Texture2D, Vector2>[10];
             this.chunkNum = chunkNum;
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
@@ -63,18 +62,20 @@ namespace GDAPS2Game
 
         // Methods
         /// <summary>
-        /// Populate the chunk with enemies
+        /// Populate the chunk with enemies and foregrounds
         /// </summary>
         /// <param name="numEnemies">Number of enemies to add</param>
         private void Populate(int numEnemies)
         {
             foreach (KeyValuePair<Texture2D, int> foreground in foregroundSet)
             {
-                sumOdds = foreground.Value;
+                sumOdds += foreground.Value;
             }
             for (int i = 0; i < 10; i++)
             {
-                FindForeground(rng.Next(0, sumOdds));
+                Texture2D foreground = FindForeground(rng.Next(0, sumOdds));
+                foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
+                    new Vector2(location.X + i * location.Width * 10 + (location.Width / 10 - foreground.Width / 2), player.FloorHeight - foreground.Height));
             }
 
             for (int i = 0; i < numEnemies; i++)
@@ -90,10 +91,9 @@ namespace GDAPS2Game
         public void Draw(SpriteBatch sb)
         {
             sb.Draw(background, location, Color.White);
-            for (int i = 0; i < treePosList.Count; i++)
+            for (int i = 0; i < foregrounds.Length; i++)
             {
-                sb.Draw(tree, treePosList[i], new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                
+                sb.Draw(foregrounds[i].Key, foregrounds[i].Value, Color.White);
             }
         }
         
@@ -108,7 +108,18 @@ namespace GDAPS2Game
 
         private Texture2D FindForeground(int odd)
         {
-
+            int min = 0;
+            int max = 0;
+            foreach (KeyValuePair<Texture2D, int> foreground in foregroundSet)
+            {
+                min = max;
+                max += foreground.Value;
+                if (odd >= min && odd < max)
+                {
+                    return foreground.Key;
+                }
+            }
+            throw new Exception("Ya fucked up da odds, matey");
         }
     }
 }   
