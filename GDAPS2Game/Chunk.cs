@@ -17,14 +17,12 @@ namespace GDAPS2Game
         private Random rng;
         
         // Graphics
-        private Texture2D background;
-        private Dictionary<Texture2D, int> foregroundSet;
+        private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
         private KeyValuePair<Texture2D, Vector2>[] foregrounds;
         private int sumOdds;
         private Rectangle location;
         private List<Enemy> chunkEnemies;
         private int chunkNum;
-        private Game1 game;
         private Player player;
 
 
@@ -46,11 +44,10 @@ namespace GDAPS2Game
         /// <param name="chunkNum">Number of Chunk in order</param>
         /// <param name="numEnemies">Number of enemies to create in chunk</param>
         /// <param name="x">X start position of chunk</param>
-        public Chunk(Random rng, Texture2D background, Dictionary<Texture2D, int> foregroundSet, int chunkNum, int numEnemies, int x, Game1 game, Player player)
+        public Chunk(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome, int chunkNum, int numEnemies, int x, Game1 game, Player player)
         {
             this.rng = rng;
-            this.background = background;
-            this.foregroundSet = foregroundSet;
+            this.biome = biome;
             sumOdds = 0;
             foregrounds = new KeyValuePair<Texture2D, Vector2>[10];
             this.chunkNum = chunkNum;
@@ -67,7 +64,7 @@ namespace GDAPS2Game
         /// <param name="numEnemies">Number of enemies to add</param>
         private void Populate(int numEnemies)
         {
-            foreach (KeyValuePair<Texture2D, int> foreground in foregroundSet)
+            foreach (KeyValuePair<Texture2D, int> foreground in biome.Value)
             {
                 sumOdds += foreground.Value;
             }
@@ -90,10 +87,13 @@ namespace GDAPS2Game
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
-            sb.Draw(background, location, Color.White);
+            sb.Draw(biome.Key, location, Color.White);
             for (int i = 0; i < foregrounds.Length; i++)
             {
-                sb.Draw(foregrounds[i].Key, foregrounds[i].Value, Color.White);
+                if (foregrounds[i].Key != null)
+                {
+                    sb.Draw(foregrounds[i].Key, foregrounds[i].Value, Color.White);
+                }
             }
         }
         
@@ -110,7 +110,7 @@ namespace GDAPS2Game
         {
             int min = 0;
             int max = 0;
-            foreach (KeyValuePair<Texture2D, int> foreground in foregroundSet)
+            foreach (KeyValuePair<Texture2D, int> foreground in biome.Value)
             {
                 min = max;
                 max += foreground.Value;
@@ -119,7 +119,7 @@ namespace GDAPS2Game
                     return foreground.Key;
                 }
             }
-            throw new Exception("Ya fucked up da odds, matey");
+            throw new Exception("Ya fucked up da foreground odds, matey");
         }
     }
 }   

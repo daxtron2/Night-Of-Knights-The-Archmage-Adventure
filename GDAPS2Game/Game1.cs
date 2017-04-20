@@ -26,8 +26,12 @@ namespace GDAPS2Game
         Texture2D spriteSheet;
         Texture2D hitSprite;
         Texture2D heartSprite;
-        List<Texture2D> backgrounds;
-        List<Texture2D> foregrounds;
+        Heart heartObj;
+
+        // Can we please store this stuff in a fucking file?
+        // It would be so much easier
+        // REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
             "background_new"
         };
@@ -35,7 +39,9 @@ namespace GDAPS2Game
             "tree.png",
             "tree_2.png"
         };
-        Heart heartObj;
+        int[][] odds = {
+            new int[] {100, 10, 1 } // Plains Backgrounds (HARDCODE)
+        };
 
         // UI
         Menu menu;
@@ -63,7 +69,7 @@ namespace GDAPS2Game
         Stream attribFilePath;
 
 
-        enum GameState { Menu, Pause, Game, GameOver}
+        enum GameState { Menu, Pause, Game, GameOver }
         GameState currentState;
         private void FileResolution()
         {
@@ -111,9 +117,7 @@ namespace GDAPS2Game
             menu = new Menu();//new menu object
             currentState = GameState.Menu;//start in the menu
             IsMouseVisible = true;//mouse is visible
-            backgrounds = new List<Texture2D>();
-            foregrounds = new List<Texture2D>();
-            
+
 
         }
 
@@ -127,7 +131,7 @@ namespace GDAPS2Game
         {
             rng = new Random();
             base.Initialize();
-            gen = new Generator(rng, backgrounds, player, this);
+            gen = new Generator(rng, world, player, this);
 
         }
 
@@ -141,25 +145,30 @@ namespace GDAPS2Game
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Load backgrounds for game here
+            LoadMap();
+
+            // Cut
             foreach (string path in backgroundPaths)
             {
-                backgrounds.Add(Content.Load<Texture2D>(path));
+                //backgrounds.Add(Content.Load<Texture2D>(path));
             }
+            
             // Load forgrounds for the game here
             foreach (string path in forgroundPaths)
             {
-                foregrounds.Add(Content.Load<Texture2D>(path));
+                //foregroundSet.Add(Content.Load<Texture2D>(path));
             }
+            // CutEnd
 
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
-            
+
             rangedEnemies.Add(rangedEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
-            
+
             //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
         }
 
@@ -229,7 +238,7 @@ namespace GDAPS2Game
             }
 
 
-            cameraPos = new Vector3((player.CharacterBox.X*-1)+playerXCamera, 0, 0f);
+            cameraPos = new Vector3((player.CharacterBox.X * -1) + playerXCamera, 0, 0f);
             //last thing
             oldKState = kState;
             base.Update(gameTime);
@@ -242,7 +251,7 @@ namespace GDAPS2Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+
             if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
             {
                 //the camera will stick with the player along the x coordinate
@@ -250,7 +259,7 @@ namespace GDAPS2Game
             }
             if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
             {
-                if(currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
+                if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
                 {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
                     spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
                 }
@@ -276,7 +285,7 @@ namespace GDAPS2Game
             }
             //spriteBatch.DrawString(mainFont, "X: " + mState.X + " Y: " + mState.Y, new Vector2(25, 25), Color.White);
             //debug, show mouse coords
-            
+
             //spriteBatch.DrawString(mainFont, "X: " + player.CharacterBox.X + " Y: " + player.CharacterBox.Y, new Vector2(25, 50), Color.White);
             //debug, show player coords
 
@@ -284,7 +293,7 @@ namespace GDAPS2Game
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
         }
-        
+
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
             gen.Draw(spriteBatch);
@@ -309,7 +318,7 @@ namespace GDAPS2Game
                 spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10 + player.CharacterBox.X - 500, 10), Color.Black);
                 spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.CharacterBox.X + screenMiddle, 10), Color.Black);
             }
-           
+
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
@@ -354,10 +363,18 @@ namespace GDAPS2Game
                         break;
                 }
             }
-            if(currentState == GameState.GameOver)
+            if (currentState == GameState.GameOver)
             {
                 //Game over screen
             }
+        }
+
+        /// <summary>
+        /// Load the Maps
+        /// </summary>
+        protected void LoadMap()
+        {
+            throw new NotImplementedException("WE MUST CONSTRUCT MORE BIOMES");
         }
     }
 }

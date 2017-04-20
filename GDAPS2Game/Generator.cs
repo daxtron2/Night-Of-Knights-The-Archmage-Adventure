@@ -17,8 +17,7 @@ namespace GDAPS2Game
         private Random rng;
 
         // Graphics
-        private List<Texture2D> backgrounds;
-        private Dictionary<Texture2D, Dictionary<Texture2D, int>> foregroundSets;
+        private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         private const int ChunkSize = 1600;
         private Game1 game;
 
@@ -36,11 +35,10 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Generator(Random rng, List<Texture2D> backgrounds, Dictionary<Texture2D, Dictionary<Texture2D, int>> foregroundSets, Player player, Game1 game)
+        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game)
         {
             this.rng = rng;
-            this.backgrounds = backgrounds;
-            this.foregroundSets = foregroundSets;
+            this.world = world;
             it = 0;
             currentIt = 0;
             this.player = player;
@@ -73,8 +71,7 @@ namespace GDAPS2Game
             // Add more chunks if nessesary
             while (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
-                Texture2D background = backgrounds[rng.Next(0, backgrounds.Count)];
-                Chunk chunk = new Chunk(rng, background, foregroundSets[background], it, 1, it * ChunkSize, game, player);
+                Chunk chunk = new Chunk(rng, world[rng.Next(0, world.Length)], it, 1, it * ChunkSize, game, player);
                 chunks.Add(chunk);
                 chunkOrder.Enqueue(chunk);
                 it++;
