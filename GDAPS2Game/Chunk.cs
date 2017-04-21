@@ -19,7 +19,7 @@ namespace GDAPS2Game
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
         private KeyValuePair<Texture2D, Vector2>[] foregrounds;
-        private const int NUMFOREGROUNDS = 5; // number of foreground sections per chunk
+        private const int NumForegrounds = 7; // number of foreground sections per chunk
         private int sumOdds;
         private Rectangle location;
         private List<Enemy> chunkEnemies;
@@ -50,7 +50,7 @@ namespace GDAPS2Game
             this.rng = rng;
             this.biome = biome;
             sumOdds = 0;
-            foregrounds = new KeyValuePair<Texture2D, Vector2>[NUMFOREGROUNDS];
+            foregrounds = new KeyValuePair<Texture2D, Vector2>[NumForegrounds];
             this.chunkNum = chunkNum;
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
@@ -69,13 +69,13 @@ namespace GDAPS2Game
             {
                 sumOdds += foreground.Value;
             }
-            for (int i = 0; i < NUMFOREGROUNDS; i++)
+            for (int i = 0; i < NumForegrounds; i++)
             {
                 Texture2D foreground = FindForeground(rng.Next(0, sumOdds));
                 if (foreground != null)
                 {
                     foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
-                        new Vector2(location.X + i * location.Width / NUMFOREGROUNDS + (location.Width / NUMFOREGROUNDS - foreground.Width / 2), 825 - foreground.Height));
+                        new Vector2(location.X + i * location.Width / NumForegrounds + (location.Width / NumForegrounds - foreground.Width / 2), 825 - foreground.Height));
                 }
                 else
                 {
@@ -127,7 +127,7 @@ namespace GDAPS2Game
                     return foreground.Key;
                 }
             }
-            // Just in case I cant math
+            // Just in case I cant math (also fixes the not all paths error)
             throw new Exception("Ya fucked up da foreground odds, matey");
         }
     }

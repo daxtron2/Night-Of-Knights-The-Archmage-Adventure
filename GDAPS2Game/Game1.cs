@@ -28,8 +28,9 @@ namespace GDAPS2Game
         Texture2D heartSprite;
         Heart heartObj;
 
-        // Can we please store this stuff in a fucking file?
+        // Can we please store this stuff in a fucking file so I dont have to make methods to construct it?
         // It would be so much easier
+        // Also should probably convert this to a new class because this currently looks like death
         // REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
