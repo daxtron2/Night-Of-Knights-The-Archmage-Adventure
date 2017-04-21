@@ -27,6 +27,7 @@ namespace GDAPS2Game
         Texture2D hitSprite;
         Texture2D heartSprite;
         Heart heartObj;
+        Texture2D[] debugs;
 
         // Can we please store this stuff in a fucking file so I dont have to make methods to construct it?
         // It would be so much easier
@@ -44,6 +45,11 @@ namespace GDAPS2Game
         int[][] odds = {
             new int[] {100, 10, 1 },  // Plains Foregrounds (HARDCODE)
             new int[] {10, 1000, 1 }    // Forest Foregrounds (HARDCODE)
+        };
+
+        string[] debugPaths = {
+            "Debug1.png",
+            "Debug2.png"
         };
 
         // UI
@@ -135,7 +141,7 @@ namespace GDAPS2Game
         {
             rng = new Random();
             base.Initialize();
-            gen = new Generator(rng, world, player, this);
+            gen = new Generator(rng, world, player, this, debugs);
 
         }
 
@@ -151,18 +157,10 @@ namespace GDAPS2Game
             // Load THE ENTIRE GAME here
             LoadWorld();
 
-            // Cut
-            foreach (string path in backgroundPaths)
-            {
-                //backgrounds.Add(Content.Load<Texture2D>(path));
-            }
-            
-            // Load forgrounds for the game here
-            foreach (string path in foregroundPaths)
-            {
-                //foregroundSet.Add(Content.Load<Texture2D>(path));
-            }
-            // CutEnd
+            // Load Debug textures
+            debugs = new Texture2D[2];
+            debugs[0] = Content.Load<Texture2D>(debugPaths[0]);
+            debugs[1] = Content.Load<Texture2D>(debugPaths[1]);
 
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite

@@ -14,18 +14,23 @@ namespace GDAPS2Game
     class Chunk
     {
         // Fields
+        // Functionality
         private Random rng;
+        private List<Enemy> chunkEnemies;
+        private Player player;
         
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
-        private KeyValuePair<Texture2D, Vector2>[] foregrounds;
-        private const int NumForegrounds = 7; // number of foreground sections per chunk
-        private int sumOdds;
+        
+        // Background
         private Rectangle location;
-        private List<Enemy> chunkEnemies;
         private int chunkNum;
-        private Player player;
 
+        // Foregrounds
+        private const int NumForegrounds = 5; // number of foreground sections per chunk (must be greater than 1, Begins to lag over 100, Shits itself at 1000000)
+        private KeyValuePair<Texture2D, Vector2>[] foregrounds;
+        private Texture2D[] debugs;
+        private int sumOdds;
 
         // Properties
         /// <summary>
@@ -45,17 +50,23 @@ namespace GDAPS2Game
         /// <param name="chunkNum">Number of Chunk in order</param>
         /// <param name="numEnemies">Number of enemies to create in chunk</param>
         /// <param name="x">X start position of chunk</param>
-        public Chunk(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome, int chunkNum, int numEnemies, int x, Game1 game, Player player)
+        public Chunk(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome, int chunkNum, int numEnemies, int x, Game1 game, Player player, Texture2D[] debugs)
         {
+            // Save required perameters
             this.rng = rng;
             this.biome = biome;
+            this.chunkNum = chunkNum;
+            this.debugs = debugs;
+            this.player = player;
+
+            // Instatiate necessary fields
             sumOdds = 0;
             foregrounds = new KeyValuePair<Texture2D, Vector2>[NumForegrounds];
-            this.chunkNum = chunkNum;
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
+
+            // Generate Chunk
             Populate(numEnemies);
-            this.player = player;
         }
 
         // Methods
@@ -75,7 +86,8 @@ namespace GDAPS2Game
                 if (foreground != null)
                 {
                     foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
-                        new Vector2(location.X + i * location.Width / NumForegrounds + (location.Width / NumForegrounds - foreground.Width / 2), 825 - foreground.Height));
+                        new Vector2(location.X + i * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - foreground.Width)),
+                        825 - foreground.Height));
                 }
                 else
                 {
@@ -98,6 +110,9 @@ namespace GDAPS2Game
             sb.Draw(biome.Key, location, Color.White);
             for (int i = 0; i < foregrounds.Length; i++)
             {
+                // Foreground Debuggery (Comment out if actually playtesting)
+                //sb.Draw(debugs[((NumForegrounds % 2) * (chunkNum % 2) + i) % 2], new Rectangle(location.X + i * location.Width / NumForegrounds, 0, location.Width / NumForegrounds, location.Height), Color.White);
+
                 if (foregrounds[i].Key != null)
                 {
                     sb.Draw(foregrounds[i].Key, foregrounds[i].Value, Color.White);

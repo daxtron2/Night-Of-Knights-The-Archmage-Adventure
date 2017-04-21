@@ -20,10 +20,14 @@ namespace GDAPS2Game
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         private const int ChunkSize = 1600;
         private Game1 game;
+        private Texture2D[] debugs;
 
         // Generation
+        private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> prevBiome;
+        private const int PrevBiomeOdds = 10;
         private const int ChunksRight = 2;
         private const int ChunksLeft = 2;
+
 
         // Where the phuq am I?
         private int it;
@@ -35,14 +39,18 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game)
+        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game, Texture2D[] debugs)
         {
+            // Save required perameters
             this.rng = rng;
             this.world = world;
-            it = 0;
-            currentIt = 0;
             this.player = player;
             this.game = game;
+            this.debugs = debugs;
+
+            // Instatiate necessary fields
+            it = 0;
+            currentIt = 0;
             chunks = new List<Chunk>();
             chunkOrder = new Queue<Chunk>();
         }
@@ -71,7 +79,17 @@ namespace GDAPS2Game
             // Add more chunks if nessesary
             while (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
-                Chunk chunk = new Chunk(rng, world[rng.Next(0, world.Length)], it, 1, it * ChunkSize, game, player);
+                // Calculate biome of new chunk
+                int biome = rng.Next(0, world.Length + PrevBiomeOdds);
+
+                // If the biome is in worlds, change biome, else don't change
+                if (biome < world.Length)
+                {
+                    prevBiome = world[biome];
+                }
+                
+                // Create chunk, and register it in the tracker variables
+                Chunk chunk = new Chunk(rng, prevBiome, it, 1, it * ChunkSize, game, player, debugs);
                 chunks.Add(chunk);
                 chunkOrder.Enqueue(chunk);
                 it++;
