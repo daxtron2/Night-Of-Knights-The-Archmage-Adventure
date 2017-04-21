@@ -32,6 +32,7 @@ namespace GDAPS2Game
         // Can we please store this stuff in a fucking file so I dont have to make methods to construct it?
         // It would be so much easier
         // Also should probably convert this to a new class because this currently looks like death
+        // Also should remove these comments before the Milestone 3 submit
         // REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
@@ -47,6 +48,7 @@ namespace GDAPS2Game
             new int[] {10, 1000, 1 }    // Forest Foregrounds (HARDCODE)
         };
 
+        // Debug textures to test boxy shaped things
         string[] debugPaths = {
             "Debug1.png",
             "Debug2.png"
@@ -143,6 +145,15 @@ namespace GDAPS2Game
             base.Initialize();
             gen = new Generator(rng, world, player, this, debugs);
 
+            // Test Codes
+            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
+            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
+            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 20, 20), spriteSheet);
+            rangedEnemies.Add(rangedEnemy);
+            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
+
+            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
+
         }
 
         /// <summary>
@@ -162,17 +173,13 @@ namespace GDAPS2Game
             debugs[0] = Content.Load<Texture2D>(debugPaths[0]);
             debugs[1] = Content.Load<Texture2D>(debugPaths[1]);
 
+            // Load text font
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
+
+            // Load Player sprites
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
-            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
-            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 20, 20), spriteSheet);
-
-            rangedEnemies.Add(rangedEnemy);
-            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
-
-            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
+            
         }
 
         /// <summary>
@@ -181,9 +188,6 @@ namespace GDAPS2Game
         /// </summary>
         protected override void UnloadContent()
         {
-
-
-
         }
 
         /// <summary>
@@ -195,7 +199,7 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
-            player.rangedEnemies = this.rangedEnemies;
+            player.rangedEnemies = rangedEnemies;
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
