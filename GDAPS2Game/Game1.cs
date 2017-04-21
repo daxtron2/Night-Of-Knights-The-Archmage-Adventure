@@ -65,6 +65,7 @@ namespace GDAPS2Game
         Random rng;
         Player player;
         RangedEnemy rangedEnemy;
+        MeleeEnemy meleeEnemy;
         List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // IO
@@ -168,6 +169,7 @@ namespace GDAPS2Game
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
+            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 20, 20), spriteSheet);
 
             rangedEnemies.Add(rangedEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
@@ -209,13 +211,19 @@ namespace GDAPS2Game
                 gen.Update();
                 rangedEnemy.Update(gameTime);
                 rangedEnemy.Attack();
+                meleeEnemy.Update();
+                //meleeEnemy.Attack();
                 /*for (int i = 0; i < rangedEnemies.Count; i++)
                 {
                     rangedEnemies[i].Update(gameTime);
                     rangedEnemies[i].Attack();
                 }*/
+                if(player.IsActive == false)
+                {
+                    currentState = GameState.GameOver;
+                }
             }
-            else if (currentState == GameState.Pause || currentState == GameState.Menu)//if in pause menu/start menu
+            else if (currentState == GameState.Pause || currentState == GameState.Menu || currentState == GameState.GameOver)//if in pause menu/start menu
             {
                 menu.Input();//check for menu input
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//if escape is pressed
@@ -228,6 +236,10 @@ namespace GDAPS2Game
                 switch (menu.SelectionIndex)//check what is currently selected
                 {
                     case 0://if the top button, play/resume game, is selected
+                        if(currentState == GameState.GameOver)
+                        {
+                            
+                        }
                         currentState = GameState.Game;//unpause game
                         //firstMenu = false;//no longer first menu, if not already
                         break;
@@ -254,6 +266,7 @@ namespace GDAPS2Game
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            //Console.WriteLine(player.IsActive);
 
             if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
             {
@@ -301,6 +314,7 @@ namespace GDAPS2Game
         {
             gen.Draw(spriteBatch);
             rangedEnemy.Draw(spriteBatch);
+            meleeEnemy.Draw(spriteBatch);
             /*for(int i = 0; i<rangedEnemies.Count; i++)
             {
                 rangedEnemies[i].Draw(spriteBatch);
@@ -325,6 +339,7 @@ namespace GDAPS2Game
         }
         protected void DrawMenu(SpriteBatch spriteBatch)
         {
+            //Console.WriteLine(mainFont.MeasureString("GAME OVER"));
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
             if (currentState == GameState.Menu)//if in menu, i.e. paused
             {
@@ -368,7 +383,23 @@ namespace GDAPS2Game
             }
             if (currentState == GameState.GameOver)
             {
-                //Game over screen
+                spriteBatch.DrawString(mainFont, "GAME OVER", new Vector2(screenMiddle - 130, 50), Color.Black);
+                spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
+
+                switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
+                {
+                    case 0://places the asterisks with "Play Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 105), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 105), Color.Black);//no matter the resolution
+
+                        break;
+                    case 1://places the asterisks with "Exit Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
+
+                        break;
+                }
             }
         }
 
