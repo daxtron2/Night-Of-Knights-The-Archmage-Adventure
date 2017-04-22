@@ -33,6 +33,12 @@ namespace GDAPS2Game
         //integer that sets the leveling up goal. Starts out at 100
         private int newGoal = 100;
 
+        /// <summary>
+        /// Integers to hold the maximum amount the player can move left
+        /// </summary>
+        private int maxMovement = 0;
+        private int oldMax = 0;
+
         public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
 
         // Properties
@@ -84,8 +90,12 @@ namespace GDAPS2Game
                     Update(gameTime);
                 }
                 pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y, 40, 70);
-                pHitBoxL = new Rectangle(characterBox.X - 35, characterBox.Y, 40, 70);
+                pHitBoxL = new Rectangle(characterBox.X - 45, characterBox.Y, 40, 70);
 
+            }
+            else
+            {
+                isActive = false;
             }
 
         }
@@ -118,6 +128,10 @@ namespace GDAPS2Game
             if (characterBox.X <= 0)
             {
                 characterBox.X = 0;
+            }
+            if (characterBox.X <= maxMovement)
+            {
+                characterBox.X = maxMovement;
             }
 
         }
@@ -187,6 +201,7 @@ namespace GDAPS2Game
                             //Console.WriteLine("CLICK EVENT");//debug console output
                             //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
                             enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
+                            Console.WriteLine("I just hit left yo!");
                         }
                     }
                     else//if hitboxes don't intersect
@@ -219,6 +234,7 @@ namespace GDAPS2Game
             }
             else
             {
+                
                 health = 0;
             }
         }
@@ -278,6 +294,11 @@ namespace GDAPS2Game
                     spriteBatch.Draw(hit, pHitBox, Color.Red);
                     spriteBatch.Draw(hit, pHitBoxL, Color.Green);
                     // same thing as above but flipped 
+                    if (intersects)
+                    {
+                        spriteBatch.Draw(hit, pHitBox, Color.PeachPuff);
+                        spriteBatch.Draw(hit, pHitBoxL, Color.PeachPuff);
+                    }
                     if (
                             (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
                             ||
@@ -285,6 +306,9 @@ namespace GDAPS2Game
                        )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+
+                        //This is there the Voice left off, he has no idea waht he is even doing right now.
+                        maxMovement = currentFrame.X - 200;
                     }
                     else
                     {
@@ -298,6 +322,7 @@ namespace GDAPS2Game
         bool firstRun = true;
         public void Update(GameTime gameTime)
         {
+            
             //calls the level up method.
             levelUp();
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;

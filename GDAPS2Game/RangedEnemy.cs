@@ -50,13 +50,35 @@ namespace GDAPS2Game
         {
             if ((playerPos.X + playerPos.Width) - (posBox.X + posBox.Width) < 500)
             {
-                if (playerPos.X < posBox.X)
+                if (playerPos.X < posBox.X + 500)
                 {
+                    frame = 1; // set frame to prep shooting
                     projectilePos.X -= 6;
+
                     if (projectilePos.X < (posBox.X - posBox.Width) - 900)
                     {
                         projectilePos.X = posBox.X - posBox.Width;
                         projectileActive = true;
+                    }
+
+                    // if the arrow is a certain point from the player
+                    if (projectilePos.X < (posBox.X - posBox.Width) - 100)
+                    {
+                        frame = 0;
+                    }
+
+                    if (posBox.X < playerPos.X)
+                    {
+                        frame = 0; // set frame to standing
+                        if (projectilePos.X < 350)
+                        {
+                            projectilePos.X += 6; // stop arrow if it's at an x less than 350
+                        }
+                        else
+                        {
+                            frame = 1; // otherwise stay shooting
+                        }
+                        
                     }
                 }
             }
