@@ -20,6 +20,7 @@ namespace GDAPS2Game
         private Point frameSize = new Point(15,20);
 
         private int lastAttack = 0;
+        bool hasAttacked = false;
 
         // Properties
 
@@ -34,29 +35,26 @@ namespace GDAPS2Game
         }
 
         // use the parameter pls
-        public override void Attack()
-        {
-            throw new NotImplementedException();
-        }
+
 
         /// <summary>
         /// Character Attack
         /// </summary>
-        public void Attack(Player user)
+        public override void Attack()
         {
             Rectangle eHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
             Rectangle eHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
 
-            bool hasAttacked = false;
 
-            if (eHitBox.Intersects(user.CharacterBox) || eHitBoxL.Intersects(user.CharacterBox))
+            if (eHitBox.Intersects(playerL.CharacterBox) || eHitBoxL.Intersects(playerL.CharacterBox))
             {
                 if (hasAttacked == false)
                 {
-                    user.TakeDamage(5);
+                    playerL.TakeDamage(5);
                     hasAttacked = true;
                 }
             }
+            
         }
 
         public new void Update(GameTime gameTime)
@@ -64,8 +62,9 @@ namespace GDAPS2Game
             if (lastAttack + 5 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
+                hasAttacked = false;
                 lastAttack = gameTime.TotalGameTime.Seconds;
-            }
+            }   
 
             switch (frame)
             {

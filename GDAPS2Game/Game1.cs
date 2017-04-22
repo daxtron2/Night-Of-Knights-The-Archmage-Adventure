@@ -199,7 +199,7 @@ namespace GDAPS2Game
                 rangedEnemy.Update(gameTime);
                 rangedEnemy.Attack();
                 meleeEnemy.Update(gameTime);
-                meleeEnemy.Attack(player);
+                meleeEnemy.Attack();
 
                 /*for (int i = 0; i < rangedEnemies.Count; i++)
                 {

@@ -86,10 +86,10 @@ namespace GDAPS2Game
             sb.Draw(background, location, Color.White);
             for (int i = 0; i < treePosList.Count; i++)
             {
-                sb.Draw(tree, treePosList[i], new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                sb.Draw(tree, treePosList[i], new Rectangle(0, 0, 160, 281), Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
                 if (player.CharacterBox.X > treePosList[i].X + 1600)
                 {
-                    sb.Draw(tree, new Vector2(treePosList[i].X + 1700, treePosList[i].Y), new Rectangle(0, 0, 33, 58), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    sb.Draw(tree, new Vector2(treePosList[i].X + 1700, treePosList[i].Y), new Rectangle(0, 0, 160, 281), Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
                 }
             }
         }
