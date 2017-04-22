@@ -51,6 +51,7 @@ namespace GDAPS2Game
             // Instatiate necessary fields
             it = 0;
             currentIt = 0;
+            prevBiome = world[0];
             chunks = new List<Chunk>();
             chunkOrder = new Queue<Chunk>();
         }

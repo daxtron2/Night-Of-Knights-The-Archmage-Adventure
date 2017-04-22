@@ -143,7 +143,6 @@ namespace GDAPS2Game
         {
             rng = new Random();
             base.Initialize();
-            gen = new Generator(rng, world, player, this, debugs);
 
             // Test Codes
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
@@ -152,6 +151,7 @@ namespace GDAPS2Game
             rangedEnemies.Add(rangedEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
 
+            gen = new Generator(rng, world, player, this, debugs);
             //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
 
         }

@@ -111,7 +111,7 @@ namespace GDAPS2Game
             for (int i = 0; i < foregrounds.Length; i++)
             {
                 // Foreground Debuggery (Comment out if actually playtesting)
-                //sb.Draw(debugs[((NumForegrounds % 2) * (chunkNum % 2) + i) % 2], new Rectangle(location.X + i * location.Width / NumForegrounds, 0, location.Width / NumForegrounds, location.Height), Color.White);
+                sb.Draw(debugs[((NumForegrounds % 2) * (chunkNum % 2) + i) % 2], new Rectangle(location.X + i * location.Width / NumForegrounds, 0, location.Width / NumForegrounds, location.Height), Color.White);
 
                 if (foregrounds[i].Key != null)
                 {
