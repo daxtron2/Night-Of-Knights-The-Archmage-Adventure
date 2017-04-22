@@ -43,13 +43,13 @@ namespace GDAPS2Game
         /// </summary>
         public override void Attack()
         {
-            Rectangle eHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
-            Rectangle eHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
+            Rectangle eHitBox = new Rectangle(characterBox.X + 20, characterBox.Y, 10, 10);
+            Rectangle eHitBoxL = new Rectangle(characterBox.X - 25, characterBox.Y, 10, 10);
 
 
             if (eHitBox.Intersects(user.CharacterBox) || eHitBoxL.Intersects(user.CharacterBox))
             {
-                if (hasAttacked == false)
+                if (hasAttacked == false && isActive == true)
                 {
                     user.TakeDamage(5);
                     hasAttacked = true;
@@ -60,7 +60,7 @@ namespace GDAPS2Game
 
         public new void Update(GameTime gameTime)
         {
-            if (lastAttack + 3 < gameTime.TotalGameTime.Seconds)
+            if (lastAttack + 2 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
                 hasAttacked = false;

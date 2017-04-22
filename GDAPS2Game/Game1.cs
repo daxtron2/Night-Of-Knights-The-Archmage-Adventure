@@ -185,6 +185,7 @@ namespace GDAPS2Game
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
             player.rangedEnemies = this.rangedEnemies;
+            player.meleeEnemies = this.meleeEnemies;
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
