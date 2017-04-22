@@ -4,7 +4,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.IO;
 using System.Diagnostics;
-
+/*GDAPS 2 Game Project - Group 2
+* Ben Fairlamb  - Group Lead
+* TJ Wolschon   - Architect
+* Zack Dunham   - UI/Art
+* Michael Schek - Game Design
+*/
 namespace GDAPS2Game
 {
     //Heart Class. A Heart is drawn when an enemy dies, and when the player collides with it, it calls the addhealth method and then disappears.

@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+/*GDAPS 2 Game Project - Group 2
+* Ben Fairlamb  - Group Lead
+* TJ Wolschon   - Architect
+* Zack Dunham   - UI/Art
+* Michael Schek - Game Design
+*/
 namespace GDAPS2Game
 {
     class Player : Character
