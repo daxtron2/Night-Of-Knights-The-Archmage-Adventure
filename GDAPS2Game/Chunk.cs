@@ -146,4 +146,4 @@ namespace GDAPS2Game
             throw new Exception("Ya fucked up da foreground odds, matey");
         }
     }
-}   
+}
