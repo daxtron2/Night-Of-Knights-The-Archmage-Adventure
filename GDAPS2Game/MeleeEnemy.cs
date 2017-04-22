@@ -20,7 +20,8 @@ namespace GDAPS2Game
         private Point frameSize = new Point(15,20);
 
         private int lastAttack = 0;
-        bool hasAttacked = false;
+        private bool hasAttacked = false;
+        private Player user;
 
         // Properties
 
@@ -31,7 +32,7 @@ namespace GDAPS2Game
         /// <param name="player">The Player</param>
         public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
         {
-            
+            user = player;
         }
 
         // use the parameter pls
@@ -46,11 +47,11 @@ namespace GDAPS2Game
             Rectangle eHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
 
 
-            if (eHitBox.Intersects(playerL.CharacterBox) || eHitBoxL.Intersects(playerL.CharacterBox))
+            if (eHitBox.Intersects(user.CharacterBox) || eHitBoxL.Intersects(user.CharacterBox))
             {
                 if (hasAttacked == false)
                 {
-                    playerL.TakeDamage(5);
+                    user.TakeDamage(5);
                     hasAttacked = true;
                 }
             }
@@ -59,7 +60,7 @@ namespace GDAPS2Game
 
         public new void Update(GameTime gameTime)
         {
-            if (lastAttack + 5 < gameTime.TotalGameTime.Seconds)
+            if (lastAttack + 3 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
                 hasAttacked = false;
