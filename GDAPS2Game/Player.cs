@@ -55,7 +55,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox) : base(initPositionBox, charSprite)
+        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, Texture2D[] debugs) : base(initPositionBox, charSprite, debugs)
         {
             health = 50;//testing value
             faceRight = true;
@@ -274,6 +274,7 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
+
             //Subtracts from the health value any damage that is taken if it results in 0 or above, otherwise sets the health to 0 in the interest of not having negative health.
             if (health - dmg >= 0)
             {
@@ -288,6 +289,8 @@ namespace GDAPS2Game
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
+            spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
+
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
             {

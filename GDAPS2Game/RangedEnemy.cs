@@ -36,7 +36,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new RangedEnemy
         /// </summary>
-        public RangedEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
+        public RangedEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite,Texture2D[] debug) : base (player, enemyPosBox, charSprite, debug)
         {
             projectilePos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
@@ -130,6 +130,7 @@ namespace GDAPS2Game
             {
                 // draw projectile
                 spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(debugTexture[0], posBox, Color.White);
 
                 // draw enemy
                 spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);

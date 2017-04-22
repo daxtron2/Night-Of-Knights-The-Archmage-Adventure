@@ -30,7 +30,7 @@ namespace GDAPS2Game
         /// Instatiate a new MeleeEnemy
         /// </summary>
         /// <param name="player">The Player</param>
-        public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
+        public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite, Texture2D[] debugs) : base (player, enemyPosBox, charSprite, debugs)
         {
             user = player;
         }
@@ -85,6 +85,7 @@ namespace GDAPS2Game
             if (isActive)
             {
                 // draw enemy
+                spriteBatch.Draw(debugTexture[0], posBox, Color.White);
                 spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
             base.Draw(spriteBatch);

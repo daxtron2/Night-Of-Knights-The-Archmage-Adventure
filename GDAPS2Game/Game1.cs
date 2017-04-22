@@ -146,10 +146,11 @@ namespace GDAPS2Game
             base.Initialize();
 
             // Test Codes
-            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite); // spawns player right where they will be for rest of game
-            rangedEnemy = new RangedEnemy(player, new Rectangle(850, 750, 26, 40), spriteSheet);
-            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 20, 20), spriteSheet);
+            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, debugs); // spawns player right where they will be for rest of game
+            rangedEnemy = new RangedEnemy(player, new Rectangle(800, 750, 70, 95), spriteSheet, debugs);
+            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 70, 95), spriteSheet, debugs);
             rangedEnemies.Add(rangedEnemy);
+            meleeEnemies.Add(meleeEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
 
             gen = new Generator(rng, world, player, this, debugs);
@@ -159,7 +160,7 @@ namespace GDAPS2Game
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
+        /// all of your content. 
         /// </summary>
         protected override void LoadContent()
         {

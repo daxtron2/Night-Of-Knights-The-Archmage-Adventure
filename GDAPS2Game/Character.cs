@@ -25,6 +25,7 @@ namespace GDAPS2Game
         protected bool addScore = false;
         //Integer for the level, initally set to 1.
         public static int level = 1;
+        protected Texture2D[] debugTexture;
 
         protected int floorHeight = 750; //never change this in the program, only through editor, treat it as a constant
         // couldn't get external editor to run, so manually changed floorheight from 750 to 850 as sprite is large
@@ -45,9 +46,9 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new Character
         /// </summary>
-        public Character(Rectangle initialPosition, Texture2D charSprite)
+        public Character(Rectangle initialPosition, Texture2D charSprite, Texture2D[] debugs)
         {
-
+            debugTexture = debugs;
             characterBox = initialPosition;
             characterSprite = charSprite;
             //Spawn(); redundant?

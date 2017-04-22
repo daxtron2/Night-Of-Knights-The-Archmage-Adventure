@@ -22,7 +22,7 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Enemy(Player player, Rectangle initPositionBox, Texture2D charSprite) : base(initPositionBox, charSprite)
+        public Enemy(Player player, Rectangle initPositionBox, Texture2D charSprite, Texture2D[] debugs) : base(initPositionBox, charSprite, debugs)
         {
             playerPos = player.CharacterBox;
             playerL = player;
