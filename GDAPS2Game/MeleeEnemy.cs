@@ -19,6 +19,10 @@ namespace GDAPS2Game
         private Point currentFrame;
         private Point frameSize = new Point(15,20);
 
+        private int lastAttack = 0;
+        private bool hasAttacked = false;
+        private Player user;
+
         // Properties
 
         // Constructor
@@ -28,44 +32,50 @@ namespace GDAPS2Game
         /// <param name="player">The Player</param>
         public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite) : base (player, enemyPosBox, charSprite)
         {
-            
+            user = player;
         }
-        //Do not use, use other method
-        public override void Attack()
-        {
-            throw new NotImplementedException();
-        }
+
+        // use the parameter pls
+
 
         /// <summary>
         /// Character Attack
         /// </summary>
-        public void Attack(Player user)
+        public override void Attack()
         {
-            Rectangle eHitBox = new Rectangle(characterBox.X + 5, characterBox.Y + 5, 10, 10);
-            Rectangle eHitBoxL = new Rectangle(characterBox.X - 10, characterBox.Y - 10, 10, 10);
+            Rectangle eHitBox = new Rectangle(characterBox.X + 20, characterBox.Y, 10, 10);
+            Rectangle eHitBoxL = new Rectangle(characterBox.X - 25, characterBox.Y, 10, 10);
 
-            if (eHitBox.Intersects(user.CharacterBox))
-            {
-                user.TakeDamage(5);
-            }
 
-            if (eHitBoxL.Intersects(user.CharacterBox))
+            if (eHitBox.Intersects(user.CharacterBox) || eHitBoxL.Intersects(user.CharacterBox))
             {
-                user.TakeDamage(5);
+                if (hasAttacked == false && isActive == true)
+                {
+                    user.TakeDamage(5);
+                    hasAttacked = true;
+                }
             }
+            
         }
 
-        public void Update()
+        public new void Update(GameTime gameTime)
         {
+            if (lastAttack + 2 < gameTime.TotalGameTime.Seconds)
+            {
+                Attack();
+                hasAttacked = false;
+                lastAttack = gameTime.TotalGameTime.Seconds;
+            }   
+
             switch (frame)
             {
                 case 0:
                     currentFrame.X = 82;
-                    currentFrame.Y = 67;
+                    currentFrame.Y = 66;
                     break;
                 case 1:
                     currentFrame.X = 104;
-                    currentFrame.Y = 67;
+                    currentFrame.Y = 66;
                     break;
             }
         }

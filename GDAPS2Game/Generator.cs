@@ -78,7 +78,7 @@ namespace GDAPS2Game
         public void Update()
         {
             // Add more chunks if nessesary
-            while (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
+            if(chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
                 // Calculate biome of new chunk
                 int biome = rng.Next(0, world.Length + PrevBiomeOdds);
@@ -100,7 +100,7 @@ namespace GDAPS2Game
             currentIt = player.CharacterBox.X / ChunkSize;
 
             // Remove previous chunks long passed
-            while ((chunkOrder.Peek().ChunkNum + ChunksLeft) * ChunkSize < player.CharacterBox.X)
+            if ((chunkOrder.Peek().ChunkNum + ChunksLeft) * ChunkSize < player.CharacterBox.X)
             {
                 chunks.Remove(chunkOrder.Dequeue());
             }

@@ -75,6 +75,7 @@ namespace GDAPS2Game
         RangedEnemy rangedEnemy;
         MeleeEnemy meleeEnemy;
         List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
+        List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();
 
         // IO
         BinaryReader attribRead;
@@ -179,7 +180,6 @@ namespace GDAPS2Game
             // Load Player sprites
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
-            
         }
 
         /// <summary>
@@ -199,7 +199,10 @@ namespace GDAPS2Game
         {
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
-            player.rangedEnemies = rangedEnemies;
+
+            player.rangedEnemies = this.rangedEnemies;
+            player.meleeEnemies = this.meleeEnemies;
+
             if (currentState == GameState.Game)//if in game
             {
                 if (kState.IsKeyDown(Keys.Escape) && oldKState.IsKeyUp(Keys.Escape))//escape is pressed
@@ -213,13 +216,15 @@ namespace GDAPS2Game
                 gen.Update();
                 rangedEnemy.Update(gameTime);
                 rangedEnemy.Attack();
-                meleeEnemy.Update();
-                //meleeEnemy.Attack();
+                meleeEnemy.Update(gameTime);
+                meleeEnemy.Attack();
+
                 /*for (int i = 0; i < rangedEnemies.Count; i++)
                 {
                     rangedEnemies[i].Update(gameTime);
                     rangedEnemies[i].Attack();
                 }*/
+
                 if(player.IsActive == false)
                 {
                     currentState = GameState.GameOver;
@@ -240,7 +245,7 @@ namespace GDAPS2Game
                     case 0://if the top button, play/resume game, is selected
                         if(currentState == GameState.GameOver)
                         {
-                            
+                            currentState = GameState.Menu;
                         }
                         currentState = GameState.Game;//unpause game
                         //firstMenu = false;//no longer first menu, if not already
