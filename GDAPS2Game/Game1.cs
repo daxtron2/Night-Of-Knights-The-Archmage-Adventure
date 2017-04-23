@@ -29,11 +29,7 @@ namespace GDAPS2Game
         Heart heartObj;
         Texture2D[] debugs;
 
-        // Can we please store this stuff in a fucking file so I dont have to make methods to construct it?
-        // It would be so much easier
-        // Also should probably convert this to a new class because this currently looks like death
-        // Also should remove these comments before the Milestone 3 submit
-        // REEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
             "background_new",
