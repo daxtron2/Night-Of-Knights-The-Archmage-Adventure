@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 */
 namespace GDAPS2Game
 {
-    class RangedEnemy : Enemy
+    public class RangedEnemy : Enemy
     {
         // Purpose: Hold code for Ranged Enemies
         // Limitations: None

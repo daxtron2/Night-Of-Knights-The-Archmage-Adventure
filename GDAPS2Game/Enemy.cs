@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 */
 namespace GDAPS2Game
 {
-    abstract class Enemy : Character
+    public abstract class Enemy : Character
     {
         // Purpose: Class to hold all the Enemy code
         // Limitations: None

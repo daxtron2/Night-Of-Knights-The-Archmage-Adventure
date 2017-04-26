@@ -23,7 +23,8 @@ namespace GDAPS2Game
         private Random rng;
         private List<Enemy> chunkEnemies;
         private Player player;
-        private Dictionary<int, bool> enemyLocations;
+        private List<int> enemyLocations;
+        private Game1 game;
         
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
@@ -56,21 +57,25 @@ namespace GDAPS2Game
         /// <param name="chunkNum">Number of Chunk in order</param>
         /// <param name="numEnemies">Number of enemies to create in chunk</param>
         /// <param name="x">X start position of chunk</param>
-        public Chunk(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome, int chunkNum, int numEnemies, int x, Game1 game, Player player, Texture2D[] debugs)
+        public Chunk(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome, int chunkNum, int numEnemies, int x, Game1 game)
         {
             // Save required perameters
             this.rng = rng;
             this.biome = biome;
             this.chunkNum = chunkNum;
-            this.debugs = debugs;
-            this.player = player;
-
+            debugs = game.Debugs;
+            player = game.Player;
+            this.game = game;
             // Instatiate necessary fields
             sumOdds = 0;
             foregrounds = new KeyValuePair<Texture2D, Vector2>[NumForegrounds];
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
-            enemyLocations = new Dictionary<int, bool>();
+            enemyLocations = new List<int>();
+            for (int i = 0; i < NumForegrounds; i++)
+            {
+                enemyLocations.Add(i);
+            }
 
             // Generate Chunk
             Populate(numEnemies);
@@ -104,10 +109,12 @@ namespace GDAPS2Game
 
             for (int i = 0; i < numEnemies; i++)
             {
-                
+                int place = rng.Next(0, enemyLocations.Count);
+                enemyLocations.RemoveAt(place);
                 if (rng.Next(0, 2) == 1)
                 {
-                    chunkEnemies.Add(new RangedEnemy(player, new Rectangle(
+                    chunkEnemies.Add(new RangedEnemy(player, location.X + place * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - 70)), , debugs;
+                    game
             }
         }
 

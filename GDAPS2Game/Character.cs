@@ -12,7 +12,7 @@ using System.Diagnostics;
 */
 namespace GDAPS2Game
 {
-    abstract class Character
+    public abstract class Character
     {
         // Purpose: Common code that all Characters will share, including player
         // Limitations: None

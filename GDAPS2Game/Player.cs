@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 */
 namespace GDAPS2Game
 {
-    class Player : Character
+    public class Player : Character
     {
         // Purpose: The Player controlled character in the game
         // Limitations: None

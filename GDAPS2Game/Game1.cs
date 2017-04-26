@@ -23,11 +23,21 @@ namespace GDAPS2Game
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont mainFont;
-        Texture2D spriteSheet;
+        public Texture2D spriteSheet;
         Texture2D hitSprite;
         Texture2D heartSprite;
         Heart heartObj;
         Texture2D[] debugs;
+
+        public Texture2D SpriteSheet
+        {
+            get { return spriteSheet; }
+        }
+        
+        public Texture2D[] Debugs
+        {
+            get { return debugs; }
+        }
 
         
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
@@ -72,6 +82,16 @@ namespace GDAPS2Game
         MeleeEnemy meleeEnemy;
         List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
         List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();
+
+        //Create Game1:
+        //Create everything in Game1
+        //  Create Player
+        //  Create Player Property
+
+        public Player Player
+        {
+            get { return player; }
+        }
 
         // IO
         BinaryReader attribRead;
@@ -149,7 +169,7 @@ namespace GDAPS2Game
             meleeEnemies.Add(meleeEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
 
-            gen = new Generator(rng, world, player, this, debugs);
+            gen = new Generator(rng, world, this);
         }
 
         /// <summary>

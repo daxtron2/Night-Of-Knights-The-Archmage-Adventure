@@ -45,7 +45,7 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game, Texture2D[] debugs)
+        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Game1 game)
         {
             // Save required perameters
             this.rng = rng;
