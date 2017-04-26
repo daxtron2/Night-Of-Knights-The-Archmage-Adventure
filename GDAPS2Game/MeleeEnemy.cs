@@ -65,6 +65,7 @@ namespace GDAPS2Game
 
         public new void Update(GameTime gameTime)
         {
+            Scoring();
             if (lastAttack + 2 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
