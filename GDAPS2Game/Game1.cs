@@ -25,9 +25,8 @@ namespace GDAPS2Game
         SpriteFont mainFont;
         public Texture2D spriteSheet;
         Texture2D hitSprite;
-        Texture2D heartSprite;
-        Heart heartObj;
         Texture2D[] debugs;
+        Texture2D fog;
 
         public Texture2D SpriteSheet
         {
@@ -167,7 +166,14 @@ namespace GDAPS2Game
             meleeEnemy = new MeleeEnemy(player, 950, spriteSheet, debugs);
             rangedEnemies.Add(rangedEnemy);
             meleeEnemies.Add(meleeEnemy);
+<<<<<<< HEAD
             //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
+=======
+            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
+
+            gen = new Generator(rng, world, player, this, debugs, fog);
+            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
+>>>>>>> e5f70476d080693ad8e2b0451932fb861f548ca6
 
             gen = new Generator(rng, world, this);
         }
@@ -195,6 +201,9 @@ namespace GDAPS2Game
             // Load Player sprites
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
+
+            // Load fog bg
+            fog = Content.Load<Texture2D>("fog");
         }
 
         /// <summary>
@@ -289,21 +298,19 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             //Console.WriteLine(player.IsActive);
-
-            if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
-            {
-                //the camera will stick with the player along the x coordinate
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
-            }
-            if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
-            {
-                if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
-                {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
-                    spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
+                if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
+                {
+                    //the camera will stick with the player along the x coordinate
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
                 }
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
-            }
-
+                if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
+                {
+                    if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
+                    {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
+                        spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
+                    }
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+                }
 
 
             switch (currentState)

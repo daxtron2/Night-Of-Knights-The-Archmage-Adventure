@@ -34,7 +34,7 @@ namespace GDAPS2Game
         private int timeSinceLastFrame; // for counting milliseconds
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
-
+        private int moveSpeed = 7;
         //integer that sets the leveling up goal. Starts out at 100
         private int newGoal = 100;
 
@@ -42,7 +42,6 @@ namespace GDAPS2Game
         /// Integers to hold the maximum amount the player can move left
         /// </summary>
         private int maxMovement = 0;
-        private int oldMax = 0;
 
         public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
         public List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();
@@ -72,6 +71,12 @@ namespace GDAPS2Game
 
         }
 
+        //accessor for movement speed;
+        public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
+
+
+        public int MaxMove {  get { return maxMovement; } set { maxMovement = value; } }
+
         /// <summary>
         /// Script that handles the movement of the player, updats x and y values
         /// </summary>
@@ -80,18 +85,35 @@ namespace GDAPS2Game
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
 
+            //if the player is blocking, reduces the movespeed.
+            if(Keyboard.GetState().IsKeyDown(Keys.B))
+            {
+                MoveSpeed = 3;
+            }
+            else
+            {
+                MoveSpeed = 7;
+            }
+
             //If the player's health is above 0, he can move
             if (health > 0)
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    characterBox.X -= 7;
+                    if (characterBox.X > maxMovement)
+                    {
+                        characterBox.X -= moveSpeed;
+                    }
                     faceRight = false;
                     Update(gameTime); // for movement animation
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
-                    base.characterBox.X += 7;
+                    maxMovement = characterBox.X - 200;
+                    
+                    base.characterBox.X += moveSpeed;
+                    Console.WriteLine("MaxMove: " + maxMovement);
+                    Console.WriteLine("CharacterX: " + characterBox.X);
                     faceRight = true;
                     Update(gameTime);
                 }
@@ -131,14 +153,6 @@ namespace GDAPS2Game
             pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
             
             
-            if (characterBox.X <= 0)
-            {
-                characterBox.X = 0;
-            }
-            if (characterBox.X <= maxMovement)
-            {
-                characterBox.X = maxMovement;
-            }
 
         }
 
@@ -164,6 +178,7 @@ namespace GDAPS2Game
         MouseState mStateLast;
         public override void Attack()
         {
+            intersects = false;
             mState = Mouse.GetState();
             // When user presses the attack key
 
@@ -271,7 +286,6 @@ namespace GDAPS2Game
                     }
                 }
             }
-
             mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
@@ -282,17 +296,19 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
-
-            //Subtracts from the health value any damage that is taken if it results in 0 or above, otherwise sets the health to 0 in the interest of not having negative health.
-            if (health - dmg >= 0)
+            if (Keyboard.GetState().IsKeyUp(Keys.B))
             {
-                health -= dmg;
-            }
+                //Subtracts from the health value any damage that is taken if it results in 0 or above, otherwise sets the health to 0 in the interest of not having negative health.
+                if (health - dmg >= 0)
+                {
+                    health -= dmg;
+                }
 
-            else
-            {
-                
-                health = 0;
+                else
+                {
+
+                    health = 0;
+                }
             }
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
@@ -366,8 +382,7 @@ namespace GDAPS2Game
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
 
-                        //This is there the Voice left off, he has no idea waht he is even doing right now.
-                        maxMovement = currentFrame.X - 200;
+                     
                     }
                     else
                     {

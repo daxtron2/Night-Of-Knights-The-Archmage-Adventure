@@ -20,12 +20,9 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        protected Point leftAttack;
-        protected Point rightAttack;
 
         // animation attributes
         private int frame = 0; // default frame of 0
-        private int numFrames = 2; // total number of frames is 2
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(14, 20); // size of each sprite
         private int damage = 5;
