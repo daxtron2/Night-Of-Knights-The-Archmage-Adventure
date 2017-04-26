@@ -99,19 +99,19 @@ namespace GDAPS2Game
         public void Update()
         {
             // fog location boxes
-            if (player.CharacterBox.X > fogLoc1.X + 2200)
+            if (player.CharacterBox.X > fogLoc1.X + 2100)
             {
-                fogLoc1.X += 1600;
+                fogLoc1.X += 3200;
             }
 
-            if (player.CharacterBox.X > fogLoc2.X + 2200)
+            if (player.CharacterBox.X > fogLoc2.X + 2100)
             {
-                fogLoc2.X += 1600;
+                fogLoc2.X += 3200;
             }
 
-            if (player.CharacterBox.X > fogLoc3.X + 2200)
+            if (player.CharacterBox.X > fogLoc3.X + 2100)
             {
-                fogLoc3.X += 1600;
+                fogLoc3.X += 3200;
             }
 
             // Add more chunks if nessesary
