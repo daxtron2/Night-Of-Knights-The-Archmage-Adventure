@@ -42,7 +42,6 @@ namespace GDAPS2Game
         /// Integers to hold the maximum amount the player can move left
         /// </summary>
         private int maxMovement = 0;
-        private int oldMax = 0;
 
         public List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
         public List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();

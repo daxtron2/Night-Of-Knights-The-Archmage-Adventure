@@ -25,8 +25,6 @@ namespace GDAPS2Game
         SpriteFont mainFont;
         Texture2D spriteSheet;
         Texture2D hitSprite;
-        Texture2D heartSprite;
-        Heart heartObj;
         Texture2D[] debugs;
         Texture2D fog;
 
