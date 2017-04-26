@@ -238,48 +238,51 @@ namespace GDAPS2Game
                 }
             }
 
-            foreach (MeleeEnemy enm in meleeEnemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
+            if (intersects == false)
             {
-                if (faceRight == true)//if facing right
+                foreach (MeleeEnemy enm in meleeEnemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
                 {
-                    if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
+                    if (faceRight == true)//if facing right
                     {
-                        intersects = true;//currently intersecting
-                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
+                        if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
                         {
-                            //Console.WriteLine("CLICK EVENT");//debug output
-                            //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
-                            enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
+                            intersects = true;//currently intersecting
+                            if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
+                            {
+                                //Console.WriteLine("CLICK EVENT");//debug output
+                                //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
+                                enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
+                            }
+                        }
+                        else//if not intersecting
+                        {
+                            intersects = false;//false obv
                         }
                     }
-                    else//if not intersecting
+                    if (faceRight == false)//if facing left
                     {
-                        intersects = false;//false obv
-                    }
-                }
-                if (faceRight == false)//if facing left
-                {
-                    if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
-                    {
-                        intersects = true;
-                        if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
-                        {//if LMB just pressed
-                            //Console.WriteLine("CLICK EVENT");//debug console output
-                            //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
-                            enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
-                            Console.WriteLine("I just hit left yo!");
+                        if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
+                        {
+                            intersects = true;
+                            if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+                            {//if LMB just pressed
+                             //Console.WriteLine("CLICK EVENT");//debug console output
+                             //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
+                                enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
+                                Console.WriteLine("I just hit left yo!");
+                            }
+                        }
+                        else//if hitboxes don't intersect
+                        {
+                            intersects = false;
                         }
                     }
-                    else//if hitboxes don't intersect
+                    enm.TryDestroy();//check if the enemy's health<=0, if it is set IsActive=false
+                    if (enm.IsActive == false)//if enemy is "dead"
                     {
-                        intersects = false;
+                        //Console.WriteLine("Removing enemy from list.");//debug output
+                        meleeEnemies.Remove(enm);//remove the enemy from the list
                     }
-                }
-                enm.TryDestroy();//check if the enemy's health<=0, if it is set IsActive=false
-                if (enm.IsActive == false)//if enemy is "dead"
-                {
-                    //Console.WriteLine("Removing enemy from list.");//debug output
-                    meleeEnemies.Remove(enm);//remove the enemy from the list
                 }
             }
 
