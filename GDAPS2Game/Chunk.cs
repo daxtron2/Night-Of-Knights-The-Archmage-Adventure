@@ -23,6 +23,7 @@ namespace GDAPS2Game
         private Random rng;
         private List<Enemy> chunkEnemies;
         private Player player;
+        private Dictionary<int, bool> enemyLocations;
         
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
@@ -69,6 +70,7 @@ namespace GDAPS2Game
             foregrounds = new KeyValuePair<Texture2D, Vector2>[NumForegrounds];
             location = new Rectangle(x, 0, game.GraphicsDevice.Viewport.Width, game.GraphicsDevice.Viewport.Height);
             chunkEnemies = new List<Enemy>();
+            enemyLocations = new Dictionary<int, bool>();
 
             // Generate Chunk
             Populate(numEnemies);
@@ -102,7 +104,10 @@ namespace GDAPS2Game
 
             for (int i = 0; i < numEnemies; i++)
             {
-                // Create enemies
+                
+                if (rng.Next(0, 2) == 1)
+                {
+                    chunkEnemies.Add(new RangedEnemy(player, new Rectangle(
             }
         }
 

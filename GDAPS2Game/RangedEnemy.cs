@@ -29,11 +29,12 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(14, 20); // size of each sprite
         private int damage = 5;
+        
         // shooting projectile stuff
         private Vector2 projectilePos;
         private Rectangle projectileRect;
-        Boolean intersecting = false;
-        Boolean projectileActive = true;
+        bool intersecting = false;
+        bool projectileActive = true;
         Color projectileColor = Color.White;
 
         // Properties
@@ -42,7 +43,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new RangedEnemy
         /// </summary>
-        public RangedEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite,Texture2D[] debug) : base (player, enemyPosBox, charSprite, debug)
+        public RangedEnemy(Player player, int x, Texture2D charSprite,Texture2D[] debug) : base (player, x, charSprite, debug)
         {
             projectilePos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting

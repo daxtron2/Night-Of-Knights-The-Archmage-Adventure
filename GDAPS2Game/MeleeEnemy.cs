@@ -35,7 +35,7 @@ namespace GDAPS2Game
         /// Instatiate a new MeleeEnemy
         /// </summary>
         /// <param name="player">The Player</param>
-        public MeleeEnemy(Player player, Rectangle enemyPosBox, Texture2D charSprite, Texture2D[] debugs) : base (player, enemyPosBox, charSprite, debugs)
+        public MeleeEnemy(Player player, int x, Texture2D charSprite, Texture2D[] debugs) : base (player, x, charSprite, debugs)
         {
             user = player;
         }

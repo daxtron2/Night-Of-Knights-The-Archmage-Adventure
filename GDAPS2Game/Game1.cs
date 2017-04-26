@@ -143,15 +143,13 @@ namespace GDAPS2Game
 
             // Test Codes
             player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, debugs); // spawns player right where they will be for rest of game
-            rangedEnemy = new RangedEnemy(player, new Rectangle(800, 750, 70, 95), spriteSheet, debugs);
-            meleeEnemy = new MeleeEnemy(player, new Rectangle(950, 750, 70, 95), spriteSheet, debugs);
+            rangedEnemy = new RangedEnemy(player, 800, spriteSheet, debugs);
+            meleeEnemy = new MeleeEnemy(player, 950, spriteSheet, debugs);
             rangedEnemies.Add(rangedEnemy);
             meleeEnemies.Add(meleeEnemy);
-            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
+            //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
 
             gen = new Generator(rng, world, player, this, debugs);
-            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
-
         }
 
         /// <summary>

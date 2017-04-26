@@ -108,7 +108,9 @@ namespace GDAPS2Game
             // Remove previous chunks long passed
             if ((chunkOrder.Peek().ChunkNum + ChunksLeft) * ChunkSize < player.CharacterBox.X)
             {
-                chunks.Remove(chunkOrder.Dequeue());
+                Chunk chunk = chunkOrder.Dequeue();
+                chunks.Remove(chunk);
+                chunk.Despawn();
             }
         }
     }
