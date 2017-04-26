@@ -27,6 +27,10 @@ namespace GDAPS2Game
         private const int ChunkSize = 1600;
         private Game1 game;
         private Texture2D[] debugs;
+        private Texture2D fog;
+        private Vector2 fogLoc1;
+        private Vector2 fogLoc2;
+        private Vector2 fogLoc3;
 
         // Generation
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> prevBiome;
@@ -45,7 +49,7 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game, Texture2D[] debugs)
+        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game, Texture2D[] debugs, Texture2D fog)
         {
             // Save required perameters
             this.rng = rng;
@@ -60,6 +64,12 @@ namespace GDAPS2Game
             prevBiome = world[0];
             chunks = new List<Chunk>();
             chunkOrder = new Queue<Chunk>();
+
+            // fog stuff
+            this.fog = fog;
+            fogLoc1 = new Vector2(0, 0);
+            fogLoc2 = new Vector2(1600, 0);
+            fogLoc3 = new Vector2(3200, 0);
         }
 
         // Methods
@@ -68,6 +78,11 @@ namespace GDAPS2Game
         /// </summary>
         public void Draw(SpriteBatch sb)
         {
+            // draw 3 backgrounds
+            sb.Draw(fog, fogLoc1, Color.White);
+            sb.Draw(fog, fogLoc2, Color.White);
+            sb.Draw(fog, fogLoc3, Color.White);
+
             if (chunks.Count != 0)
             {
                 foreach (Chunk chunk in chunks)
@@ -83,8 +98,24 @@ namespace GDAPS2Game
         /// </summary>
         public void Update()
         {
+            // fog location boxes
+            if (player.CharacterBox.X > fogLoc1.X + 2200)
+            {
+                fogLoc1.X += 1600;
+            }
+
+            if (player.CharacterBox.X > fogLoc2.X + 2200)
+            {
+                fogLoc2.X += 1600;
+            }
+
+            if (player.CharacterBox.X > fogLoc3.X + 2200)
+            {
+                fogLoc3.X += 1600;
+            }
+
             // Add more chunks if nessesary
-            if(chunkOrder.Count < ChunksRight + ChunksLeft + 1)
+            if (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {
                 // Calculate biome of new chunk
                 int biome = rng.Next(0, world.Length + PrevBiomeOdds);

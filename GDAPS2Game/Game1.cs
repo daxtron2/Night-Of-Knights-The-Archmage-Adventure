@@ -28,6 +28,7 @@ namespace GDAPS2Game
         Texture2D heartSprite;
         Heart heartObj;
         Texture2D[] debugs;
+        Texture2D fog;
 
         
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
@@ -149,7 +150,7 @@ namespace GDAPS2Game
             meleeEnemies.Add(meleeEnemy);
             //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
 
-            gen = new Generator(rng, world, player, this, debugs);
+            gen = new Generator(rng, world, player, this, debugs, fog);
             //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
 
         }
@@ -177,6 +178,9 @@ namespace GDAPS2Game
             // Load Player sprites
             spriteSheet = Content.Load<Texture2D>("spritesheet_transparent"); // now loads entire spritesheet instead of one test sprite
             hitSprite = Content.Load<Texture2D>("playerSpriteTesting");
+
+            // Load fog bg
+            fog = Content.Load<Texture2D>("fog");
         }
 
         /// <summary>
