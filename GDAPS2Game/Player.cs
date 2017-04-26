@@ -76,6 +76,8 @@ namespace GDAPS2Game
         public int MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
 
 
+        public int MaxMove {  get { return maxMovement; } set { maxMovement = value; } }
+
         /// <summary>
         /// Script that handles the movement of the player, updats x and y values
         /// </summary>
@@ -99,13 +101,20 @@ namespace GDAPS2Game
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
-                    characterBox.X -= moveSpeed;
+                    if (characterBox.X > maxMovement)
+                    {
+                        characterBox.X -= moveSpeed;
+                    }
                     faceRight = false;
                     Update(gameTime); // for movement animation
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
+                    maxMovement = characterBox.X - 200;
+                    
                     base.characterBox.X += moveSpeed;
+                    Console.WriteLine("MaxMove: " + maxMovement);
+                    Console.WriteLine("CharacterX: " + characterBox.X);
                     faceRight = true;
                     Update(gameTime);
                 }
@@ -145,14 +154,6 @@ namespace GDAPS2Game
             pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
             
             
-            if (characterBox.X <= 0)
-            {
-                characterBox.X = 0;
-            }
-            if (characterBox.X <= maxMovement)
-            {
-                characterBox.X = maxMovement;
-            }
 
         }
 
@@ -382,8 +383,7 @@ namespace GDAPS2Game
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
 
-                        //This is there the Voice left off, he has no idea waht he is even doing right now.
-                        maxMovement = currentFrame.X - 200;
+                     
                     }
                     else
                     {

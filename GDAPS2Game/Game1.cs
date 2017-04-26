@@ -275,21 +275,19 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             //Console.WriteLine(player.IsActive);
-
-            if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
-            {
-                //the camera will stick with the player along the x coordinate
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
-            }
-            if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
-            {
-                if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
-                {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
-                    spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
+                if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
+                {
+                    //the camera will stick with the player along the x coordinate
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
                 }
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
-            }
-
+                if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
+                {
+                    if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
+                    {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
+                        spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
+                    }
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+                }
 
 
             switch (currentState)
