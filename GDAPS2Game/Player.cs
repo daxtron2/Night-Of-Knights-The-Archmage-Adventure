@@ -178,6 +178,7 @@ namespace GDAPS2Game
         MouseState mStateLast;
         public override void Attack()
         {
+            intersects = false;
             mState = Mouse.GetState();
             // When user presses the attack key
 
@@ -285,7 +286,6 @@ namespace GDAPS2Game
                     }
                 }
             }
-
             mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
