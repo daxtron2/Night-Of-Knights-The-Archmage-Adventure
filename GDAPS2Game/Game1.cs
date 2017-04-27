@@ -209,7 +209,6 @@ namespace GDAPS2Game
                 }
                 player.Physics();
                 player.Movement(gameTime); // threw in gametime for animation
-                player.Collision();
                 player.Attack();
                 gen.Update(gameTime);
 
@@ -292,12 +291,19 @@ namespace GDAPS2Game
                 }
             }
             if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
-            {
+            { 
                 if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
                 {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
                     spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
                 }
-                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+                if (player.MaxMove != 0)
+                {
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(new Vector3((player.MaxMove * -1) - 5, 0, 0f)));//Draw after this
+                }
+                else
+                {
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+                }
             }
 
 
@@ -346,19 +352,10 @@ namespace GDAPS2Game
             player.Draw(spriteBatch);
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
 
-            //Draws the player score and health depending on his position, made such that it follows the player when its x position is below 200, else it appears in the top left
-            if (player.CharacterBox.X < playerXCamera)
-            {
-                spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(screenMiddle - 200, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(screenMiddle + 500, 10), Color.Black);
-            }
-            else
-            {
-                spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(15 + player.MaxMove, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
-            }
+            spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
+            spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(15 + player.MaxMove, 10), Color.Black);
+            spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
+            
 
         }
         protected void DrawMenu(SpriteBatch spriteBatch)

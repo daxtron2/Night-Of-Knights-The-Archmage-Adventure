@@ -137,30 +137,6 @@ namespace GDAPS2Game
         /// <summary>
         /// Script that handles picking up health items that then increase or refill the player's health
         /// </summary>
-        public void HealthPickup()
-        {
-            // Enemies occasionally drop health pickup
-
-            throw new NotImplementedException();
-
-        }
-
-
-        /// <summary>
-        /// Main collision detection script
-        /// </summary>
-        public void Collision()
-        {
-            // If character is within a piece of terrain move them out
-            // Might be handled by monogame?
-            
-            
-            pHitBoxL.Y = characterBox.Y + 30; // + characterBox.Height - 50;
-            pHitBox.Y = characterBox.Y + 30;  //+ characterBox.Height - 50;
-            
-            
-
-        }
 
         //method for leveling up. If the level starts out at 0 it sets it to 1. Each time the score reaches the 'newGoal', the new goal gets 100 added to it and level goes up
         public void levelUp()
@@ -184,6 +160,8 @@ namespace GDAPS2Game
         MouseState mStateLast;
         public override void Attack()
         {
+            pHitBoxL.Y = characterBox.Y + 30;
+            pHitBox.Y = characterBox.Y + 30;
             intersects = false;
             mState = Mouse.GetState();
             // When user presses the attack key
