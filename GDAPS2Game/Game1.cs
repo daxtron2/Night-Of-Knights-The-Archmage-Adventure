@@ -270,19 +270,26 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             //Console.WriteLine(player.IsActive);
-                if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
+            if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
+            {
+                if (player.CharacterBox.X - 500 <= player.MaxMove)
+                {
+                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(new Vector3((player.MaxMove * -1) -5, 0, 0f)));//Draw after this
+                }
+                else
                 {
                     //the camera will stick with the player along the x coordinate
                     spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(cameraPos));//Draw after this
                 }
-                if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
-                {
-                    if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
-                    {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
-                        spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
-                    }
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+            }
+            if (player.CharacterBox.X <= playerXCamera || currentState != GameState.Game)//if they're at or before 200, or in a menu
+            {
+                if (currentState != GameState.Game && currentState != GameState.Menu)//if not in the first menu or in game
+                {   //this bit of code makes the menu render in the center of the screen again, instead of off to the left.
+                    spriteBatch.End();//end the spritebatch otherwise an exception is thrown on next line
                 }
+                spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, null);//draw normally with topleft being (0,0)
+            }
 
 
             switch (currentState)
@@ -306,6 +313,7 @@ namespace GDAPS2Game
             //spriteBatch.DrawString(mainFont, "X: " + player.CharacterBox.X + " Y: " + player.CharacterBox.Y, new Vector2(25, 50), Color.White);
             //debug, show player coords
 
+            spriteBatch.Draw(debugs[0], new Rectangle(player.MaxMove, 600, 10, 10), Color.White);
 
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);

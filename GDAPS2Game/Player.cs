@@ -109,7 +109,13 @@ namespace GDAPS2Game
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
-                    maxMovement = characterBox.X - 200;
+                    if (characterBox.X >= 500)
+                    {
+                        if (maxMovement + 500 <= characterBox.X)
+                        {
+                            maxMovement += moveSpeed;
+                        }
+                    }
                     
                     base.characterBox.X += moveSpeed;
                     Console.WriteLine("MaxMove: " + maxMovement);
