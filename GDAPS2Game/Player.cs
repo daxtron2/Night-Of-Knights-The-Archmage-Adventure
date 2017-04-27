@@ -182,7 +182,7 @@ namespace GDAPS2Game
                 {
                     if (enemies.Count > 0)
                     {
-                        foreach (Enemy enm in enemies)//for some reason needs a tolist, otherwise it throws exceptions when changed
+                        foreach (Enemy enm in enemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
                         {
                             if (faceRight == true)//if facing right
                             {
