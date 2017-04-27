@@ -49,6 +49,14 @@ namespace GDAPS2Game
             get { return chunkNum; }
         }
 
+        /// <summary>
+        /// List of all enemies
+        /// </summary>
+        public List<Enemy> ChunkEnemies
+        {
+            get { return chunkEnemies; }
+        }
+
         // Constructor
         /// <summary>
         /// Instantiate a new Chunk
@@ -172,6 +180,23 @@ namespace GDAPS2Game
 
         }
 
+        /// <summary>
+        /// Update Enemies in chunk
+        /// </summary>
+        /// <param name="gameTime"></param>
+        public void Update(GameTime gameTime)
+        {
+            foreach (Enemy enemy in chunkEnemies)
+            {
+                enemy.Update(gameTime);
+            }
+        }
+
+        /// <summary>
+        /// Generate a foreground with a given generated odd
+        /// </summary>
+        /// <param name="odd">Odd generated</param>
+        /// <returns>Foreground</returns>
         private Texture2D FindForeground(int odd)
         {
             int min = 0;

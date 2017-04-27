@@ -88,7 +88,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Update the terrain
         /// </summary>
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             // Add more chunks if nessesary
             if (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
@@ -118,6 +118,27 @@ namespace GDAPS2Game
                 Chunk chunk = chunkOrder.Dequeue();
                 chunks.Remove(chunk);
                 chunk.Despawn();
+            }
+
+            // Have Chunks update
+            if (chunks.Count != 0)
+            {
+                int update = 3;
+
+                if (chunks.Count < 3)
+                {
+                    update = chunks.Count;
+                }
+
+                // Only update viewable chunks
+                for (int i = 0; i < update; i++)
+                {
+                    // Only update if chunk contains enemies
+                    if (chunks[i].ChunkEnemies.Count != 0)
+                    {
+                        chunks[i].Update(gameTime);
+                    }
+                }
             }
         }
     }
