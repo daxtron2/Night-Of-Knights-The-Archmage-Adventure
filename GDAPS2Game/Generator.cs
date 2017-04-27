@@ -27,10 +27,6 @@ namespace GDAPS2Game
         private const int ChunkSize = 1600;
         private Game1 game;
         private Texture2D[] debugs;
-        private Texture2D fog;
-        private Vector2 fogLoc1;
-        private Vector2 fogLoc2;
-        private Vector2 fogLoc3;
 
         // Generation
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> prevBiome;
@@ -64,12 +60,6 @@ namespace GDAPS2Game
             prevBiome = world[0];
             chunks = new List<Chunk>();
             chunkOrder = new Queue<Chunk>();
-
-            // fog stuff
-            fog = game.fog;
-            fogLoc1 = new Vector2(0, 0);
-            fogLoc2 = new Vector2(1600, 0);
-            fogLoc3 = new Vector2(3200, 0);
         }
 
         // Methods
@@ -78,16 +68,18 @@ namespace GDAPS2Game
         /// </summary>
         public void Draw(SpriteBatch sb)
         {
-            // draw 3 backgrounds
-            sb.Draw(fog, fogLoc1, Color.White);
-            sb.Draw(fog, fogLoc2, Color.White);
-            sb.Draw(fog, fogLoc3, Color.White);
-
             if (chunks.Count != 0)
             {
-                foreach (Chunk chunk in chunks)
+                int draw = 3;
+
+                if (chunks.Count < 3)
                 {
-                    chunk.Draw(sb);
+                    draw = chunks.Count;
+                }
+
+                for (int i = 0; i < draw; i++)
+                {
+                    chunks[i].Draw(sb);
                 }
             }
 
@@ -98,22 +90,6 @@ namespace GDAPS2Game
         /// </summary>
         public void Update()
         {
-            // fog location boxes
-            if (player.CharacterBox.X > fogLoc1.X + 2100)
-            {
-                fogLoc1.X += 3200;
-            }
-
-            else if (player.CharacterBox.X > fogLoc2.X + 2100)
-            {
-                fogLoc2.X += 3200;
-            }
-
-            else if (player.CharacterBox.X > fogLoc3.X + 2100)
-            {
-                fogLoc3.X += 3200;
-            }
-
             // Add more chunks if nessesary
             if (chunkOrder.Count < ChunksRight + ChunksLeft + 1)
             {

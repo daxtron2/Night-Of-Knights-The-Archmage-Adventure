@@ -28,7 +28,8 @@ namespace GDAPS2Game
         
         // Graphics
         private KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]> biome;
-        
+        private Texture2D fog;
+
         // Background
         private Rectangle location;
         private int chunkNum;
@@ -65,7 +66,9 @@ namespace GDAPS2Game
             this.chunkNum = chunkNum;
             debugs = game.debugs;
             player = game.player;
+            fog = game.fog;
             this.game = game;
+
             // Instatiate necessary fields
             sumOdds = 0;
             foregrounds = new KeyValuePair<Texture2D, Vector2>[NumForegrounds];
@@ -146,6 +149,7 @@ namespace GDAPS2Game
         /// <param name="sb"></param>
         public void Draw(SpriteBatch sb)
         {
+            sb.Draw(fog, location, Color.White);
             sb.Draw(biome.Key, location, Color.White);
             for (int i = 0; i < foregrounds.Length; i++)
             {
