@@ -42,7 +42,7 @@ namespace GDAPS2Game
         /// </summary>
         public RangedEnemy(Player player, int x, Texture2D charSprite,Texture2D[] debug) : base (player, x, charSprite, debug)
         {
-            projectilePos = new Vector2((posBox.X - posBox.Width), (posBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
+            projectilePos = new Vector2((characterBox.X - characterBox.Width), (characterBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
             health += level;
         }
@@ -52,26 +52,26 @@ namespace GDAPS2Game
         /// </summary>
         public override void Attack()
         {
-            if ((playerPos.X + playerPos.Width) - (posBox.X + posBox.Width) < 500)
+            if ((playerPos.X + playerPos.Width) - (characterBox.X + characterBox.Width) < 500)
             {
-                if (playerPos.X < posBox.X + 500)
+                if (playerPos.X < characterBox.X + 500)
                 {
                     frame = 1; // set frame to prep shooting
                     projectilePos.X -= 6;
 
-                    if (projectilePos.X < (posBox.X - posBox.Width) - 900)
+                    if (projectilePos.X < (characterBox.X - characterBox.Width) - 900)
                     {
-                        projectilePos.X = posBox.X - posBox.Width;
+                        projectilePos.X = characterBox.X - characterBox.Width;
                         projectileActive = true;
                     }
 
                     // if the arrow is a certain point from the player
-                    if (projectilePos.X < (posBox.X - posBox.Width) - 100)
+                    if (projectilePos.X < (characterBox.X - characterBox.Width) - 100)
                     {
                         frame = 0;
                     }
 
-                    if (posBox.X < playerPos.X)
+                    if (characterBox.X < playerPos.X)
                     {
                         frame = 0; // set frame to standing
                         if (projectilePos.X < 350)
@@ -134,10 +134,10 @@ namespace GDAPS2Game
             {
                 // draw projectile
                 spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                spriteBatch.Draw(debugTexture[0], posBox, Color.White);
+                spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
 
                 // draw enemy
-                spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(sprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
             base.Draw(spriteBatch);
         }

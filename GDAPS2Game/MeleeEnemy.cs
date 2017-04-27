@@ -65,6 +65,7 @@ namespace GDAPS2Game
 
         public new void Update(GameTime gameTime)
         {
+            //Console.WriteLine(characterBox);
             Scoring();
             if (lastAttack + 2 < gameTime.TotalGameTime.Seconds)
             {
@@ -91,8 +92,8 @@ namespace GDAPS2Game
             if (isActive)
             {
                 // draw enemy
-                spriteBatch.Draw(debugTexture[0], posBox, Color.White);
-                spriteBatch.Draw(sprite, new Vector2(posBox.X, posBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
+                spriteBatch.Draw(sprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
             base.Draw(spriteBatch);
         }
