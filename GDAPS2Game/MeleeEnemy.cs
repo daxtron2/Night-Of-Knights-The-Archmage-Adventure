@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 */
 namespace GDAPS2Game
 {
-    class MeleeEnemy : Enemy
+    public class MeleeEnemy : Enemy
     {
         // Purpose: Hold code for Melee Enemies
         // Limitations: None

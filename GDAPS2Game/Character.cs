@@ -185,4 +185,3 @@ namespace GDAPS2Game
         public abstract void TakeDamage(int dmg);
     }
 }
-

@@ -49,18 +49,14 @@ namespace GDAPS2Game
         // Properties
 
         // Constructor
-<<<<<<< HEAD
         public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Game1 game)
-=======
-        public Generator(Random rng, KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world, Player player, Game1 game, Texture2D[] debugs, Texture2D fog)
->>>>>>> e5f70476d080693ad8e2b0451932fb861f548ca6
         {
             // Save required perameters
             this.rng = rng;
             this.world = world;
-            this.player = player;
+            player = game.player;
             this.game = game;
-            this.debugs = debugs;
+            debugs = game.debugs;
 
             // Instatiate necessary fields
             it = 0;
@@ -70,7 +66,7 @@ namespace GDAPS2Game
             chunkOrder = new Queue<Chunk>();
 
             // fog stuff
-            this.fog = fog;
+            fog = game.fog;
             fogLoc1 = new Vector2(0, 0);
             fogLoc2 = new Vector2(1600, 0);
             fogLoc3 = new Vector2(3200, 0);
@@ -108,12 +104,12 @@ namespace GDAPS2Game
                 fogLoc1.X += 3200;
             }
 
-            if (player.CharacterBox.X > fogLoc2.X + 2100)
+            else if (player.CharacterBox.X > fogLoc2.X + 2100)
             {
                 fogLoc2.X += 3200;
             }
 
-            if (player.CharacterBox.X > fogLoc3.X + 2100)
+            else if (player.CharacterBox.X > fogLoc3.X + 2100)
             {
                 fogLoc3.X += 3200;
             }
@@ -131,7 +127,7 @@ namespace GDAPS2Game
                 }
                 
                 // Create chunk, and register it in the tracker variables
-                Chunk chunk = new Chunk(rng, prevBiome, it, 1, it * ChunkSize, game, player, debugs);
+                Chunk chunk = new Chunk(rng, prevBiome, it, 1, it * ChunkSize, game);
                 chunks.Add(chunk);
                 chunkOrder.Enqueue(chunk);
                 it++;

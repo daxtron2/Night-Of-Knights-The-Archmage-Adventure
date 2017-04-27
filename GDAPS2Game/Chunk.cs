@@ -63,8 +63,8 @@ namespace GDAPS2Game
             this.rng = rng;
             this.biome = biome;
             this.chunkNum = chunkNum;
-            debugs = game.Debugs;
-            player = game.Player;
+            debugs = game.debugs;
+            player = game.player;
             this.game = game;
             // Instatiate necessary fields
             sumOdds = 0;
@@ -88,13 +88,19 @@ namespace GDAPS2Game
         /// <param name="numEnemies">Number of enemies to add</param>
         private void Populate(int numEnemies)
         {
+            // Calculate total odds
             foreach (KeyValuePair<Texture2D, int> foreground in biome.Value)
             {
                 sumOdds += foreground.Value;
             }
+
+            // Add foregrounds
             for (int i = 0; i < NumForegrounds; i++)
             {
+                // Random a foreground for location
                 Texture2D foreground = FindForeground(rng.Next(0, sumOdds));
+
+                // If not null, create a foreground at location
                 if (foreground != null)
                 {
                     if (location.Width / NumForegrounds > foreground.Width)
@@ -110,20 +116,27 @@ namespace GDAPS2Game
                             825 - foreground.Height));
                     }
                 }
+
+                // Null placeholder in array
                 else
                 {
                     foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(null, new Vector2());
                 }
             }
 
+            // Add enemies
             for (int i = 0; i < numEnemies; i++)
             {
                 int place = rng.Next(0, enemyLocations.Count);
                 enemyLocations.RemoveAt(place);
                 if (rng.Next(0, 2) == 1)
                 {
-                    chunkEnemies.Add(new RangedEnemy(player, location.X + place * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - 70)), , debugs;
-                    game
+                    chunkEnemies.Add(new RangedEnemy(player, location.X + place * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - 70)), game.spriteSheet, debugs));
+                }
+                else
+                {
+                    chunkEnemies.Add(new MeleeEnemy(player, location.X + place * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - 70)), game.spriteSheet, debugs));
+                }
             }
         }
 

@@ -25,19 +25,8 @@ namespace GDAPS2Game
         SpriteFont mainFont;
         public Texture2D spriteSheet;
         Texture2D hitSprite;
-        Texture2D[] debugs;
-        Texture2D fog;
-
-        public Texture2D SpriteSheet
-        {
-            get { return spriteSheet; }
-        }
-        
-        public Texture2D[] Debugs
-        {
-            get { return debugs; }
-        }
-
+        public Texture2D[] debugs;
+        public Texture2D fog;
         
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
@@ -76,21 +65,11 @@ namespace GDAPS2Game
 
         // Calculations
         Random rng;
-        Player player;
+        public Player player;
         RangedEnemy rangedEnemy;
         MeleeEnemy meleeEnemy;
         List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
         List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();
-
-        //Create Game1:
-        //Create everything in Game1
-        //  Create Player
-        //  Create Player Property
-
-        public Player Player
-        {
-            get { return player; }
-        }
 
         // IO
         BinaryReader attribRead;
@@ -161,19 +140,12 @@ namespace GDAPS2Game
             base.Initialize();
 
             // Test Codes
-            player = new Player(new Rectangle(50, 750, 55, 130), spriteSheet, hitSprite, debugs); // spawns player right where they will be for rest of game
+            player = new Player(50, spriteSheet, hitSprite, debugs); // spawns player right where they will be for rest of game
             rangedEnemy = new RangedEnemy(player, 800, spriteSheet, debugs);
             meleeEnemy = new MeleeEnemy(player, 950, spriteSheet, debugs);
             rangedEnemies.Add(rangedEnemy);
             meleeEnemies.Add(meleeEnemy);
-<<<<<<< HEAD
             //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
-=======
-            //rangedEnemies.Add(new RangedEnemy(player, new Rectangle(900, 750, 26, 40), spriteSheet));
-
-            gen = new Generator(rng, world, player, this, debugs, fog);
-            //player = new Player(new Rectangle(17, 400, 17, 26), playerSprite, hitSprite); // spawns player right where they will be for rest of game
->>>>>>> e5f70476d080693ad8e2b0451932fb861f548ca6
 
             gen = new Generator(rng, world, this);
         }

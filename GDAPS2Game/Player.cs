@@ -59,7 +59,7 @@ namespace GDAPS2Game
         /// <summary>
         /// Instatiate a new Player
         /// </summary>
-        public Player(Rectangle initPositionBox, Texture2D charSprite, Texture2D hitbox, Texture2D[] debugs) : base(initPositionBox, charSprite, debugs)
+        public Player(int x, Texture2D charSprite, Texture2D hitbox, Texture2D[] debugs) : base(x, 750, 55, 130, charSprite, debugs)
         {
             health = 50;//testing value
             faceRight = true;
