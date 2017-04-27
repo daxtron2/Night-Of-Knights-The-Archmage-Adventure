@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 */
 namespace GDAPS2Game
 {
-    abstract class Enemy : Character
+    public abstract class Enemy : Character
     {
         // Purpose: Class to hold all the Enemy code
         // Limitations: None
@@ -22,18 +22,15 @@ namespace GDAPS2Game
         // Fields
         protected Rectangle playerPos;
         protected Texture2D sprite;
-        protected Rectangle posBox;
-        private Random rng = new Random();
+        protected Rectangle posBox; // for all enemy types
         // Properties
 
         // Constructor
-        public Enemy(Player player, Rectangle initPositionBox, Texture2D charSprite, Texture2D[] debugs) : base(initPositionBox, charSprite, debugs)
+        public Enemy(Player player, int x, Texture2D charSprite, Texture2D[] debugs) : base(x, 750, 70, 95, charSprite, debugs)
         {
             playerPos = player.CharacterBox;
             playerL = player;
             sprite = charSprite;
-            posBox = initPositionBox;
-            posBox.X = initPositionBox.X - 15;
             
         }
 

@@ -69,6 +69,9 @@
     <Content Include="Content\Debug2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\fog.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\spritesheet.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

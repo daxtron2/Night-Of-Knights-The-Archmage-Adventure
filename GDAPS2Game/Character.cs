@@ -12,7 +12,7 @@ using System.Diagnostics;
 */
 namespace GDAPS2Game
 {
-    abstract class Character
+    public abstract class Character
     {
         // Purpose: Common code that all Characters will share, including player
         // Limitations: None
@@ -51,10 +51,10 @@ namespace GDAPS2Game
         /// <summary>
         /// Instantiate a new Character
         /// </summary>
-        public Character(Rectangle initialPosition, Texture2D charSprite, Texture2D[] debugs)
+        public Character(int x, int y, int width, int height, Texture2D charSprite, Texture2D[] debugs)
         {
             debugTexture = debugs;
-            characterBox = initialPosition;
+            characterBox = new Rectangle(x, y, width, height);
             characterSprite = charSprite;
             //Spawn(); redundant?
             BinaryReader read;
