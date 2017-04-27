@@ -145,6 +145,7 @@ namespace GDAPS2Game
             meleeEnemy = new MeleeEnemy(player, 950, spriteSheet, debugs);
             rangedEnemies.Add(rangedEnemy);
             meleeEnemies.Add(meleeEnemy);
+            rangedEnemies.Add(new RangedEnemy(player, 1050, spriteSheet, debugs));
             //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
 
             gen = new Generator(rng, world, this);
@@ -210,16 +211,22 @@ namespace GDAPS2Game
                 player.Collision();
                 player.Attack();
                 gen.Update();
-                rangedEnemy.Update(gameTime);
-                rangedEnemy.Attack();
-                meleeEnemy.Update(gameTime);
-                meleeEnemy.Attack();
+                //rangedEnemy.Update(gameTime);
+                //rangedEnemy.Attack();
+                //meleeEnemy.Update(gameTime);
+                //meleeEnemy.Attack();
+                
 
-                /*for (int i = 0; i < rangedEnemies.Count; i++)
+                for (int i = 0; i < rangedEnemies.Count; i++)
                 {
                     rangedEnemies[i].Update(gameTime);
                     rangedEnemies[i].Attack();
-                }*/
+                }
+                for(int i = 0; i<meleeEnemies.Count; i++)
+                {
+                    meleeEnemies[i].Update(gameTime);
+                    meleeEnemies[i].Attack();
+                }
 
                 if(player.IsActive == false)
                 {
@@ -322,8 +329,14 @@ namespace GDAPS2Game
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
             gen.Draw(spriteBatch);
-            rangedEnemy.Draw(spriteBatch);
-            meleeEnemy.Draw(spriteBatch);
+            for (int i = 0; i < rangedEnemies.Count; i++)
+            {
+                rangedEnemies[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < meleeEnemies.Count; i++)
+            {
+                meleeEnemy.Draw(spriteBatch);
+            }
             /*for(int i = 0; i<rangedEnemies.Count; i++)
             {
                 rangedEnemies[i].Draw(spriteBatch);
