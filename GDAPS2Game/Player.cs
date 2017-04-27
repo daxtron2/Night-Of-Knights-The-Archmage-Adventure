@@ -118,8 +118,8 @@ namespace GDAPS2Game
                     }
                     
                     base.characterBox.X += moveSpeed;
-                    Console.WriteLine("MaxMove: " + maxMovement);
-                    Console.WriteLine("CharacterX: " + characterBox.X);
+                    //Console.WriteLine("MaxMove: " + maxMovement);
+                    //Console.WriteLine("CharacterX: " + characterBox.X);
                     faceRight = true;
                     Update(gameTime);
                 }
