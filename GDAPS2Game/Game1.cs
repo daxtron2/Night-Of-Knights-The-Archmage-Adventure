@@ -313,7 +313,7 @@ namespace GDAPS2Game
             //spriteBatch.DrawString(mainFont, "X: " + player.CharacterBox.X + " Y: " + player.CharacterBox.Y, new Vector2(25, 50), Color.White);
             //debug, show player coords
 
-            spriteBatch.Draw(debugs[0], new Rectangle(player.MaxMove, 600, 10, 10), Color.White);
+            //spriteBatch.Draw(debugs[0], new Rectangle(player.MaxMove, 600, 10, 10), Color.White);
 
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
