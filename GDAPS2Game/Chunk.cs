@@ -181,18 +181,6 @@ namespace GDAPS2Game
         }
 
         /// <summary>
-        /// Update Enemies in chunk
-        /// </summary>
-        /// <param name="gameTime"></param>
-        public void Update(GameTime gameTime)
-        {
-            foreach (Enemy enemy in chunkEnemies)
-            {
-                enemy.Update(gameTime);
-            }
-        }
-
-        /// <summary>
         /// Generate a foreground with a given generated odd
         /// </summary>
         /// <param name="odd">Odd generated</param>

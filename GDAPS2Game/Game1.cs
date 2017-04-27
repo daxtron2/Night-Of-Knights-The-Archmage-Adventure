@@ -141,10 +141,12 @@ namespace GDAPS2Game
 
             // Test Codes
             player = new Player(50, spriteSheet, hitSprite, debugs); // spawns player right where they will be for rest of game
+
             //rangedEnemy = new RangedEnemy(player, 800, spriteSheet, debugs);
             //meleeEnemy = new MeleeEnemy(player, 950, spriteSheet, debugs);
             //rangedEnemies.Add(rangedEnemy);
             //meleeEnemies.Add(meleeEnemy);
+
             //rangedEnemies.Add(new RangedEnemy(player, 900, spriteSheet, debugs));
 
             gen = new Generator(rng, world, this);
@@ -210,21 +212,23 @@ namespace GDAPS2Game
                 player.Collision();
                 player.Attack();
                 gen.Update(gameTime);
+
                 //rangedEnemy.Update(gameTime);
                 //rangedEnemy.Attack();
                 //meleeEnemy.Update(gameTime);
                 //meleeEnemy.Attack();
 
+                // Update enemies
                 for (int i = 0; i < rangedEnemies.Count; i++)
                 {
                     rangedEnemies[i].Update(gameTime);
                     rangedEnemies[i].Attack();
                 }
-
                 for (int i = 0; i < meleeEnemies.Count; i++)
                 {
                     meleeEnemies[i].Update(gameTime);
                     meleeEnemies[i].Attack();
+                }
 
                 if(player.IsActive == false)
                 {
@@ -318,7 +322,7 @@ namespace GDAPS2Game
             //spriteBatch.DrawString(mainFont, "X: " + player.CharacterBox.X + " Y: " + player.CharacterBox.Y, new Vector2(25, 50), Color.White);
             //debug, show player coords
 
-            spriteBatch.Draw(debugs[0], new Rectangle(player.MaxMove, 600, 10, 10), Color.White);
+            //spriteBatch.Draw(debugs[0], new Rectangle(player.MaxMove, 600, 10, 10), Color.White);
 
             spriteBatch.End();//Draw before this
             base.Draw(gameTime);
@@ -330,9 +334,13 @@ namespace GDAPS2Game
             //rangedEnemy.Draw(spriteBatch);
             //meleeEnemy.Draw(spriteBatch);
 
-            for(int i = 0; i < rangedEnemies.Count; i++)
+            for (int i = 0; i < rangedEnemies.Count; i++)
             {
                 rangedEnemies[i].Draw(spriteBatch);
+            }
+            for (int i = 0; i < meleeEnemies.Count; i++)
+            {
+                meleeEnemy.Draw(spriteBatch);
             }
 
             player.Draw(spriteBatch);

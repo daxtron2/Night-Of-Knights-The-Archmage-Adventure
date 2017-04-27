@@ -129,16 +129,6 @@ namespace GDAPS2Game
                 {
                     update = chunks.Count;
                 }
-
-                // Only update viewable chunks
-                for (int i = 0; i < update; i++)
-                {
-                    // Only update if chunk contains enemies
-                    if (chunks[i].ChunkEnemies.Count != 0)
-                    {
-                        chunks[i].Update(gameTime);
-                    }
-                }
             }
         }
     }
