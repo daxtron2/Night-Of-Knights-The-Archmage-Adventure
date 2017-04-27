@@ -340,9 +340,9 @@ namespace GDAPS2Game
             }
             else
             {
-                spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.CharacterBox.X + screenMiddle - 700, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(10 + player.CharacterBox.X - 500, 10), Color.Black);
-                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.CharacterBox.X + screenMiddle, 10), Color.Black);
+                spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
+                spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(15 + player.MaxMove, 10), Color.Black);
+                spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
             }
 
         }
