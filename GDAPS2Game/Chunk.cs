@@ -90,9 +90,18 @@ namespace GDAPS2Game
                 Texture2D foreground = FindForeground(rng.Next(0, sumOdds));
                 if (foreground != null)
                 {
-                    foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
-                        new Vector2(location.X + i * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - foreground.Width)),
-                        825 - foreground.Height));
+                    if (location.Width / NumForegrounds > foreground.Width)
+                    {
+                        foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
+                            new Vector2(location.X + i * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - foreground.Width)),
+                            825 - foreground.Height));
+                    }
+                    else
+                    {
+                        foregrounds[i] = new KeyValuePair<Texture2D, Vector2>(foreground,
+                            new Vector2(location.X + i * location.Width / NumForegrounds + location.Width / NumForegrounds - foreground.Width,
+                            825 - foreground.Height));
+                    }
                 }
                 else
                 {

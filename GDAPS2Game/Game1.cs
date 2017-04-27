@@ -44,8 +44,8 @@ namespace GDAPS2Game
             "tree_2.png"
         };
         int[][] odds = {
-            new int[] {100, 10, 1 },  // Plains Foregrounds (HARDCODE)
-            new int[] {10, 1000, 1 }    // Forest Foregrounds (HARDCODE)
+            new int[] {10000, 1000, 1 },  // Plains Foregrounds (HARDCODE)
+            new int[] {1000, 100000, 1 }    // Forest Foregrounds (HARDCODE)
         };
 
         // Debug textures to test boxy shaped things
