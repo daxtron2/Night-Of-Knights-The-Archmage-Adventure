@@ -66,10 +66,7 @@ namespace GDAPS2Game
         // Calculations
         Random rng;
         public Player player;
-        RangedEnemy rangedEnemy;
-        MeleeEnemy meleeEnemy;
-        List<RangedEnemy> rangedEnemies = new List<RangedEnemy>();
-        List<MeleeEnemy> meleeEnemies = new List<MeleeEnemy>();
+        public Dictionary<int, List<Enemy>> worldEnemies = new Dictionary<int, List<Enemy>>();
 
         // IO
         BinaryReader attribRead;
@@ -198,8 +195,7 @@ namespace GDAPS2Game
             kState = Keyboard.GetState();//first thing
             mState = Mouse.GetState();//second thing
 
-            player.rangedEnemies = rangedEnemies;
-            player.meleeEnemies = meleeEnemies;
+            player.worldEnemies = worldEnemies;
 
             if (currentState == GameState.Game)//if in game
             {
@@ -219,15 +215,13 @@ namespace GDAPS2Game
                 //meleeEnemy.Attack();
 
                 // Update enemies
-                for (int i = 0; i < rangedEnemies.Count; i++)
+                foreach (List<Enemy> enemies in worldEnemies.Values)
                 {
-                    rangedEnemies[i].Update(gameTime);
-                    rangedEnemies[i].Attack();
-                }
-                for (int i = 0; i < meleeEnemies.Count; i++)
-                {
-                    meleeEnemies[i].Update(gameTime);
-                    meleeEnemies[i].Attack();
+                    for (int i = 0; i < enemies.Count; i++)
+                    {
+                        enemies[i].Update(gameTime);
+                        enemies[i].Attack();
+                    }
                 }
 
                 if(player.IsActive == false)
@@ -334,13 +328,13 @@ namespace GDAPS2Game
             //rangedEnemy.Draw(spriteBatch);
             //meleeEnemy.Draw(spriteBatch);
 
-            for (int i = 0; i < rangedEnemies.Count; i++)
+            // Draw all enemies
+            foreach (List<Enemy> enemies in worldEnemies.Values)
             {
-                rangedEnemies[i].Draw(spriteBatch);
-            }
-            for (int i = 0; i < meleeEnemies.Count; i++)
-            {
-                meleeEnemy.Draw(spriteBatch);
+                foreach (Enemy enemy in enemies)
+                {
+                    enemy.Draw(spriteBatch);
+                }
             }
 
             player.Draw(spriteBatch);

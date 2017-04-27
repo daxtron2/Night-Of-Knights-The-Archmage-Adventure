@@ -149,6 +149,8 @@ namespace GDAPS2Game
                     chunkEnemies.Add(new MeleeEnemy(player, location.X + place * location.Width / NumForegrounds + (rng.Next(0, location.Width / NumForegrounds - 70)), game.spriteSheet, debugs));
                 }
             }
+
+            game.worldEnemies.Add(chunkNum, chunkEnemies);
         }
 
         /// <summary>
@@ -177,7 +179,7 @@ namespace GDAPS2Game
         /// </summary>
         public void Despawn()
         {
-
+            chunkEnemies = null;
         }
 
         /// <summary>
