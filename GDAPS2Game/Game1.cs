@@ -184,7 +184,7 @@ namespace GDAPS2Game
         protected override void UnloadContent()
         {
         }
-
+        Heart heart;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -206,6 +206,11 @@ namespace GDAPS2Game
                 player.Physics();
                 player.Movement(gameTime); // threw in gametime for animation
                 player.Attack();
+                Tuple<bool, Rectangle> test = player.Test();
+                if (test.Item1)
+                {
+                    heart = new Heart(spriteSheet, test.Item2, player);
+                }
                 gen.Update(gameTime);
 
                 //rangedEnemy.Update(gameTime);
@@ -330,6 +335,7 @@ namespace GDAPS2Game
 
         protected void DrawGame(SpriteBatch spriteBatch, GameTime gameTime)
         {
+            
             gen.Draw(spriteBatch);
             //rangedEnemy.Draw(spriteBatch);
             //meleeEnemy.Draw(spriteBatch);
@@ -349,7 +355,10 @@ namespace GDAPS2Game
             spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
             spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(15 + player.MaxMove, 10), Color.Black);
             spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
-            
+            if (heart != null)
+            {
+                heart.Draw(spriteBatch);
+            }
 
         }
         protected void DrawMenu(SpriteBatch spriteBatch)

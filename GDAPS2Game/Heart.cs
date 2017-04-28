@@ -49,9 +49,10 @@ namespace GDAPS2Game
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            
+            Pickup();
             if (player != null)
             {
-                Pickup();
                 spriteBatch.Draw(sheet, enemyPosBox, heartSpriteBox, Color.White, 0f, new Vector2(0, 0), 5f, SpriteEffects.None, 0f);
             }
         }

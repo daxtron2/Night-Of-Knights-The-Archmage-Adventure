@@ -22,6 +22,7 @@ namespace GDAPS2Game
         // Fields
         private int playerAttack;
         private Texture2D hit;
+        private Heart heart;
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
@@ -157,6 +158,8 @@ namespace GDAPS2Game
 
         MouseState mState;
         MouseState mStateLast;
+        bool test = false;
+        Rectangle enmHeart;
         public override void Attack()
         {
             pHitBoxL.Y = characterBox.Y + 30;
@@ -184,6 +187,11 @@ namespace GDAPS2Game
                     {
                         foreach (Enemy enm in enemies.ToList())//for some reason needs a tolist, otherwise it throws exceptions when changed
                         {
+                            if (enm.TryDestroy())
+                            {
+                                test = true;
+                                enmHeart = enm.CharacterBox;
+                            }
                             if (faceRight == true)//if facing right
                             {
                                 if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
@@ -219,7 +227,6 @@ namespace GDAPS2Game
                                     intersects = false;
                                 }
                             }
-                            enm.TryDestroy();//check if the enemy's health<=0, if it is set IsActive=false
                             if (enm.IsActive == false)//if enemy is "dead"
                             {
                                 //Console.WriteLine("Removing enemy from list.");//debug output
@@ -259,6 +266,10 @@ namespace GDAPS2Game
         {
             spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
 
+            if(heart!= null)
+            {
+                heart.Draw(spriteBatch);
+            }
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
             {
@@ -394,6 +405,16 @@ namespace GDAPS2Game
                 }
             }
             firstRun = false;
+        }
+
+        public Tuple<bool,Rectangle> Test()
+        {
+            if (test)
+            {
+                test = false;
+                return new Tuple<bool, Rectangle>(true, enmHeart);
+            }
+            else { return new Tuple<bool, Rectangle>(false,Rectangle.Empty); }
         }
     }
 }

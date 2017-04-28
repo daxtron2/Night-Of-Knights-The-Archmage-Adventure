@@ -110,18 +110,17 @@ namespace GDAPS2Game
         /// Death animation?
         /// give a chance to drop a health potion
         /// </summary>
-        public void TryDestroy()
+        public bool TryDestroy()
         {
             if (health <= 0)
             {
                 //sets addScore to true so that the score can be added, set to false after score is incremented.
                 addScore = true;
+                
                 isActive = false;
-                
-                heart = new Heart(characterSprite, characterBox, playerL);
-                
+                return true;
             }
-            
+            return false;
 
         }
 
