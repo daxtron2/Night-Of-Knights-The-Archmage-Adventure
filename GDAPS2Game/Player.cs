@@ -22,7 +22,6 @@ namespace GDAPS2Game
         // Fields
         private int playerAttack;
         private Texture2D hit;
-        private Heart heart;
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
@@ -265,11 +264,7 @@ namespace GDAPS2Game
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
             spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
-
-            if(heart!= null)
-            {
-                heart.Draw(spriteBatch);
-            }
+            
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
             {

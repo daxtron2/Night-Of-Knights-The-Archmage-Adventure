@@ -30,7 +30,6 @@ namespace GDAPS2Game
         // shooting projectile stuff
         private Vector2 projectilePos;
         private Rectangle projectileRect;
-        bool intersecting = false;
         bool projectileActive = true;
         Color projectileColor = Color.White;
 
@@ -103,7 +102,6 @@ namespace GDAPS2Game
                         playerL.TakeDamage(damage + level / 2);
                     }
                     projectileActive = false;
-                    intersecting = true;
                 }
                 else
                 {

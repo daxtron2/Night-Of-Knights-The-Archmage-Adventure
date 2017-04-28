@@ -20,7 +20,7 @@ namespace GDAPS2Game
         // Limitations: None
 
         // Fields
-        private int frame;
+        private int frame;//currently unused because no animation has been added
         private Point currentFrame;
         private Point frameSize = new Point(15,20);
 
