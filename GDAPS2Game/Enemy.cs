@@ -69,9 +69,6 @@ namespace GDAPS2Game
         {
             base.Draw(spriteBatch);
         }
-        internal void Update(GameTime gameTime)
-        {
-            playerPos = playerL.CharacterBox;
-        }
+        public abstract void Update(GameTime gameTime);
     }
 }

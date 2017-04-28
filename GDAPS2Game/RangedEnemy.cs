@@ -88,7 +88,7 @@ namespace GDAPS2Game
             }
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             Scoring();
             if (isActive == true)
@@ -100,7 +100,7 @@ namespace GDAPS2Game
                     if (projectileActive == true)
                     {
                         //the projectile for the archer does damage (set to 1), plus the level divided by 2, this adds scaling.
-                        playerL.TakeDamage(damage + level/2);
+                        playerL.TakeDamage(damage + level / 2);
                     }
                     projectileActive = false;
                     intersecting = true;
@@ -124,7 +124,6 @@ namespace GDAPS2Game
                         currentFrame.Y = 40;
                         break;
                 }
-                base.Update(gameTime);
             }
         }
 
@@ -137,7 +136,7 @@ namespace GDAPS2Game
                 spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
 
                 // draw enemy
-                spriteBatch.Draw(sprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
             base.Draw(spriteBatch);
         }

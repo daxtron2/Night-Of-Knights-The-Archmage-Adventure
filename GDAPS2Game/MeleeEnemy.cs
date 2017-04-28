@@ -63,7 +63,7 @@ namespace GDAPS2Game
             
         }
 
-        public new void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             //Console.WriteLine(characterBox);
             Scoring();
