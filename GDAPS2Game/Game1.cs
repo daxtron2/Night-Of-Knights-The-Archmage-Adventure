@@ -27,6 +27,7 @@ namespace GDAPS2Game
         Texture2D hitSprite;
         public Texture2D[] debugs;
         public Texture2D fog;
+        public Texture2D healthBar;
         
         KeyValuePair<Texture2D, KeyValuePair<Texture2D, int>[]>[] world;
         string[] backgroundPaths = {
@@ -175,6 +176,9 @@ namespace GDAPS2Game
 
             // Load fog bg
             fog = Content.Load<Texture2D>("fog");
+
+            // load health bar
+            healthBar = Content.Load<Texture2D>("health");
         }
 
         /// <summary>
@@ -353,7 +357,29 @@ namespace GDAPS2Game
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
 
             spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
-            spriteBatch.DrawString(mainFont, "Health: " + player.Health, new Vector2(15 + player.MaxMove, 10), Color.Black);
+
+            // health bar conditions and drawing
+
+            // draw full bar if health is above fifty
+            if (player.Health >= 50)
+            {
+                spriteBatch.Draw(debugs[0], new Rectangle(15 + player.MaxMove, 10, 300, 16), Color.White);
+
+            }
+            // draw red if low
+            else if (player.Health <= 15)
+            {
+                spriteBatch.Draw(debugs[1], new Rectangle(15 + player.MaxMove, 10, player.Health * 6, 16), Color.White);
+
+            }
+            // otherwise draw health * 6
+            else
+            {
+                spriteBatch.Draw(debugs[0], new Rectangle(15 + player.MaxMove, 10, player.Health * 6, 16), Color.White);
+            }
+            // draw health bar on top of debug colors
+            spriteBatch.Draw(healthBar, new Vector2(15 + player.MaxMove, 10), Color.White);
+
             spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
             if (heart != null)
             {
