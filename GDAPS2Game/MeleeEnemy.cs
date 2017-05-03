@@ -58,6 +58,7 @@ namespace GDAPS2Game
                 {
                     user.TakeDamage(5);
                     hasAttacked = true;
+                    frame = 1;
                 }
             }
             
@@ -67,11 +68,12 @@ namespace GDAPS2Game
         {
             //Console.WriteLine(characterBox);
             Scoring();
-            if (lastAttack + 2 < gameTime.TotalGameTime.Seconds)
+            if (lastAttack + 1 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
                 hasAttacked = false;
                 lastAttack = gameTime.TotalGameTime.Seconds;
+                frame = 0;
             }   
 
             switch (frame)
