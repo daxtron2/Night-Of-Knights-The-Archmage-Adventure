@@ -101,9 +101,17 @@ namespace GDAPS2Game
                 {
                     prevBiome = world[biome];
                 }
-                
-                // Create chunk, and register it in the tracker variables
-                Chunk chunk = new Chunk(rng, prevBiome, it, rng.Next(0, 5), it * ChunkSize, game);
+
+                // Create chunk, and register it in the tracker variables, but not the first 3 chunks
+                Chunk chunk;
+                if (it > 3)
+                {
+                    chunk = new Chunk(rng, prevBiome, it, rng.Next(0, 5), it * ChunkSize, game);
+                }
+                else
+                {
+                    chunk = new Chunk(rng, prevBiome, it, 0, it * ChunkSize, game);
+                }
                 chunks.Add(chunk);
                 chunkOrder.Enqueue(chunk);
                 it++;
