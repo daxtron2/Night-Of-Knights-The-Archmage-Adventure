@@ -104,7 +104,7 @@ namespace GDAPS2Game
 
                 // Create chunk, and register it in the tracker variables, but not the first 3 chunks
                 Chunk chunk;
-                if (it > 3)
+                if (it > 1)
                 {
                     chunk = new Chunk(rng, prevBiome, it, rng.Next(0, 5), it * ChunkSize, game);
                 }
