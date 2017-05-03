@@ -12,7 +12,7 @@ using System.Diagnostics;
 */
 namespace GDAPS2Game
 {
-    //Heart Class. A Heart is drawn when an enemy dies, and when the player collides with it, it calls the add method and then disappears.
+    //Heart Class. A Heart is drawn when an enemy dies, and when the player collides with it, it calls the addhealth method and then disappears.
     public class Heart
     {
         private Vector2 enemyPosBox;
