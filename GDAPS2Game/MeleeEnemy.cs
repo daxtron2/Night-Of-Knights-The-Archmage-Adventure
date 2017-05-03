@@ -94,7 +94,6 @@ namespace GDAPS2Game
             if (isActive)
             {
                 // draw enemy
-                spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
                 spriteBatch.Draw(sprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
             }
             base.Draw(spriteBatch);

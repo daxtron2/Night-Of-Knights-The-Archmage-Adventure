@@ -131,7 +131,6 @@ namespace GDAPS2Game
             {
                 // draw projectile
                 spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
-                spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
 
                 // draw enemy
                 spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);

@@ -182,5 +182,10 @@ namespace GDAPS2Game
         /// </summary>
         /// <param name="dmg">Damage to take</param>
         public abstract void TakeDamage(int dmg);
+
+        public void DrawDebug(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
+        }
     }
 }

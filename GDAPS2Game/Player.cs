@@ -122,8 +122,8 @@ namespace GDAPS2Game
                     faceRight = true;
                     Update(gameTime);
                 }
-                pHitBox = new Rectangle(characterBox.X + 50, characterBox.Y, 40, 70);
-                pHitBoxL = new Rectangle(characterBox.X - 45, characterBox.Y, 40, 70);
+                pHitBox = new Rectangle(characterBox.X + 45, characterBox.Y, 40, 70);
+                pHitBoxL = new Rectangle(characterBox.X - 30, characterBox.Y, 40, 70);
 
             }
             else
@@ -161,8 +161,8 @@ namespace GDAPS2Game
         Rectangle enmHeart;
         public override void Attack()
         {
-            pHitBoxL.Y = characterBox.Y + 30;
-            pHitBox.Y = characterBox.Y + 30;
+            pHitBoxL.Y = characterBox.Y + 35;
+            pHitBox.Y = characterBox.Y + 35;
             intersects = false;
             mState = Mouse.GetState();
             // When user presses the attack key
@@ -263,8 +263,7 @@ namespace GDAPS2Game
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
-            spriteBatch.Draw(debugTexture[0], characterBox, Color.White);
-            
+
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
             {

@@ -73,6 +73,9 @@ namespace GDAPS2Game
         BinaryReader attribRead;
         Stream attribFilePath;
 
+        // debug colors bool (turn debug colors on/off, does not turn off hitboxes)
+        bool debugColors = false;
+
 
         enum GameState { Menu, Pause, Game, GameOver }
         GameState currentState;
@@ -349,11 +352,22 @@ namespace GDAPS2Game
             {
                 foreach (Enemy enemy in enemies)
                 {
+                    // check for debugColors bool
+                    if (debugColors == true)
+                    {
+                        enemy.DrawDebug(spriteBatch);
+                    }
                     enemy.Draw(spriteBatch);
                 }
             }
 
+            // check for debugColors bool
+            if (debugColors == true)
+            {
+                player.DrawDebug(spriteBatch);
+            }
             player.Draw(spriteBatch);
+
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
 
             spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(player.MaxMove + screenMiddle - 195, 10), Color.Black);
