@@ -24,7 +24,7 @@ namespace GDAPS2Game
         // animation attributes
         private int frame = 0; // default frame of 0
         private Point currentFrame; // where current frame is on spritesheet
-        private Point frameSize = new Point(14, 20); // size of each sprite
+        private Point frameSize = new Point(14, 21); // size of each sprite
         private int damage = 5;
         
         // shooting projectile stuff
@@ -115,11 +115,11 @@ namespace GDAPS2Game
                 {
                     case 0:
                         currentFrame.X = 82;
-                        currentFrame.Y = 40;
+                        currentFrame.Y = 39;
                         break;
                     case 1:
                         currentFrame.X = 104;
-                        currentFrame.Y = 40;
+                        currentFrame.Y = 39;
                         break;
                 }
             }

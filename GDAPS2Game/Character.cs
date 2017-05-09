@@ -157,6 +157,12 @@ namespace GDAPS2Game
         public void AddHealth(int healthPlus)
         {
             health += healthPlus;
+
+            // cap health at 50
+            if (health > 50)
+            {
+                health = 50;
+            }
         }
 
         /// <summary>

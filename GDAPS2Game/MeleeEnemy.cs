@@ -22,7 +22,7 @@ namespace GDAPS2Game
         // Fields
         private int frame;//currently unused because no animation has been added
         private Point currentFrame;
-        private Point frameSize = new Point(15,20);
+        private Point frameSize = new Point(15,21);
 
         private int lastAttack = 0;
         private bool hasAttacked = false;

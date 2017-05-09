@@ -75,7 +75,7 @@
     <Content Include="Content\health.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\spritesheet.png">
+    <Content Include="Content\logo.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\spritesheet_transparent.png">
