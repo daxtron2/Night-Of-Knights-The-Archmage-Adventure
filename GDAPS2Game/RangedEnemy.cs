@@ -54,11 +54,12 @@ namespace GDAPS2Game
             if (isRanged == 0)
             {
                 archer = false;
+                base.MageScore = 50; //sets the magescore to 50 to indicate its an ArchMage (who awards 50 points upon being slain because he hurts a lot
                 damage = 25;
             }
 
         }
-
+        public Boolean IsArcher { get { return archer; } } // returns the boolean if the ranged archer is an archer or not
         /// <summary>
         /// Character Attack
         /// </summary>

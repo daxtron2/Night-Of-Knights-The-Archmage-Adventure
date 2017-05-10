@@ -272,7 +272,17 @@ namespace GDAPS2Game
                                     AddScore(20);
                                 }
                                 else
-                                    AddScore(10);
+                                {
+                                    if (enm is RangedEnemy)
+                                    {
+                                        if (enm.MageScore > 0) //checks the mageScore integer, if its greater than 0 then its an ArchMage enemy and not an archer, thus it awards more points.
+                                        {
+                                            AddScore(50);
+                                        }
+                                        else
+                                            AddScore(10);
+                                    }
+                                }
                                 enemies.Remove(enm);//remove the enemy from the list
                             }
                         }
