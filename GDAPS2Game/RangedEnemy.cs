@@ -26,6 +26,10 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(14, 21); // size of each sprite
         private int damage = 5;
+
+        Boolean archer = true;
+        Random rangedSelector = new Random();
+        int isRanged = 0;
         
         // shooting projectile stuff
         private Vector2 projectilePos;
@@ -46,8 +50,16 @@ namespace GDAPS2Game
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
             health += level;
             pl = player;
-        }
+            isRanged = rangedSelector.Next(0, 10);
+            if (isRanged == 0)
+            {
+                archer = false;
+                base.MageScore = 50; //sets the magescore to 50 to indicate its an ArchMage (who awards 50 points upon being slain because he hurts a lot
+                damage = 25;
+            }
 
+        }
+        public Boolean IsArcher { get { return archer; } } // returns the boolean if the ranged archer is an archer or not
         /// <summary>
         /// Character Attack
         /// </summary>
@@ -132,11 +144,19 @@ namespace GDAPS2Game
         {
             if (isActive)
             {
-                // draw projectile
-                spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                if (archer == false)
+                {
+                    // draw projectile 37, 18, 15, 7
+                    spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 18, 35, 15), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
-                // draw enemy
-                spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    // draw enemy
+                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y - 30), new Rectangle(currentFrame.X, currentFrame.Y - 37, frameSize.X + 4, frameSize.Y + 20), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                }
+                else
+                {
+                    spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 48, 15, 7), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                }
             }
             base.Draw(spriteBatch);
         }

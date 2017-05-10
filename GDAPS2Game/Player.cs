@@ -22,6 +22,9 @@ namespace GDAPS2Game
         // Fields
         private int playerAttack;
         private Texture2D hit;
+
+        Color characterColor = Color.White;
+
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
@@ -90,7 +93,7 @@ namespace GDAPS2Game
             //if the player is blocking, reduces the movespeed.
             
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.B) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
+            if ((Keyboard.GetState().IsKeyDown(Keys.Q) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
                 blockHeldTime+=5;//increase the held amount by 5, giving the amount of time blocking around 1 sec maximum, dependant on frame rate.
                 Console.WriteLine("BHT: " + blockHeldTime);
@@ -189,6 +192,8 @@ namespace GDAPS2Game
 
         MouseState mState;
         MouseState mStateLast;
+        KeyboardState kState;
+        KeyboardState kStateLast;
         bool test = false;
         Rectangle enmHeart;
         public override void Attack()
@@ -197,6 +202,7 @@ namespace GDAPS2Game
             pHitBox.Y = characterBox.Y + 35;
             intersects = false;
             mState = Mouse.GetState();
+            kState = Keyboard.GetState();
             // When user presses the attack key
 
             // Do attack animation
@@ -232,7 +238,7 @@ namespace GDAPS2Game
                                 if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
                                 {
                                     intersects = true;//currently intersecting
-                                    if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
+                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.E) && kStateLast.IsKeyUp(Keys.E)))//if LMB just pressed
                                     {
                                         //Console.WriteLine("CLICK EVENT");//debug output
                                         //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
@@ -249,7 +255,7 @@ namespace GDAPS2Game
                                 if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
                                 {
                                     intersects = true;
-                                    if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.E) && kStateLast.IsKeyUp(Keys.E)))
                                     {//if LMB just pressed
                                      //Console.WriteLine("CLICK EVENT");//debug console output
                                      //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
@@ -270,14 +276,24 @@ namespace GDAPS2Game
                                     AddScore(20);
                                 }
                                 else
-                                    AddScore(10);
+                                {
+                                    if (enm is RangedEnemy)
+                                    {
+                                        if (enm.MageScore > 0) //checks the mageScore integer, if its greater than 0 then its an ArchMage enemy and not an archer, thus it awards more points.
+                                        {
+                                            AddScore(50);
+                                        }
+                                        else
+                                            AddScore(10);
+                                    }
+                                }
                                 enemies.Remove(enm);//remove the enemy from the list
                             }
                         }
                     }
                 }
             }
-
+            kStateLast = kState;
             mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
@@ -294,6 +310,7 @@ namespace GDAPS2Game
                 if (health - dmg >= 0)
                 {
                     health -= dmg;
+                    characterColor = Color.Red;
                 }
 
                 else
@@ -331,7 +348,7 @@ namespace GDAPS2Game
                         (frame == -2 || frame == -1)
                         )
                     {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                     }
                     else
                     {
@@ -341,8 +358,11 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
                             )
                         {
+
                             frame = 0;
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+
                         }
 
                         if (
@@ -355,8 +375,10 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
                             )
                         {
+
                             frame = 0;
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
                     }
                 }
@@ -378,15 +400,17 @@ namespace GDAPS2Game
                             (frame ==-2 || frame ==-1)
                        )
                     {
-                        
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), characterColor, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
 
                      
                     }
                     else
                     {
+
                         frame = 0;
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
                     }
                 }
             }
@@ -411,7 +435,11 @@ namespace GDAPS2Game
             {
                 
                 timeSinceLastFrame = 0;
+
+                characterColor = Color.White;
                 
+                frame++;
+
                 if (frame >= numFrames)
                 {
                     frame = 0;

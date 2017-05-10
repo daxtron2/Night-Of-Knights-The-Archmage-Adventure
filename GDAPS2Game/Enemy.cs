@@ -23,6 +23,8 @@ namespace GDAPS2Game
         protected Rectangle playerPos;
         protected Texture2D sprite;
         protected Rectangle posBox; // for all enemy types
+
+        private int mageScore = 0; //int used iwth RangedEnemy to determine if the ranged enemy is an arch mage
         // Properties
 
         // Constructor
@@ -33,7 +35,7 @@ namespace GDAPS2Game
             sprite = charSprite;
             
         }
-
+        public int MageScore { get { return mageScore; } set { mageScore = value; } } //accessor for the magescore
         /// <summary>
         /// Have character Take Damage
         /// </summary>
