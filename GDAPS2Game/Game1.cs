@@ -488,19 +488,25 @@ namespace GDAPS2Game
             if (currentState == GameState.Pause)
             {
                 spriteBatch.DrawString(mainFont, "Pause Menu", new Vector2(screenMiddle - 147, 50), Color.Black); //centers text at 50 = y
-                spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
-                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
+                spriteBatch.DrawString(mainFont, "Continue", new Vector2(screenMiddle - 119, 100), Color.Black);//draws the play game "button"
+                spriteBatch.DrawString(mainFont, "Restart", new Vector2(screenMiddle - 95, 150), Color.Black);//draws the restart "button"
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 200), Color.Black);//draws the exit game "button"
 
                 switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
                 {
-                    case 0://places the asterisks with "Play Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 105), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 105), Color.Black);//no matter the resolution
+                    case 0://places the asterisks with "Continue"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 145, 105), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 110, 105), Color.Black);//no matter the resolution
 
                         break;
-                    case 1://places the asterisks with "Exit Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
+                    case 1://places the asterisks with "Restart"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 125, 155), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 105, 155), Color.Black);//no matter the resolution
+
+                        break;
+                    case 2://places the asterisks with "Exit Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 205), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 205), Color.Black);//no matter the resolution
 
                         break;
                 }
