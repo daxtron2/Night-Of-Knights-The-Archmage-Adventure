@@ -35,6 +35,7 @@ namespace GDAPS2Game
         private Point currentFrame; // where current frame is on spritesheet
         private Point frameSize = new Point(17, 26); // size of each sprite
         private int moveSpeed = 7;
+        private int blockHeldTime = 0;
         //integer that sets the leveling up goal. Starts out at 100
         private int newGoal = 100;
 
@@ -79,19 +80,47 @@ namespace GDAPS2Game
         /// <summary>
         /// Script that handles the movement of the player, updats x and y values
         /// </summary>
+        bool onCooldown = false;
+        bool blocking = false;
         public void Movement(GameTime gameTime) // added gameTime parameter for movement animation
         {
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
-
             //if the player is blocking, reduces the movespeed.
-            if(Keyboard.GetState().IsKeyDown(Keys.B))
+            if (Keyboard.GetState().IsKeyDown(Keys.B) && blockHeldTime < 100 && onCooldown == false)
             {
+                blockHeldTime+=5;
+                //Console.WriteLine("BHT: " + blockHeldTime);
+
                 MoveSpeed = 3;
             }
             else
             {
+                if (blockHeldTime > 0)
+                {
+                    if(blockHeldTime > 100)
+                    {
+                        onCooldown = true;
+                    }
+                    blockHeldTime--;
+                    //Console.WriteLine("BHT: " + blockHeldTime);
+
+                }
+                if (blockHeldTime <= 0)
+                {
+                    blockHeldTime = 0;
+
+                    onCooldown = false;
+                }
                 MoveSpeed = 7;
+            }
+            if(onCooldown == false && blockHeldTime > 0)
+            {
+                blocking = true;
+            }
+            else
+            {
+                blocking = false;
             }
 
             //If the player's health is above 0, he can move
@@ -251,7 +280,7 @@ namespace GDAPS2Game
         /// <param name="dmg">Damage to take</param>
         public override void TakeDamage(int dmg)
         {
-            if (Keyboard.GetState().IsKeyUp(Keys.B))
+            if (blocking == false)
             {
                 //Subtracts from the health value any damage that is taken if it results in 0 or above, otherwise sets the health to 0 in the interest of not having negative health.
                 if (health - dmg >= 0)
