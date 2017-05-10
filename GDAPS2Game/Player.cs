@@ -87,7 +87,7 @@ namespace GDAPS2Game
             // W or Up to jump
             //if the player is blocking, reduces the movespeed.
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.B) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
+            if ((Keyboard.GetState().IsKeyDown(Keys.Q) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
                 blockHeldTime+=5;//increase the held amount by 5, giving the amount of time blocking around 1 sec maximum, dependant on frame rate.
                 Console.WriteLine("BHT: " + blockHeldTime);
@@ -185,6 +185,8 @@ namespace GDAPS2Game
 
         MouseState mState;
         MouseState mStateLast;
+        KeyboardState kState;
+        KeyboardState kStateLast;
         bool test = false;
         Rectangle enmHeart;
         public override void Attack()
@@ -193,6 +195,7 @@ namespace GDAPS2Game
             pHitBox.Y = characterBox.Y + 35;
             intersects = false;
             mState = Mouse.GetState();
+            kState = Keyboard.GetState();
             // When user presses the attack key
 
             // Do attack animation
@@ -228,7 +231,7 @@ namespace GDAPS2Game
                                 if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
                                 {
                                     intersects = true;//currently intersecting
-                                    if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)//if LMB just pressed
+                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.E) && kStateLast.IsKeyUp(Keys.E)))//if LMB just pressed
                                     {
                                         //Console.WriteLine("CLICK EVENT");//debug output
                                         //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
@@ -245,7 +248,7 @@ namespace GDAPS2Game
                                 if (pHitBoxL.Intersects(enm.CharacterBox))//if the left hitbox intersects w/ enemy
                                 {
                                     intersects = true;
-                                    if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.E) && kStateLast.IsKeyUp(Keys.E)))
                                     {//if LMB just pressed
                                      //Console.WriteLine("CLICK EVENT");//debug console output
                                      //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
@@ -273,7 +276,7 @@ namespace GDAPS2Game
                     }
                 }
             }
-
+            kStateLast = kState;
             mStateLast = mState;//put the mouse state we just used into last state for use next runthrough
         }
 
