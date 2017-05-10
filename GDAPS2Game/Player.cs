@@ -67,6 +67,8 @@ namespace GDAPS2Game
             hit = hitbox;
             intersects = false;
             playerAttack = 1;//deals 1 damage per click
+            //currentFrame = new Point(23, 36);//-2 debug
+            //currentFrame = new Point(1, 66);//-1 debug
 
         }
 
@@ -86,6 +88,7 @@ namespace GDAPS2Game
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
             //if the player is blocking, reduces the movespeed.
+            
 
             if ((Keyboard.GetState().IsKeyDown(Keys.B) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
@@ -131,7 +134,7 @@ namespace GDAPS2Game
                         characterBox.X -= moveSpeed;
                     }
                     faceRight = false;
-                    Update(gameTime); // for movement animation
+                    //Update(gameTime); // for movement animation
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
@@ -147,7 +150,7 @@ namespace GDAPS2Game
                     //Console.WriteLine("MaxMove: " + maxMovement);
                     //Console.WriteLine("CharacterX: " + characterBox.X);
                     faceRight = true;
-                    Update(gameTime);
+                    //Update(gameTime);
                 }
                 pHitBox = new Rectangle(characterBox.X + 45, characterBox.Y, 40, 70);
                 pHitBoxL = new Rectangle(characterBox.X - 30, characterBox.Y, 40, 70);
@@ -157,6 +160,7 @@ namespace GDAPS2Game
             {
                 isActive = false;
             }
+            Update(gameTime);
         }
 
         /// <summary>
@@ -301,6 +305,7 @@ namespace GDAPS2Game
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
+            Console.WriteLine(frame);
 
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
@@ -322,6 +327,8 @@ namespace GDAPS2Game
                         (Keyboard.GetState().IsKeyUp(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.D))
                         ||
                         (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
+                        ||
+                        (frame == -2 || frame == -1)
                         )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
@@ -334,6 +341,7 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
                             )
                         {
+                            frame = 0;
                             spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
 
@@ -347,6 +355,7 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
                             )
                         {
+                            frame = 0;
                             spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
                     }
@@ -365,14 +374,18 @@ namespace GDAPS2Game
                             (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
                             ||
                             (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
+                            ||
+                            (frame ==-2 || frame ==-1)
                        )
                     {
+                        
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
 
                      
                     }
                     else
                     {
+                        frame = 0;
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
                     }
                 }
@@ -381,6 +394,7 @@ namespace GDAPS2Game
 
         // Update method is used for movement animation
         bool firstRun = true;
+        // bool
         public void Update(GameTime gameTime)
         {
             
@@ -395,12 +409,9 @@ namespace GDAPS2Game
             // every 80 ms while player is holding left/right it will change frame
             if(timeSinceLastFrame > 80)
             {
+                
                 timeSinceLastFrame = 0;
-                if(frame != -2)
-                {
-                    frame++;
-                }
-
+                
                 if (frame >= numFrames)
                 {
                     frame = 0;
@@ -412,11 +423,12 @@ namespace GDAPS2Game
                     case -2:
                         currentFrame.X = 23;
                         currentFrame.Y = 36;
-                        frame++;
+                        //frame++;
                         break;
                     case -1:
                         currentFrame.X = 1;
                         currentFrame.Y = 66;
+                        //frame++;
                         break;
                     case 0:
                         currentFrame.X = 1;
@@ -435,10 +447,12 @@ namespace GDAPS2Game
                         currentFrame.Y = 36; // on the spritesheet this sprite's location is actually 1,40 but for some reason monogame decided to bring it up 4 pixels
                         break;
                 }
+                            frame++;
+
             }
             firstRun = false;
         }
-
+        
         public Tuple<bool,Rectangle> Test()
         {
             if (test)
