@@ -52,8 +52,7 @@ namespace GDAPS2Game
         /// Integer that tracks the player's score. Increases as the player levels up
         /// </summary>
         public int Health { get { return health; } }
-
-        //Properties
+        public int BlockHeldTime { get { return blockHeldTime; } }
 
         // Constructor
         /// <summary>

@@ -47,7 +47,8 @@ namespace GDAPS2Game
         // Debug textures to test boxy shaped things
         string[] debugPaths = {
             "Debug1.png",
-            "Debug2.png"
+            "Debug2.png",
+            "Debug3.png"
         };
 
         // UI
@@ -167,9 +168,10 @@ namespace GDAPS2Game
             LoadWorld();
 
             // Load Debug textures
-            debugs = new Texture2D[2];
+            debugs = new Texture2D[3];
             debugs[0] = Content.Load<Texture2D>(debugPaths[0]);
             debugs[1] = Content.Load<Texture2D>(debugPaths[1]);
+            debugs[2] = Content.Load<Texture2D>(debugPaths[2]);
 
             // Load text font
             mainFont = Content.Load<SpriteFont>("mainFont");//font used in the menus
@@ -405,6 +407,20 @@ namespace GDAPS2Game
             }
             // draw health bar on top of debug colors
             spriteBatch.Draw(healthBar, new Vector2(15 + player.MaxMove, 10), Color.White);
+
+            // block bar
+
+            if (player.BlockHeldTime == 0)
+            {
+                spriteBatch.Draw(debugs[2], new Rectangle(15 + player.MaxMove, 30, 300, 16), Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(debugs[2], new Rectangle(15 + player.MaxMove, 30, (300 - (player.BlockHeldTime * 3)), 16), Color.White);
+            }
+
+            spriteBatch.Draw(healthBar, new Vector2(15 + player.MaxMove, 30), Color.White);
+
 
             spriteBatch.DrawString(mainFont, "Level: " + Character.level, new Vector2(player.MaxMove+505 + screenMiddle, 10), Color.Black);
             if (heart != null)
