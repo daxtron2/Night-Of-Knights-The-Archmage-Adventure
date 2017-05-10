@@ -15,6 +15,8 @@ namespace GDAPS2Game
         public int SelectionIndex { get { return selectionIndex; } set { selectionIndex = value; } }//allows Update() to see selection index
         KeyboardState kState;
         KeyboardState oldKState;
+        //added back in maxValue because there are 3 possible menus
+        private int maxValue = 2;
         public Menu()
         {
             selectionIndex = 0;//start off hovering over Play Game button
@@ -31,7 +33,7 @@ namespace GDAPS2Game
                 }
                 else if (selectionIndex < 0)//don't let it go below 0
                 {
-                    selectionIndex = 0;
+                    selectionIndex = -2;
                     //maybe play a sound indicating you cant go higher in the menu
                 }
             }
@@ -40,10 +42,11 @@ namespace GDAPS2Game
             {
                 selectionIndex += 1;//go down 1 item menu
             }
-            //else if (selectionIndex > maxValue)
-            //{
-            //    selectionIndex = maxValue;
-            //}
+            else if (selectionIndex > maxValue)
+            {
+                //set the selection index to maxvalue to account for the score screen.
+                selectionIndex = maxValue;
+            }
 
             //not gonna check for too high values, as we might need to add more menu options
             //When we're sure we don't need more menu options we can uncomment the code

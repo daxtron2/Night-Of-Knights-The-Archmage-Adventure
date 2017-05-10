@@ -18,6 +18,13 @@ namespace GDAPS2Game
     /// </summary>
     public class Game1 : Game
     {
+        ScoreTracker scoreTracker = new ScoreTracker();
+
+        //creates a list for the player scores, and two booleans for recording adn reading score
+        List<int> playerScores;
+        Boolean recordScore = true;
+        Boolean readScore = true;
+
         // Fields
         // Graphics
         GraphicsDeviceManager graphics;
@@ -78,8 +85,8 @@ namespace GDAPS2Game
         // debug colors bool (turn debug colors on/off, does not turn off hitboxes)
         bool debugColors = false;
 
-
-        enum GameState { Menu, Pause, Game, GameOver }
+        //added scorescreen to the state list
+        enum GameState { Menu, Pause, Game, GameOver, ScoreScreen }
         GameState currentState;
         private void FileResolution()
         {
@@ -254,6 +261,15 @@ namespace GDAPS2Game
                     currentState = GameState.Game;//exit the menu
                 }
             }
+            //added the ability to exit the score screen with esc or backspace
+            if (currentState == GameState.ScoreScreen)
+            {
+                if (kState.IsKeyDown(Keys.Escape) || kState.IsKeyDown(Keys.Back))
+                {
+                    currentState = GameState.Menu;
+                }
+            }
+
             if (kState.IsKeyDown(Keys.Enter))//if enter is pressed
             {
                 switch (menu.SelectionIndex)//check what is currently selected
@@ -270,8 +286,9 @@ namespace GDAPS2Game
                     case 1://if exit game is selected
                         Exit();//close the game
                         break;
-                    default://if something other than the two we currently have is selected
-                        currentState = GameState.Pause;//leave it paused
+                    case 2://selects the score menu
+                        currentState = GameState.ScoreScreen;
+                        Console.WriteLine("Setting to pause menu");
                         break;//do nothing
                 }
             }
@@ -340,6 +357,9 @@ namespace GDAPS2Game
                     break;
                 case GameState.GameOver:
                     DrawMenu(spriteBatch);//Draws the Game Over screen
+                    break;
+                case GameState.ScoreScreen://draws the score screen
+                    DrawMenu(spriteBatch); //Draws the score screen;
                     break;
             }
             //spriteBatch.DrawString(mainFont, "X: " + mState.X + " Y: " + mState.Y, new Vector2(25, 25), Color.White);
@@ -435,10 +455,16 @@ namespace GDAPS2Game
             int screenMiddle = GraphicsDevice.Viewport.Width / 2;//gets the midpoint of the current x resolution
             if (currentState == GameState.Menu)//if in menu, i.e. paused
             {
+                //resets the readscore boolean so its not infinitely running in score menu and can be read again
+                if (readScore == false)
+                {
+                    readScore = true;
+                }
                 spriteBatch.Draw(logo, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(mainFont, "Start Menu", new Vector2(screenMiddle - 147, 300), Color.Black);//centers text at 50 = y
                 spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 350), Color.Black);//draws the play game "button", centered
                 spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 400), Color.Black);//draws the exit game "button", centered
+                spriteBatch.DrawString(mainFont, " Scores  ", new Vector2(screenMiddle - 133, 450), Color.Black);//draws the score game "button", centered
 
                 switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
                 {
@@ -451,6 +477,11 @@ namespace GDAPS2Game
                         spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 405), Color.Black);//draws the asterisk
                         spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 405), Color.Black);//next to exit game
                                                                                                                  //no matter the resolution
+                        break;
+                    case 2://places the Asterisks with "Scores"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 455), Color.Black);
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 455), Color.Black);
+
                         break;
                 }
             }
@@ -479,12 +510,33 @@ namespace GDAPS2Game
                 spriteBatch.DrawString(mainFont, "GAME OVER", new Vector2(screenMiddle - 130, 50), Color.Black);
                 //spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
                 float scoreSize = mainFont.MeasureString("Score: " + player.Score).X / 2;
+
+                //records the players score then sets the boolean to false so its not constantly writing on this screen
+                if (recordScore == true)
+                {
+                    scoreTracker.WriteScore(player.Score);
+                    recordScore = false;
+                }
                 spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(screenMiddle - scoreSize, 100), Color.Black);
                 spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
                 
                 spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
                 spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
                 
+            }
+            if (currentState == GameState.ScoreScreen)
+            {
+                //reads the screen once and displays the scores
+                if (readScore == true)
+                {
+                    playerScores = scoreTracker.ReadScores();
+                    readScore = false;
+                }
+                spriteBatch.Draw(logo, Vector2.Zero, Color.White);
+                spriteBatch.DrawString(mainFont, "High Scores", new Vector2(screenMiddle - 147, 300), Color.Black);//centers text at 50 = y
+                spriteBatch.DrawString(mainFont, "1st Score: " + playerScores[0], new Vector2(screenMiddle - 147, 350), Color.Black);
+                spriteBatch.DrawString(mainFont, "2nd Score: " + playerScores[1], new Vector2(screenMiddle - 147, 400), Color.Black);
+                spriteBatch.DrawString(mainFont, "3rd Score: " + playerScores[2], new Vector2(screenMiddle - 147, 450), Color.Black);
             }
         }
 

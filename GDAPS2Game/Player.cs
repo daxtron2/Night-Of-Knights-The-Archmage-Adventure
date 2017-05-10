@@ -171,8 +171,10 @@ namespace GDAPS2Game
             }
             if (Score >= newGoal)
             {
-                newGoal += 100;
+                //the player gains a level and some health when the level up, and sets a new score goal to reach in order to level up.
+                newGoal += 50;
                 level += 1;
+                health += 10;
             }
         }
         
