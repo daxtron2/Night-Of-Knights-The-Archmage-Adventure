@@ -50,7 +50,7 @@ namespace GDAPS2Game
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
             health += level;
             pl = player;
-            isRanged = rangedSelector.Next(0, 2);
+            isRanged = rangedSelector.Next(0, 10);
             if (isRanged == 1)
             {
                 archer = false;
