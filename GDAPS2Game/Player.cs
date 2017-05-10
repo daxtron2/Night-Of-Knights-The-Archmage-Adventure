@@ -86,7 +86,8 @@ namespace GDAPS2Game
             // Will use Arrow Keys and WASD for movement
             // W or Up to jump
             //if the player is blocking, reduces the movespeed.
-            if (Keyboard.GetState().IsKeyDown(Keys.B) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
+
+            if ((Keyboard.GetState().IsKeyDown(Keys.B) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
                 blockHeldTime+=5;//increase the held amount by 5, giving the amount of time blocking around 1 sec maximum, dependant on frame rate.
                 Console.WriteLine("BHT: " + blockHeldTime);
@@ -98,6 +99,7 @@ namespace GDAPS2Game
             }
             else//if they're on cooldown or not blocking
             {
+                //mStateLast = mState;
                 blocking = false;
                 if (blockHeldTime > 0)//if the held time is greater than 0, ie they're recovering from cooldown/stopped holding down b before max
                 {
@@ -155,7 +157,6 @@ namespace GDAPS2Game
             {
                 isActive = false;
             }
-
         }
 
         /// <summary>
