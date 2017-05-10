@@ -303,13 +303,13 @@ namespace GDAPS2Game
                 {
                     if (intersects)
                     {
-                        spriteBatch.Draw(hit, pHitBox, Color.Purple);
-                        spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
+                        //spriteBatch.Draw(hit, pHitBox, Color.Purple);
+                        //spriteBatch.Draw(hit, pHitBoxL, Color.Purple);
                     }
                     else
                     {
-                        spriteBatch.Draw(hit, pHitBox, Color.Green);
-                        spriteBatch.Draw(hit, pHitBoxL, Color.Red);
+                        //spriteBatch.Draw(hit, pHitBox, Color.Green);
+                        //spriteBatch.Draw(hit, pHitBoxL, Color.Red);
                     }
                     // player is now drawn here and base.Draw is no longer called
                     if (
@@ -347,13 +347,13 @@ namespace GDAPS2Game
                 }
                 else
                 {
-                    spriteBatch.Draw(hit, pHitBox, Color.Red);
-                    spriteBatch.Draw(hit, pHitBoxL, Color.Green);
+                    //spriteBatch.Draw(hit, pHitBox, Color.Red);
+                    //spriteBatch.Draw(hit, pHitBoxL, Color.Green);
                     // same thing as above but flipped 
                     if (intersects)
                     {
-                        spriteBatch.Draw(hit, pHitBox, Color.PeachPuff);
-                        spriteBatch.Draw(hit, pHitBoxL, Color.PeachPuff);
+                        //spriteBatch.Draw(hit, pHitBox, Color.PeachPuff);
+                        //spriteBatch.Draw(hit, pHitBoxL, Color.PeachPuff);
                     }
                     if (
                             (Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyDown(Keys.A))
