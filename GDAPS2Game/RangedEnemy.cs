@@ -149,7 +149,7 @@ namespace GDAPS2Game
                     spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 18, 35, 15), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
                     // draw enemy
-                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y + 10), new Rectangle(currentFrame.X, currentFrame.Y - 30, frameSize.X + 5, frameSize.Y + 20), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y - 35, frameSize.X + 5, frameSize.Y + 20), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                 }
                 else
                 {
