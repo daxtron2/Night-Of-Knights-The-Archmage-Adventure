@@ -188,8 +188,12 @@ namespace GDAPS2Game
                         {
                             if (enm.TryDestroy())
                             {
-                                test = true;
-                                enmHeart = enm.CharacterBox;
+                                Random rng = new Random();
+                                if (rng.Next(0, 3) == 1)//1 in 3 chance of spawning a heart
+                                {
+                                    test = true;
+                                    enmHeart = enm.CharacterBox;
+                                }
                             }
                             if (faceRight == true)//if facing right
                             {
