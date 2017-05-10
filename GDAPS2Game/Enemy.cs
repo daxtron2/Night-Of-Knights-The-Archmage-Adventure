@@ -59,7 +59,21 @@ namespace GDAPS2Game
                 if (addScore == true)
                 {
                     Console.WriteLine("Is this even working?");
-                    playerL.AddScore(10);
+                    playerL.AddScore(20);
+                    Console.WriteLine("Score: " + playerL.Score);
+                    addScore = false;
+                }
+            }
+        }
+        public void Scoring(int meleeScore)
+        {
+            if (isActive == false)
+            {
+                //if addscore is equal to true adds to the score then sets it to false so it only runs once.
+                if (addScore == true)
+                {
+                    Console.WriteLine("Is this even working?");
+                    playerL.AddScore(meleeScore);
                     Console.WriteLine("Score: " + playerL.Score);
                     addScore = false;
                 }

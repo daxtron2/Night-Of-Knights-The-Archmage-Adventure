@@ -82,7 +82,7 @@ namespace GDAPS2Game
         public override void Update(GameTime gameTime)
         {
             //Console.WriteLine(characterBox);
-            Scoring();
+            Scoring(30);
             if (lastAttack + 1 < gameTime.TotalGameTime.Seconds)
             {
                 Attack();
