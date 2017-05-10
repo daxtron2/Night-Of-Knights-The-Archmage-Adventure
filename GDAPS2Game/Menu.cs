@@ -12,7 +12,7 @@ namespace GDAPS2Game
     class Menu
     {
         private int selectionIndex;//determines which button is selected. 0=play/resume game, 1=exit
-        public int SelectionIndex { get { return selectionIndex; } }//allows Update() to see selection index
+        public int SelectionIndex { get { return selectionIndex; } set { selectionIndex = value; } }//allows Update() to see selection index
         KeyboardState kState;
         KeyboardState oldKState;
         public Menu()

@@ -259,7 +259,8 @@ namespace GDAPS2Game
                     case 0://if the top button, play/resume game, is selected
                         if(currentState == GameState.GameOver)
                         {
-                            currentState = GameState.Menu;
+                            menu.SelectionIndex = 1;
+                            break;
                         }
                         currentState = GameState.Game;//unpause game
                         //firstMenu = false;//no longer first menu, if not already
@@ -460,22 +461,14 @@ namespace GDAPS2Game
             if (currentState == GameState.GameOver)
             {
                 spriteBatch.DrawString(mainFont, "GAME OVER", new Vector2(screenMiddle - 130, 50), Color.Black);
-                spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
+                //spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 100), Color.Black);//draws the play game "button"
+                float scoreSize = mainFont.MeasureString("Score: " + player.Score).X / 2;
+                spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(screenMiddle - scoreSize, 100), Color.Black);
                 spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
-
-                switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
-                {
-                    case 0://places the asterisks with "Play Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 105), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 105), Color.Black);//no matter the resolution
-
-                        break;
-                    case 1://places the asterisks with "Exit Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
-
-                        break;
-                }
+                
+                spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
+                spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
+                
             }
         }
 

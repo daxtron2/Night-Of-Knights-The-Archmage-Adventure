@@ -233,6 +233,7 @@ namespace GDAPS2Game
                             if (enm.IsActive == false)//if enemy is "dead"
                             {
                                 //Console.WriteLine("Removing enemy from list.");//debug output
+                                AddScore(10);
                                 enemies.Remove(enm);//remove the enemy from the list
                             }
                         }
