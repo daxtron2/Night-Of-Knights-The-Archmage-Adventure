@@ -51,7 +51,7 @@ namespace GDAPS2Game
             health += level;
             pl = player;
             isRanged = rangedSelector.Next(0, 10);
-            if (isRanged == 1)
+            if (isRanged == 0)
             {
                 archer = false;
                 damage = 25;
@@ -149,7 +149,7 @@ namespace GDAPS2Game
                     spriteBatch.Draw(sprite, projectilePos, new Rectangle(47, 18, 35, 15), projectileColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
                     // draw enemy
-                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y - 35, frameSize.X + 5, frameSize.Y + 20), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y - 30), new Rectangle(currentFrame.X, currentFrame.Y - 37, frameSize.X + 4, frameSize.Y + 20), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                 }
                 else
                 {
