@@ -32,6 +32,7 @@ namespace GDAPS2Game
         private Rectangle projectileRect;
         bool projectileActive = true;
         Color projectileColor = Color.White;
+        Player pl;
 
         // Properties
 
@@ -44,6 +45,7 @@ namespace GDAPS2Game
             projectilePos = new Vector2((characterBox.X - characterBox.Width), (characterBox.Y + 47)); // create projectile position in center of bow, dependant on position of enemy
             projectileRect = new Rectangle((int)projectilePos.X, (int)projectilePos.Y, 15, 7); // create projectile position in rectangle form for intersecting
             health += level;
+            pl = player;
         }
 
         /// <summary>
@@ -93,6 +95,7 @@ namespace GDAPS2Game
             if (isActive == true)
             {
                 projectileRect.X = (int)projectilePos.X;
+                playerPos = pl.CharacterBox;
                 if (projectileRect.Intersects(playerPos))
                 {
                     projectileColor = Color.Red;

@@ -288,7 +288,7 @@ namespace GDAPS2Game
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             //Console.WriteLine(player.IsActive);
-            if (player.CharacterBox.X > playerXCamera)//if the player is past 200px on the screen
+            if (player.CharacterBox.X > playerXCamera && currentState == GameState.Game)//if the player is past 200px on the screen
             {
                 if (player.CharacterBox.X - 500 <= player.MaxMove)
                 {
@@ -308,7 +308,14 @@ namespace GDAPS2Game
                 }
                 if (player.MaxMove != 0)
                 {
-                    spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(new Vector3((player.MaxMove * -1) - 5, 0, 0f)));//Draw after this
+                    if (currentState == GameState.Game)
+                    {
+                        spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.PointClamp, null, null, null, Matrix.CreateTranslation(new Vector3((player.MaxMove * -1) - 5, 0, 0f)));//Draw after this
+                    }
+                    else
+                    {
+                        spriteBatch.Begin();
+                    }
                 }
                 else
                 {
