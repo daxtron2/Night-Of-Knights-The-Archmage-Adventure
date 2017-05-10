@@ -87,7 +87,7 @@ namespace GDAPS2Game
             // W or Up to jump
             //if the player is blocking, reduces the movespeed.
 
-            if ((Keyboard.GetState().IsKeyDown(Keys.E) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
+            if ((Keyboard.GetState().IsKeyDown(Keys.Q) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
                 blockHeldTime+=5;//increase the held amount by 5, giving the amount of time blocking around 1 sec maximum, dependant on frame rate.
                 Console.WriteLine("BHT: " + blockHeldTime);
@@ -231,7 +231,7 @@ namespace GDAPS2Game
                                 if (pHitBox.Intersects(enm.CharacterBox))//if the right hit box intersects the current enemy's hitbox
                                 {
                                     intersects = true;//currently intersecting
-                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.Q) && kStateLast.IsKeyUp(Keys.Q)))//if LMB just pressed
+                                    if ((mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released) || (kState.IsKeyDown(Keys.E) && kStateLast.IsKeyUp(Keys.E)))//if LMB just pressed
                                     {
                                         //Console.WriteLine("CLICK EVENT");//debug output
                                         //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
