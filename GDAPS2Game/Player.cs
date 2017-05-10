@@ -22,6 +22,9 @@ namespace GDAPS2Game
         // Fields
         private int playerAttack;
         private Texture2D hit;
+
+        Color characterColor = Color.White;
+
         //Creates the two rectangles for the attack hitboxes
         public Rectangle pHitBox;
         public Rectangle pHitBoxL;
@@ -269,7 +272,17 @@ namespace GDAPS2Game
                                     AddScore(20);
                                 }
                                 else
-                                    AddScore(10);
+                                {
+                                    if (enm is RangedEnemy)
+                                    {
+                                        if (enm.MageScore > 0) //checks the mageScore integer, if its greater than 0 then its an ArchMage enemy and not an archer, thus it awards more points.
+                                        {
+                                            AddScore(50);
+                                        }
+                                        else
+                                            AddScore(10);
+                                    }
+                                }
                                 enemies.Remove(enm);//remove the enemy from the list
                             }
                         }
@@ -293,6 +306,7 @@ namespace GDAPS2Game
                 if (health - dmg >= 0)
                 {
                     health -= dmg;
+                    characterColor = Color.Red;
                 }
 
                 else
@@ -327,7 +341,7 @@ namespace GDAPS2Game
                         (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
                         )
                     {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                     }
                     else
                     {
@@ -337,7 +351,7 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
                             )
                         {
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
 
                         if (
@@ -350,7 +364,7 @@ namespace GDAPS2Game
                                 (Keyboard.GetState().IsKeyDown(Keys.A) && Keyboard.GetState().IsKeyDown(Keys.Right))
                             )
                         {
-                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
+                            spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
                     }
                 }
@@ -370,13 +384,13 @@ namespace GDAPS2Game
                             (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
                        )
                     {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), characterColor, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
 
                      
                     }
                     else
                     {
-                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), Color.White, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
+                        spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
                     }
                 }
             }
@@ -399,6 +413,7 @@ namespace GDAPS2Game
             if(timeSinceLastFrame > 80)
             {
                 timeSinceLastFrame = 0;
+                characterColor = Color.White;
                 if(frame != -2)
                 {
                     frame++;
