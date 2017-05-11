@@ -76,7 +76,7 @@ namespace GDAPS2Game
         // Calculations
         Random rng;
         public Player player;
-        public Dictionary<int, List<Enemy>> worldEnemies = new Dictionary<int, List<Enemy>>();
+        public Dictionary<int, List<Enemy>> worldEnemies;
 
         // IO
         BinaryReader attribRead;
@@ -147,6 +147,7 @@ namespace GDAPS2Game
         protected override void Initialize()
         {
             rng = new Random();
+            worldEnemies = new Dictionary<int, List<Enemy>>();
             base.Initialize();
 
             // Test Codes
@@ -272,24 +273,56 @@ namespace GDAPS2Game
 
             if (kState.IsKeyDown(Keys.Enter))//if enter is pressed
             {
-                switch (menu.SelectionIndex)//check what is currently selected
+                if (currentState == GameState.Pause) // If pause menu
                 {
-                    case 0://if the top button, play/resume game, is selected
-                        if(currentState == GameState.GameOver)
-                        {
-                            menu.SelectionIndex = 1;
+                    switch (menu.SelectionIndex)//check what is currently selected
+                    {
+                        case 0://if the top button, play/resume game, is selected
+                            currentState = GameState.Game;//unpause game
+                            //firstMenu = false;//no longer first menu, if not already
                             break;
-                        }
-                        currentState = GameState.Game;//unpause game
-                        //firstMenu = false;//no longer first menu, if not already
-                        break;
-                    case 1://if exit game is selected
-                        Exit();//close the game
-                        break;
-                    case 2://selects the score menu
-                        currentState = GameState.ScoreScreen;
-                        Console.WriteLine("Setting to pause menu");
-                        break;//do nothing
+                        case 1://if restart is selected
+                            Initialize();
+                            currentState = GameState.Game;
+                            break;
+                        case 2://if exit game is selected
+                            Exit();//close the game
+                            break;//do nothing
+                    }
+                }
+                else if (currentState == GameState.Menu) // If main menu
+                {
+                    switch (menu.SelectionIndex)//check what is currently selected
+                    {
+                        case 0://if the top button, play game is selected
+                            currentState = GameState.Game;//unpause game
+                            break;
+                        case 1://selects the score menu
+                            currentState = GameState.ScoreScreen;
+                            Console.WriteLine("Setting to pause menu");
+                            break;//do nothing
+                        case 2://if exit game is selected
+                            Exit();//close the game
+                            break;
+                    }
+                }
+                else if (currentState == GameState.GameOver) // If GameOver screen
+                {
+                    switch (menu.SelectionIndex)//check what is currently selected
+                    {
+                        case 0://selects restart
+                            Initialize();
+                            currentState = GameState.Game;
+                            break;
+                        case 1://selects the score menu
+                            currentState = GameState.ScoreScreen;
+                            Console.WriteLine("Setting to pause menu");
+                            break;//do nothing
+                        case 2:
+                            //if exit game is selected
+                            Exit();//close the game
+                            break;
+                    }
                 }
             }
 
@@ -463,25 +496,26 @@ namespace GDAPS2Game
                 spriteBatch.Draw(logo, Vector2.Zero, Color.White);
                 spriteBatch.DrawString(mainFont, "Start Menu", new Vector2(screenMiddle - 147, 300), Color.Black);//centers text at 50 = y
                 spriteBatch.DrawString(mainFont, "Play Game", new Vector2(screenMiddle - 133, 350), Color.Black);//draws the play game "button", centered
-                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 400), Color.Black);//draws the exit game "button", centered
-                spriteBatch.DrawString(mainFont, " Scores  ", new Vector2(screenMiddle - 133, 450), Color.Black);//draws the score game "button", centered
+                spriteBatch.DrawString(mainFont, "High Scores", new Vector2(screenMiddle - 161, 400), Color.Black);//draws the score game "button", centered
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 450), Color.Black);//draws the exit game "button", centered
 
+                int y = menu.SelectionIndex * 50 + 355;// mark y of * mathematicaly
                 switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
                 {
                     case 0://places the asterisks with "Play Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 355), Color.Black);//draws the asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 355), Color.Black);//next to play game
-                                                                                                                 //no matter the resolution
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, y), Color.Black);//draws the asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, y), Color.Black);//next to play game
+                                                                                                               //no matter the resolution
                         break;
-                    case 1://places the asterisks with "Exit Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 405), Color.Black);//draws the asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 405), Color.Black);//next to exit game
-                                                                                                                 //no matter the resolution
+                    case 1://places the Asterisks with "High Scores"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 190, y), Color.Black);//draws the asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 155, y), Color.Black);//next to scores
+                                                                                                               //no matter the resolution
                         break;
-                    case 2://places the Asterisks with "Scores"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 455), Color.Black);
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 455), Color.Black);
-
+                    case 2://places the asterisks with "Exit Game"
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, y), Color.Black);//draws the asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, y), Color.Black);//next to exit game
+                                                                                                               //no matter the resolution
                         break;
                 }
             }
@@ -492,21 +526,22 @@ namespace GDAPS2Game
                 spriteBatch.DrawString(mainFont, "Restart", new Vector2(screenMiddle - 95, 150), Color.Black);//draws the restart "button"
                 spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 200), Color.Black);//draws the exit game "button"
 
+                int y = menu.SelectionIndex * 50 + 105;// mark y of * mathematicaly
                 switch (menu.SelectionIndex)//draws two asterisks before and after currently selected item
                 {
                     case 0://places the asterisks with "Continue"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 145, 105), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 110, 105), Color.Black);//no matter the resolution
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 145, y), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 110, y), Color.Black);//no matter the resolution
 
                         break;
                     case 1://places the asterisks with "Restart"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 125, 155), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 105, 155), Color.Black);//no matter the resolution
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 125, y), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 105, y), Color.Black);//no matter the resolution
 
                         break;
                     case 2://places the asterisks with "Exit Game"
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 205), Color.Black);//centers asterisk
-                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 205), Color.Black);//no matter the resolution
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, y), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, y), Color.Black);//no matter the resolution
 
                         break;
                 }
@@ -524,11 +559,29 @@ namespace GDAPS2Game
                     recordScore = false;
                 }
                 spriteBatch.DrawString(mainFont, "Score: " + player.Score, new Vector2(screenMiddle - scoreSize, 100), Color.Black);
-                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 150), Color.Black);//draws the exit game "button"
-                
-                spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, 155), Color.Black);//centers asterisk
-                spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, 155), Color.Black);//no matter the resolution
-                
+                spriteBatch.DrawString(mainFont, "Restart", new Vector2(screenMiddle - 95, 150), Color.Black);//draws the restart "button"
+                spriteBatch.DrawString(mainFont, "High Scores", new Vector2(screenMiddle - 161, 200), Color.Black);//draws the score game "button", centered
+                spriteBatch.DrawString(mainFont, "Exit Game", new Vector2(screenMiddle - 133, 250), Color.Black);//draws the exit game "button"
+
+                int y = menu.SelectionIndex * 50 + 155;// mark y of * mathematicaly
+                switch (menu.SelectionIndex)
+                {
+                    case 0:
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 125, y), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 105, y), Color.Black);//no matter the resolution
+
+                        break;
+                    case 1:
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 190, y), Color.Black);//draws the asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 155, y), Color.Black);//next to scores
+                                                                                                               //no matter the resolution
+                        break;
+                    case 2:
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle - 160, y), Color.Black);//centers asterisk
+                        spriteBatch.DrawString(mainFont, "*", new Vector2(screenMiddle + 125, y), Color.Black);//no matter the resolution
+
+                        break;
+                }
             }
             if (currentState == GameState.ScoreScreen)
             {

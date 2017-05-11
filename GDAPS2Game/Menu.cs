@@ -27,13 +27,13 @@ namespace GDAPS2Game
             kState = Keyboard.GetState();//get the keyboard state everytime it's called
             if(kState.IsKeyDown(Keys.Up) && oldKState.IsKeyUp(Keys.Up))//if the user presses up, only run once per press
             {
-                if (selectionIndex != 0)//0 is top of menu
+                if (selectionIndex > 0)//0 is top of menu
                 {
                     selectionIndex -= 1;//go up one menu item
                 }
                 else if (selectionIndex < 0)//don't let it go below 0
                 {
-                    selectionIndex = -2;
+                    selectionIndex = 0;
                     //maybe play a sound indicating you cant go higher in the menu
                 }
             }
