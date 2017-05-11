@@ -39,6 +39,8 @@ namespace GDAPS2Game
         private Point frameSize = new Point(17, 26); // size of each sprite
         private int moveSpeed = 7;
         private int blockHeldTime = 0;
+        private bool attackAnim = false;
+        private bool moveThisFrame = false;
         //integer that sets the leveling up goal. Starts out at 100
         private int newGoal = 100;
 
@@ -132,6 +134,7 @@ namespace GDAPS2Game
             {
                 if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
                 {
+                    moveThisFrame = true;
                     if (characterBox.X > maxMovement)
                     {
                         characterBox.X -= moveSpeed;
@@ -141,6 +144,7 @@ namespace GDAPS2Game
                 }
                 if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
                 {
+                    moveThisFrame = true;
                     if (characterBox.X >= 500)
                     {
                         if (maxMovement + 500 <= characterBox.X)
@@ -154,6 +158,12 @@ namespace GDAPS2Game
                     //Console.WriteLine("CharacterX: " + characterBox.X);
                     faceRight = true;
                     //Update(gameTime);
+                }
+
+                //if no movement keys are pressed
+                if(Keyboard.GetState().IsKeyUp(Keys.A)&& Keyboard.GetState().IsKeyUp(Keys.D) && Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyUp(Keys.Right))
+                {
+                    moveThisFrame = false;//we're not moving
                 }
                 pHitBox = new Rectangle(characterBox.X + 45, characterBox.Y, 40, 70);
                 pHitBoxL = new Rectangle(characterBox.X - 30, characterBox.Y, 40, 70);
@@ -204,13 +214,14 @@ namespace GDAPS2Game
             mState = Mouse.GetState();
             kState = Keyboard.GetState();
             // When user presses the attack key
-
-            // Do attack animation
-            if (mState.LeftButton == ButtonState.Pressed && mStateLast.LeftButton == ButtonState.Released)
+            if((mState.LeftButton == ButtonState.Pressed || kState.IsKeyDown(Keys.E)) && (mStateLast.LeftButton == ButtonState.Released && kStateLast.IsKeyUp(Keys.E)))
             {
-                frame = -2;
+                attackAnim = true;
+                //attackIt++;
             }
 
+            // Do attack animation
+            
             // If enemy within range, kill/deal damage to enemy
             if (worldEnemies.Count == 0)//if the enemy list is empty, ie no enemies
             {
@@ -260,7 +271,8 @@ namespace GDAPS2Game
                                      //Console.WriteLine("CLICK EVENT");//debug console output
                                      //The player's damage scales with the level such that it does damage (Set to 5) plus the level / 5, it scales but not quickly.
                                         enm.TakeDamage(playerAttack + level / 5);//take an amount of damage
-                                        Console.WriteLine("I just hit left yo!");
+                                        //Console.WriteLine("I just hit left yo!");
+
                                     }
                                 }
                                 else//if hitboxes don't intersect
@@ -322,7 +334,6 @@ namespace GDAPS2Game
         }
         public override void Draw(SpriteBatch spriteBatch) // also changed spritebatch to spriteBatch because it was aggravating me lmao
         {
-            Console.WriteLine(frame);
 
             //While the player's health is greater than 0, it continues to draw him
             if (health > 0)
@@ -345,7 +356,7 @@ namespace GDAPS2Game
                         ||
                         (Keyboard.GetState().IsKeyUp(Keys.Left) && Keyboard.GetState().IsKeyDown(Keys.Right))
                         ||
-                        (frame == -2 || frame == -1)
+                        attackAnim
                         )
                     {
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(currentFrame.X, currentFrame.Y, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
@@ -359,7 +370,7 @@ namespace GDAPS2Game
                             )
                         {
 
-                            frame = 0;
+                            //frame = 0;
 
                             spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
 
@@ -376,7 +387,7 @@ namespace GDAPS2Game
                             )
                         {
 
-                            frame = 0;
+                            //frame = 0;
 
                             spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, Vector2.Zero, 5f, SpriteEffects.None, 0);
                         }
@@ -397,7 +408,7 @@ namespace GDAPS2Game
                             ||
                             (Keyboard.GetState().IsKeyUp(Keys.Right) && Keyboard.GetState().IsKeyDown(Keys.Left))
                             ||
-                            (frame ==-2 || frame ==-1)
+                            attackAnim
                        )
                     {
 
@@ -408,7 +419,7 @@ namespace GDAPS2Game
                     else
                     {
 
-                        frame = 0;
+                        //frame = 0;
 
                         spriteBatch.Draw(characterSprite, new Vector2(characterBox.X, characterBox.Y), new Rectangle(1, 6, frameSize.X, frameSize.Y), characterColor, 0, new Vector2(6, 0), 5f, SpriteEffects.FlipHorizontally, 0);
                     }
@@ -418,10 +429,12 @@ namespace GDAPS2Game
 
         // Update method is used for movement animation
         bool firstRun = true;
+        //bool attackLastFrame = false;
         // bool
+        int attackIt = 0;
         public void Update(GameTime gameTime)
         {
-            
+            Console.WriteLine(attackIt);
             //calls the level up method.
             levelUp();
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -445,37 +458,75 @@ namespace GDAPS2Game
                     frame = 0;
                 }
 
-                // switch case for loading different frames of animation
-                switch(frame)
+                
+                if (attackAnim)
                 {
-                    case -2:
-                        currentFrame.X = 23;
-                        currentFrame.Y = 36;
-                        //frame++;
-                        break;
-                    case -1:
-                        currentFrame.X = 1;
-                        currentFrame.Y = 66;
-                        //frame++;
-                        break;
-                    case 0:
-                        currentFrame.X = 1;
-                        currentFrame.Y = 6;
-                        break;
-                    case 1:
-                        currentFrame.X = 23;
-                        currentFrame.Y = 6;
-                        break;
-                    case 2:
-                        currentFrame.X = 1;
-                        currentFrame.Y = 6;
-                        break;
-                    case 3:
-                        currentFrame.X = 1;
-                        currentFrame.Y = 36; // on the spritesheet this sprite's location is actually 1,40 but for some reason monogame decided to bring it up 4 pixels
-                        break;
+                    attackIt++;
+
+                    if (attackIt <= 1)
+                    {
+                        frame = -2;
+                    }
+                    else if(attackIt <= 2)
+                    {
+                        frame = -1;
+                    }
+                    else
+                    {
+                        frame = 0;
+                        attackIt = 0;
+                        attackAnim = false;
+                    }
+                    
+
+                    //Console.WriteLine(frame);
+                    switch (frame)
+                    {
+                        case -2:
+                            currentFrame.X = 23;
+                            currentFrame.Y = 36;
+                            break;
+                        case -1:
+                            currentFrame.X = 1;
+                            currentFrame.Y = 66;
+                            break;
+                    }
                 }
+
+                // switch case for loading different frames of animation
+                if (moveThisFrame)
+                {
+                    switch (frame)
+                    {
+                        case -2:
+                            currentFrame.X = 23;
+                            currentFrame.Y = 36;
                             frame++;
+                            break;
+                        case -1:
+                            currentFrame.X = 1;
+                            currentFrame.Y = 66;
+                            //frame++;
+                            break;
+                        case 0:
+                            currentFrame.X = 1;
+                            currentFrame.Y = 6;
+                            break;
+                        case 1:
+                            currentFrame.X = 23;
+                            currentFrame.Y = 6;
+                            break;
+                        case 2:
+                            currentFrame.X = 1;
+                            currentFrame.Y = 6;
+                            break;
+                        case 3:
+                            currentFrame.X = 1;
+                            currentFrame.Y = 36; // on the spritesheet this sprite's location is actually 1,40 but for some reason monogame decided to bring it up 4 pixels
+                            break;
+                    }
+                }
+                
 
             }
             firstRun = false;
