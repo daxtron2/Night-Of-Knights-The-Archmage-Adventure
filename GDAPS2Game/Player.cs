@@ -42,7 +42,7 @@ namespace GDAPS2Game
         private bool attackAnim = false;
         private bool moveThisFrame = false;
         //integer that sets the leveling up goal. Starts out at 100
-        private int newGoal = 100;
+        private int newGoal;
 
         /// <summary>
         /// Integers to hold the maximum amount the player can move left
@@ -65,6 +65,8 @@ namespace GDAPS2Game
         /// </summary>
         public Player(int x, Texture2D charSprite, Texture2D hitbox, Texture2D[] debugs) : base(x, 750, 55, 130, charSprite, debugs)
         {
+            level = 1;
+            newGoal = 100;
             health = 50;//testing value
             faceRight = true;
             pHitBox = new Rectangle(characterBox.X, characterBox.Y, 40, 70);
