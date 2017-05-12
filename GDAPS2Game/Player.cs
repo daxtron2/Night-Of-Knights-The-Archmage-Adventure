@@ -98,7 +98,7 @@ namespace GDAPS2Game
             if ((Keyboard.GetState().IsKeyDown(Keys.Q) || Mouse.GetState().RightButton == ButtonState.Pressed) && blockHeldTime < 100 && onCooldown == false)//if holding down B, hasn't been holding for past 20 incrementations
             {
                 blockHeldTime+=5;//increase the held amount by 5, giving the amount of time blocking around 1 sec maximum, dependant on frame rate.
-                Console.WriteLine("BHT: " + blockHeldTime);
+                //Console.WriteLine("BHT: " + blockHeldTime);
                 if (blockHeldTime > 0)
                 {
                     blocking = true;
@@ -116,7 +116,7 @@ namespace GDAPS2Game
                         onCooldown = true;
                     }
                     blockHeldTime--;//decrement the cooldown timer
-                    Console.WriteLine("BHT: " + blockHeldTime);
+                    //Console.WriteLine("BHT: " + blockHeldTime);
 
                 }
                 if (blockHeldTime <= 0)//if we decremented the timer too far, ie the cooldown is over
@@ -434,7 +434,7 @@ namespace GDAPS2Game
         int attackIt = 0;
         public void Update(GameTime gameTime)
         {
-            Console.WriteLine(attackIt);
+            //Console.WriteLine(attackIt);
             //calls the level up method.
             levelUp();
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;

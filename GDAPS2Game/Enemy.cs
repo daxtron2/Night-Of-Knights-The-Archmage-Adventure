@@ -60,9 +60,9 @@ namespace GDAPS2Game
                 //if addscore is equal to true adds to the score then sets it to false so it only runs once.
                 if (addScore == true)
                 {
-                    Console.WriteLine("Is this even working?");
+                    //Console.WriteLine("Is this even working?");
                     playerL.AddScore(20);
-                    Console.WriteLine("Score: " + playerL.Score);
+                    //Console.WriteLine("Score: " + playerL.Score);
                     addScore = false;
                 }
             }
@@ -74,9 +74,9 @@ namespace GDAPS2Game
                 //if addscore is equal to true adds to the score then sets it to false so it only runs once.
                 if (addScore == true)
                 {
-                    Console.WriteLine("Is this even working?");
+                    //Console.WriteLine("Is this even working?");
                     playerL.AddScore(meleeScore);
-                    Console.WriteLine("Score: " + playerL.Score);
+                    //Console.WriteLine("Score: " + playerL.Score);
                     addScore = false;
                 }
             }

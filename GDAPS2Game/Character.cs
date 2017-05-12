@@ -86,7 +86,7 @@ namespace GDAPS2Game
         public void AddScore(int add)
         {
             score += add;
-            Console.WriteLine("Score is: " + score);
+            //Console.WriteLine("Score is: " + score);
         }
 
         //returns the score value

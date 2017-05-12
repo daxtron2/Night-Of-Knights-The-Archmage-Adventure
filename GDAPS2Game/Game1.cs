@@ -94,16 +94,16 @@ namespace GDAPS2Game
             int screenHeight = 0;
             try
             {
-                Console.WriteLine("About to open file");
+                //Console.WriteLine("About to open file");
                 attribFilePath = File.Open("..\\..\\..\\..\\content\\attributes.dat", FileMode.Open);
 
-                Console.WriteLine("About to initialize attribRead obj");
+                //Console.WriteLine("About to initialize attribRead obj");
                 attribRead = new BinaryReader(attribFilePath);
 
-                Console.WriteLine("About to try to read file");
+                //Console.WriteLine("About to try to read file");
                 screenWidth = attribRead.ReadInt32();
                 screenHeight = attribRead.ReadInt32();
-                Console.WriteLine("Got through try block.");
+                //Console.WriteLine("Got through try block.");
                 attribRead.Close();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -299,7 +299,7 @@ namespace GDAPS2Game
                             break;
                         case 1://selects the score menu
                             currentState = GameState.ScoreScreen;
-                            Console.WriteLine("Setting to pause menu");
+                            //Console.WriteLine("Setting to pause menu");
                             break;//do nothing
                         case 2://if exit game is selected
                             Exit();//close the game
@@ -316,7 +316,7 @@ namespace GDAPS2Game
                             break;
                         case 1://selects the score menu
                             currentState = GameState.ScoreScreen;
-                            Console.WriteLine("Setting to pause menu");
+                            //Console.WriteLine("Setting to pause menu");
                             break;//do nothing
                         case 2:
                             //if exit game is selected

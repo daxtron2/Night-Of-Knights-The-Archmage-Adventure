@@ -16,7 +16,7 @@ namespace GDAPS2Game
             {
                 scores = ReadScores();
                 Stream str = File.Open("scores.dat", FileMode.Create);
-                Console.WriteLine("Writing the file");
+                //Console.WriteLine("Writing the file");
                 BinaryWriter output = new BinaryWriter(str);
                     int posOne = scores[0];
                     int posTwo = scores[1];
@@ -48,7 +48,7 @@ namespace GDAPS2Game
 
                     output.Close();
                 str.Close();
-                Console.WriteLine("Done writing");
+                //Console.WriteLine("Done writing");
             }
             catch (IOException ioe)
             {
@@ -69,7 +69,7 @@ namespace GDAPS2Game
                 if (File.Exists("scores.dat"))
                 {
                     BinaryReader input = new BinaryReader(File.OpenRead("scores.dat"));
-                    Console.WriteLine("Reading the file");
+                    //Console.WriteLine("Reading the file");
                     scoreOne = input.ReadInt32();
 
                     scoreTwo = input.ReadInt32();
@@ -79,7 +79,7 @@ namespace GDAPS2Game
                     scores.Add(scoreTwo);
                     scores.Add(scoreThree);
                     input.Close();
-                    Console.WriteLine("Done Reading");
+                    //Console.WriteLine("Done Reading");
                     return scores;
                 }
                 else
@@ -90,7 +90,7 @@ namespace GDAPS2Game
                     scores.Add(scoreThree);
                     scores.Add(scoreTwo);
                     scores.Add(scoreOne);
-                    Console.WriteLine("File did not exist!");
+                    //Console.WriteLine("File did not exist!");
                     return scores;
                 }
 
