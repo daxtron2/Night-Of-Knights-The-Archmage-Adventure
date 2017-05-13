@@ -10,6 +10,7 @@ using System.IO;
 * TJ Wolschon   - Architect
 * Zack Dunham   - UI/Art
 * Michael Schek - Game Design
+* FINAL VERSION
 */
 namespace GDAPS2Game
 {
