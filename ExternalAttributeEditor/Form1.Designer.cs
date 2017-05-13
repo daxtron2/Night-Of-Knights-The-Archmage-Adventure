@@ -124,7 +124,7 @@
             // 
             this.widthUD.Location = new System.Drawing.Point(113, 42);
             this.widthUD.Maximum = new decimal(new int[] {
-            2000,
+            20000,
             0,
             0,
             0});

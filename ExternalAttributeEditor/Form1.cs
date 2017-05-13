@@ -24,15 +24,20 @@ namespace ExternalAttributeEditor
         {
             InitializeComponent();
             attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
-            //reader = new BinaryReader(attribFilePath);
-            writer = new BinaryWriter(attribFilePath);
             DefaultButton.Enabled = false;
             
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
+
+            }catch { }
             //convert values to ints
+            writer = new BinaryWriter(attribFilePath);
+
             screenWidth = (int)widthUD.Value;
             screenHeight = (int)heightUD.Value;
             gravity = (int)GravityUD.Value;
@@ -49,17 +54,31 @@ namespace ExternalAttributeEditor
             writer.Close();
             SaveButton.Enabled = false;
             DefaultButton.Enabled = true;
+            writer = null;
 
         }
 
         private void LoadButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                attribFilePath = File.Open("..\\..\\..\\GDAPS2Game\\Content\\attributes.dat", FileMode.OpenOrCreate);
+
+            }
+            catch { }
+            reader = new BinaryReader(attribFilePath);
             //read in values
+            screenWidth = reader.ReadInt32();
+            screenHeight =reader.ReadInt32();
+
             gravity = reader.ReadInt32();
             floorHeight = reader.ReadInt32();
+            jumpHeight = reader.ReadInt32();
 
             //update values
             GravityUD.Value = gravity;
+            reader.Close();
+            reader = null;
         }
 
         private void DefaultButton_Click(object sender, EventArgs e)
