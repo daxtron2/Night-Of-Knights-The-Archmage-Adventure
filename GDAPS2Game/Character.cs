@@ -29,7 +29,7 @@ namespace GDAPS2Game
         private int score;
         protected bool addScore = false;
         //Integer for the level, initally set to 1.
-        public static int level = 1;
+        public static int level;
         protected Texture2D[] debugTexture;
 
         protected int floorHeight = 750; //never change this in the program, only through editor, treat it as a constant
