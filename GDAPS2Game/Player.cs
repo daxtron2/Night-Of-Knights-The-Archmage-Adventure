@@ -240,7 +240,7 @@ namespace GDAPS2Game
                             if (enm.TryDestroy())
                             {
                                 Random rng = new Random();
-                                if (rng.Next(0, 3) == 1)//1 in 3 chance of spawning a heart
+                                if (rng.Next(0, 2) == 1)//1 in 2 chance of spawning a heart
                                 {
                                     test = true;
                                     enmHeart = enm.CharacterBox;
